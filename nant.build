@@ -21,7 +21,6 @@
                 <include name="*.dll" />
             </fileset>
         </copy>
-        <copy tofile="${output.dir}/${src.output.file}.config" file="${src.dir}/App.config"/>
         <csc target="library" output="${output.dir}/${src.output.file}" debug="${build.debug}">
             <sources failonempty="true">
                 <include name="${src.dir}/**/*.cs"/> 
@@ -32,7 +31,7 @@
         </csc>   
     </target>
     <target name="compile-test" depends="compile-src">
-        <csc target="library" output="${test.output.file}" debug="${build.debug}">
+        <csc target="library" output="${output.dir}/${test.output.file}" debug="${build.debug}">
             <sources failonempty="true">
                 <include name="${test.dir}/**/*.cs"/> 
             </sources>
@@ -44,7 +43,6 @@
     <target name="test">
         <nunit2 verbose="true">
             <formatter type="Xml" usefile="true" extension=".xml" outputdir="${output.dir}/results" />
-            <test assemblyname="${output.dir}/${src.output.file}"/>     
             <test assemblyname="${output.dir}/${test.output.file}"/>     
         </nunit2> 
     </target> 
