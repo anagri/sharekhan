@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<project name="sharekhan" default="release">
+    <property name="src.dir" value="./src"/>
+    <property name="test.dir" value="./test"/>
+    <property name="lib.dir" value="./Lib"/>
+    <property name="nant.settings.currentframework" value="net-3.5"/>
+    <property name="build.debug" value="true" />
+    <property name="src.output.file" value="sharekhan.dll" />
+    <property name="test.output.file" value="sharekhantest.dll" />
+    <property name="output.dir" value="./bin/Debug"/>
+
+    <target name="init">
+        <delete dir="${output.dir}"/>
+    </target>
+
+    <target name="compile-src" depends="init">
+        <mkdir dir="${output.dir}" />
+        <mkdir dir="${output.dir}/results" />
+        <copy todir="${output.dir}">
+            <fileset basedir="${lib.dir}">
+                <include name="*.dll" />
+            </fileset>
+        </copy>
+        <copy tofile="${output.dir}/${src.output.file}.config" file="${src.dir}/App.config"/>
+        <csc target="library" output="${output.dir}/${src.output.file}" debug="${build.debug}">
+            <sources failonempty="true">
+                <include name="${src.dir}/**/*.cs"/> 
+            </sources>
+            <references>
+                <include name="${output.dir}/*.dll"/>  
+            </references>
+        </csc>   
+    </target>
+    <target name="compile-test" depends="compile-src">
+        <csc target="library" output="${test.output.file}" debug="${build.debug}">
+            <sources failonempty="true">
+                <include name="${test.dir}/**/*.cs"/> 
+            </sources>
+            <references>
+                <include name="${output.dir}/*.dll"/> 
+            </references>
+        </csc>   
+    </target>
+    <target name="test">
+        <nunit2 verbose="true">
+            <formatter type="Xml" usefile="true" extension=".xml" outputdir="${output.dir}/results" />
+            <test assemblyname="${output.dir}/${src.output.file}"/>     
+            <test assemblyname="${output.dir}/${test.output.file}"/>     
+        </nunit2> 
+    </target> 
+    <target name="release" depends="init, compile-src, compile-test, test"/>
+</project>
