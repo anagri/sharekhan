@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <project name="sharekhan" default="release">
     <property name="src.dir" value="./src"/>
     <property name="test.dir" value="./test"/>
@@ -42,7 +42,7 @@
     </target>
     <target name="test">
         <nunit2 verbose="true">
-            <formatter type="Xml" usefile="true" extension=".xml" outputdir="${output.dir}/results" />
+		<formatter type="Plain" usefile="true" extension=".xml" outputdir="${output.dir}/testoutput/result" />
             <test assemblyname="${output.dir}/${test.output.file}"/>     
         </nunit2> 
     </target> 

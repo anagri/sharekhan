@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Sharekhan.domain;
+using ShareKhan.service;
 
 namespace Sharekhan.domain
 {
@@ -11,21 +12,22 @@ namespace Sharekhan.domain
         public virtual int Id { get; set; }
         public virtual string Symbol { get; set; }
         public virtual string Description { get; set; }
-        public virtual Price CurrentValue { get; set; }
+        public virtual Price CurrentPrice { get; set; }
+
 
         public Instrument()
         {
-            CurrentValue = Price.Null;
+            CurrentPrice = Price.Null;
         }
 
         public void UpdateCurrentPrice(Price price)
         {
-            CurrentValue = price;
+            CurrentPrice = price;
         }
 
         public Price currentPrice()
         {
-            return CurrentValue;
+            return CurrentPrice;
         }
     }
 }
