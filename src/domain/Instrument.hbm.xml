@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" auto-import="true" assembly="orm_intro" namespace="orm_intro">
+  <class name="Sharekhan.domain.Instrument" table="Instrument">
+    <id name="Id">
+      <generator class="native" />
+    </id>
+    <component name="Symbol" class="Sharekhan.domain.Symbol" insert="true" update="false">
+      <property name="Value" column="symbol" type="String" length="120"/>
+    </component>
+    <component name="CurrentPrice" class="Sharekhan.domain.Price" insert="true" update="true">
+      <property name="Value" column="current_price" type="Double" length="120"/>
+    </component>
+    <property name="Description" column="description" type="String" length="120" />
+  </class>
+</hibernate-mapping>
