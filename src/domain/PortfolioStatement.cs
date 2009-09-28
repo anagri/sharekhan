@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Sharekhan.domain;
 
-namespace ShareKhan.src.domain
+namespace ShareKhan.domain
 {
     class PortfolioStatement : Statement
     {

@@ -91,6 +91,7 @@
     <Compile Include="src\domain\Statement.cs" />
     <Compile Include="src\domain\Transaction.cs" />
     <Compile Include="src\domain\TransactionStatement.cs" />
+    <Compile Include="src\service\IRepository.cs" />
     <Compile Include="src\service\Repository.cs" />
     <Compile Include="test\domain\InstrumentTest.cs" />
     <Compile Include="src\domain\MutualFund.cs" />
