@@ -19,7 +19,7 @@ namespace ShareKhan.domain
                                                      DateTime.Today, 100, 100));
 
 
-            Assert.AreEqual(1200,portfolio.getInvestedValue().Value);
+            Assert.AreEqual(10200,portfolio.getInvestedValue().Value);
 
         }
     }
