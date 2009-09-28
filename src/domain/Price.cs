@@ -7,14 +7,14 @@ namespace Sharekhan.domain
 {
     public class Price
     {
-        private readonly double _price;
+        private readonly double _value;
 
         public static readonly Price Null = new Price(0.0);
 
 
         public Price(double price)
         {
-            _price = price;
+            _value = price;
         }
 
         
@@ -24,12 +24,12 @@ namespace Sharekhan.domain
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
             if (other.GetType() != this.GetType()) return false; 
-            return ((Price )other)._price == _price;
+            return ((Price )other)._value == _value;
         }
 
         public override int GetHashCode()
         {
-            return _price.GetHashCode();
+            return _value.GetHashCode();
         }
     }
 }

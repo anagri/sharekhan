@@ -8,8 +8,8 @@
     <ProjectGuid>{77CF5C49-3FC3-42AA-82A7-BB9E85BB8417}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ShareKhan</RootNamespace>
-    <AssemblyName>ShareKhan</AssemblyName>
+    <RootNamespace>Sharekhan</RootNamespace>
+    <AssemblyName>Sharekhan</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -85,10 +85,15 @@
     <Compile Include="src\domain\Instrument.cs" />
     <Compile Include="src\domain\Price.cs" />
     <Compile Include="src\domain\Transaction.cs" />
+    <Compile Include="src\service\IRepository.cs" />
     <Compile Include="src\service\Repository.cs" />
     <Compile Include="test\domain\InstrumentTest.cs" />
     <Compile Include="src\domain\MutualFund.cs" />
     <Compile Include="test\domain\PriceTest.cs" />
+    <Compile Include="test\service\RepositoryTest.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="src\domain\Instrument.hbm.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -5,13 +5,15 @@ using System.Text;
 
 namespace ShareKhan.service
 {
-    public interface IRepository<T>
+    public interface IRepository
     {
-        T Save(T entity);
+ 
+        void Save(Object entity);
 
-        T Lookup(int id);
+        T Lookup<T>(int id);
 
-        void Delete(T entity);
+        void Delete(Object entity);
 
+        void Attach(Object entity);
     }
 }

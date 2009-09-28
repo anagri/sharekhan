@@ -11,6 +11,7 @@ namespace Sharekhan.domain
         [Test]
         public void should_be_able_to_update_instrument_current_price()
         {
+            
             Instrument instrument = new MutualFund();
             Price fourRupees = new Price(4.0d);
             instrument.UpdateCurrentPrice(fourRupees);
