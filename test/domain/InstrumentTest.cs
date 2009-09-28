@@ -8,6 +8,8 @@ namespace Sharekhan.domain
     public class InstrumentTest
     {
 
+
+
         [Test]
         public void should_be_able_to_update_instrument_current_price()
         {

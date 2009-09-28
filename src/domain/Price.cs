@@ -9,8 +9,12 @@ namespace Sharekhan.domain
     {
         public virtual double Value { get; set; }
 
-        public static readonly Price Null = new Price(0.0);
+        protected virtual double Value { get; set; }
 
+        public static readonly Price Null = new Price(0.0);
+        private Price()
+        {
+        }
 
         public Price(double price)
         {

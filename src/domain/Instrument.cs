@@ -22,12 +22,12 @@ namespace Sharekhan.domain
             this.CurrentPrice = CurrentPrice;
         }
 
-        public void UpdateCurrentPrice(Price price)
+        public virtual void UpdateCurrentPrice(Price price)
         {
             CurrentPrice = price;
         }
 
-        public Price currentPrice()
+        public virtual Price currentPrice()
         {
             return CurrentPrice;
         }
