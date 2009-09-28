@@ -1,8 +1,8 @@
 using NUnit.Framework;
-using sharekhan.domain;
-using sharekhan.domain;
+using Sharekhan.domain;
 
-namespace sharekhan.domain
+
+namespace Sharekhan.domain
 {
     [TestFixture]
     public class InstrumentTest

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using sharekhan.domain;
+using Sharekhan.domain;
 
-namespace sharekhan.domain
+namespace Sharekhan.domain
 {
     public abstract class Instrument
     {

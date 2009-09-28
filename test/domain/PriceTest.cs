@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NUnit.Framework;
-using sharekhan.domain;
+using Sharekhan.domain;
 
-namespace sharekhan.domain
+namespace Sharekhan.domain
 {
     [TestFixture]
     public class PriceTest
