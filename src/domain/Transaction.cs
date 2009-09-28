@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace sharekhan.src
+
+namespace Sharekhan.domain
 {
-    class Transaction
+    public class Transaction
     {
         public virtual int Id { get; set;}
         public virtual int Quantity { get; set; }
