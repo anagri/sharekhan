@@ -14,7 +14,12 @@ namespace ShareKhan.domain
         public void should_get_realised_value()
         {
             Portfolio portfolio = new Portfolio();
-            portfolio.getRealisedValue();
+            portfolio.addTransaction(new Transaction("Trans001", 10,
+                                                     new MutualFund("Mutual001", "RIL", "Reliance MF", new Price(1000)),
+                                                     DateTime.Today, 100, 100));
+
+
+            Assert.AreEqual(1200,portfolio.getInvestedValue().Value);
 
         }
     }
@@ -23,15 +28,18 @@ namespace ShareKhan.domain
 
     class Portfolio
     {
-        private PortfolioStatement portfolioStatement;
-        private TransactionStatement transactionStatement;
+        private PortfolioStatement portfolioStatement=new PortfolioStatement();
+        private TransactionStatement transactionStatement=new TransactionStatement();
 
 
-
-
-        public void getRealisedValue()
+        public Price getInvestedValue()
         {
-            
+            return transactionStatement.getInvestedValue();
+        }
+
+        public void addTransaction(Transaction transaction)
+        {
+            transactionStatement.addTransaction(transaction);
         }
     }
 }

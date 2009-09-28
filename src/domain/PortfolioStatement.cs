@@ -9,5 +9,10 @@ namespace ShareKhan.domain
     class PortfolioStatement : Statement
     {
         private List<Instrument> instrumentList;
+
+        public PortfolioStatement()
+        {
+            instrumentList=new List<Instrument>();
+        }
     }
 }

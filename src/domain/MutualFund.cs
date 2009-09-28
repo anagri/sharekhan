@@ -1,28 +1,18 @@
+using System;
 using NUnit.Framework;
+using System.Text;
 
 namespace Sharekhan.domain
 {
     
-    [TestFixture]
-    public class MutualFundTest
-    {
-        [Test]
-        public void should_record_purchase_of_MF()
-        {
-            MutualFund mf = new MutualFund();
-        }
-
-
-
-    }
-    
-    
-    
-    
+ 
     public class MutualFund : Instrument
     {
 
-
+        public MutualFund(String id, String Symbol, String Description, Price CurrentPrice):base(id,Symbol,Description,CurrentPrice)
+        {
+            
+        }
 
     }
 
