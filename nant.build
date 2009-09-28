@@ -42,7 +42,7 @@
     </target>
     <target name="test">
         <nunit2 verbose="true">
-		<formatter type="Plain" usefile="true" extension=".xml" outputdir="${output.dir}/testoutput/result" />
+		<formatter type="Xml" usefile="true" extension=".xml" outputdir="${output.dir}/testoutput/result" />
             <test assemblyname="${output.dir}/${test.output.file}"/>     
         </nunit2> 
     </target> 
