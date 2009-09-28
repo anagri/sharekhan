@@ -15,7 +15,7 @@ namespace Sharekhan.domain
         {
             Price fourRuppees = new Price(4.0d);
             Price anotherFourRuppees = new Price(4.0d);
-
+            
             
             Assert.AreEqual(fourRuppees,anotherFourRuppees);
             Assert.AreEqual(fourRuppees.GetHashCode(), anotherFourRuppees.GetHashCode());

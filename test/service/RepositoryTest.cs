@@ -12,29 +12,29 @@ using ShareKhan.service;
 
 
 
-namespace Sharekhan.service 
+namespace Sharekhan.service
 {
     [TestFixture]
-    public class RepositoryTest : NHibernateInMemoryTestFixtureBase
+    class RepositoryTest 
     {
-        private ISession session;
+        private IRepository repository;
 
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
         {
-            InitalizeSessionFactory(new FileInfo("src/domain/Instrument.hbm.xml"));
+            repository = new Repository();
         }
 
         [SetUp]
         public void SetUp()
         {
-            session = this.CreateSession();
+            repository.BeginTransaction();
         }
 
         [TearDown]
         public void TearDown()
         {
-            session.Dispose();
+            repository.RollbackTransaction();
         }
 
 
@@ -42,12 +42,36 @@ namespace Sharekhan.service
         [Test]
         public void TestSave()
         {
-            Instrument instrument = new MutualFund();
-            IRepository repository = new Repository(session);
+            Price hundredRuppees = new Price(100);
+            Symbol relianceMutuals = new Symbol("RELTICK");
+            Instrument instrument = new MutualFund(relianceMutuals,hundredRuppees,"Test Fund");
+
             Assert.AreEqual(0, instrument.Id);
             repository.Save(instrument);
-            Assert.AreNotEqual(0,instrument.Id);
+            Assert.AreNotEqual(0, instrument.Id);
             Assert.True(instrument.Id > 0);
+        }
+
+        [Test]
+        public void TestLookupAfterSave()
+        {
+            Price hundredRuppees = new Price(100);
+            Symbol relianceMutuals = new Symbol("RELTICK");
+            Instrument instrument = new MutualFund(relianceMutuals, hundredRuppees, "Test Fund");
+
+            
+            repository.Save(instrument);
+
+            Instrument actual = repository.Lookup<Instrument>(instrument.Id);
+
+            Assert.AreEqual(typeof(MutualFund), actual.GetType());
+            Assert.AreEqual(instrument,actual);
+            
+
+
+            //Instrument actual = repository.Lookup<Instrument>();
+
+           
         }
     }
 }

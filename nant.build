@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<project name="sharekhan" default="release">
+<project name="Sharekhan" default="release">
     <property name="src.dir" value="./src"/>
     <property name="test.dir" value="./test"/>
     <property name="lib.dir" value="./Lib"/>
     <property name="nant.settings.currentframework" value="net-3.5"/>
     <property name="build.debug" value="true" />
-    <property name="src.output.file" value="sharekhan.dll" />
-    <property name="test.output.file" value="sharekhantest.dll" />
+    <property name="src.output.file" value="Sharekhan.dll" />
+    <property name="test.output.file" value="Sharekhantest.dll" />
     <property name="output.dir" value="./bin/Debug"/>
 
     <target name="init">
@@ -21,6 +21,12 @@
                 <include name="*.dll" />
             </fileset>
         </copy>
+      <copy todir="${output.dir}">
+        <fileset basedir=".">
+          <include name="hibernate.cfg.xml"/>
+           <include name=".hbm.xml"/>
+        </fileset>
+      </copy>
         <csc target="library" output="${output.dir}/${src.output.file}" debug="${build.debug}">
             <sources failonempty="true">
                 <include name="${src.dir}/**/*.cs"/> 
@@ -38,6 +44,9 @@
             <references>
                 <include name="${output.dir}/*.dll"/> 
             </references>
+          <resources basedir="." dynamicprefix="true" >
+              <include name="*.hbm.xml"/>
+          </resources>
         </csc>   
     </target>
 		

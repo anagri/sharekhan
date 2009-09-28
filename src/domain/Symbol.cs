@@ -7,9 +7,8 @@ namespace Sharekhan.domain
 {
     public class Symbol
     {
-        private String _value;
 
-        protected virtual String Value { get; set; }
+        public virtual String Value { get; protected set; }
 
         private Symbol()
         {
@@ -17,8 +16,38 @@ namespace Sharekhan.domain
 
         public Symbol(String value)
         {
-            this._value = value;
+            this.Value = value;
         }
 
+
+        public bool Equals(Symbol other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return Equals(other.Value, Value);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != typeof (Symbol)) return false;
+            return Equals((Symbol) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return Value.GetHashCode();
+        }
+
+        public static bool operator ==(Symbol left, Symbol right)
+        {
+            return Equals(left, right);
+        }
+
+        public static bool operator !=(Symbol left, Symbol right)
+        {
+            return !Equals(left, right);
+        }
     }
 }

@@ -9,7 +9,11 @@ namespace Sharekhan.domain
     public class MutualFund : Instrument
     {
 
-        public MutualFund(String id, String Symbol, String Description, Price CurrentPrice):base(id,Symbol,Description,CurrentPrice)
+        protected MutualFund()
+        {
+        }
+
+        public MutualFund(Symbol symbol, Price currentPrice,String description ) : base(symbol,currentPrice,description)
         {
             
         }
