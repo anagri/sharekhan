@@ -8,7 +8,7 @@ using Sharekhan.domain;
 namespace ShareKhan.domain
 {
     [TestFixture]
-    class PorfolioTest
+    public class PorfolioTest
     {
         [Test]
         public void should_get_realised_value()
@@ -23,9 +23,17 @@ namespace ShareKhan.domain
 
     class Portfolio
     {
+        private PortfolioStatement portfolioStatement;
+        private TransactionStatement transactionStatement;
+
+
+
+
         public void getRealisedValue()
         {
-            throw new NotImplementedException();
+            
         }
     }
 }
+
+
