@@ -21,7 +21,7 @@ namespace ShareKhan.domain
 
             Transaction buy = new BuyTransaction(DateTime.Today, mutualFund, 10, 1000, 100, 100);
 
-            portfolio.addTransaction(buy);
+            //portfolio.addTransaction(buy);
 
 
         }

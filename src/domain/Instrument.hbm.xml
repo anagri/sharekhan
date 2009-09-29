@@ -12,10 +12,9 @@
       <property name="Value" column="current_price" type="Double" length="120"/>
     </component>
     <property name="Description" column="description" type="String" length="120" />
-
-
     
 
     <subclass name="Sharekhan.domain.MutualFund" discriminator-value="MF" dynamic-update="true" dynamic-insert="true" />
+    <subclass name="Sharekhan.domain.Stock" discriminator-value="ST" dynamic-update="true" dynamic-insert="true" />
   </class>
 </hibernate-mapping>
