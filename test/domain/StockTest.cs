@@ -5,9 +5,9 @@ using NHibernate.Cfg;
 using NUnit.Framework;
 using Sharekhan.domain;
 using ShareKhan.service;
-using ShareKhan.src.domain;
+using ShareKhan.domain;
 
-namespace ShareKhan.test.domain
+namespace ShareKhan.domain
 {
     [TestFixture]
     public class StockTest

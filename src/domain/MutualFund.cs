@@ -45,7 +45,4 @@ namespace Sharekhan.domain
             return !Equals(left, right);
         }
     }
-
-
-
 }

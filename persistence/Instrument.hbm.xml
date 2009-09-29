@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" auto-import="true" assembly="Sharekhan" namespace="Sharekhan">
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" auto-import="true" assembly="Sharekhan" namespace="orm_intro">
   <class name="Sharekhan.domain.Instrument" table="Instrument">
     <id name="Id">
       <generator class="native" />
@@ -13,5 +13,6 @@
     </component>
     <property name="Description" column="description" type="String" length="120" />
     <subclass name="Sharekhan.domain.MutualFund" discriminator-value="MF" dynamic-update="true" dynamic-insert="true" />
+    <subclass name="Sharekhan.domain.Stock" discriminator-value="ST" dynamic-update="true" dynamic-insert="true" />
   </class>
 </hibernate-mapping>
