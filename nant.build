@@ -1,64 +1,68 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <project name="Sharekhan" default="release">
-    <property name="src.dir" value="./src"/>
-    <property name="test.dir" value="./test"/>
-    <property name="lib.dir" value="./Lib"/>
-    <property name="nant.settings.currentframework" value="net-3.5"/>
-    <property name="build.debug" value="true" />
-    <property name="src.output.file" value="Sharekhan.dll" />
-    <property name="test.output.file" value="Sharekhantest.dll" />
-    <property name="output.dir" value="./bin/Debug"/>
+  <property name="src.dir" value="./src"/>
+  <property name="persistence.dir" value="./persistence"/>
+  <property name="test.dir" value="./test"/>
+  <property name="lib.dir" value="./Lib"/>
+  <property name="nant.settings.currentframework" value="net-3.5"/>
+  <property name="build.debug" value="true" />
+  <property name="src.output.file" value="Sharekhan.dll" />
+  <property name="test.output.file" value="Sharekhantest.dll" />
+  <property name="output.dir" value="./bin/Debug"/>
 
-    <target name="init">
-        <delete dir="${output.dir}"/>
-    </target>
+  <target name="init">
+    <delete dir="${output.dir}"/>
+  </target>
 
-    <target name="compile-src" depends="init">
-        <mkdir dir="${output.dir}" />
-        <mkdir dir="${output.dir}/results" />
-        <copy todir="${output.dir}">
-            <fileset basedir="${lib.dir}">
-                <include name="*.dll" />
-            </fileset>
-        </copy>
-      <copy todir="${output.dir}">
-        <fileset basedir=".">
-          <include name="hibernate.cfg.xml"/>
-           <include name=".hbm.xml"/>
-        </fileset>
-      </copy>
-        <csc target="library" output="${output.dir}/${src.output.file}" debug="${build.debug}">
-            <sources failonempty="true">
-                <include name="${src.dir}/**/*.cs"/> 
-            </sources>
-            <references>
-                <include name="${output.dir}/*.dll"/>  
-            </references>
-        </csc>   
-    </target>
-    <target name="compile-test" depends="compile-src">
-        <csc target="library" output="${output.dir}/${test.output.file}" debug="${build.debug}">
-            <sources failonempty="true">
-                <include name="${test.dir}/**/*.cs"/> 
-            </sources>
-            <references>
-                <include name="${output.dir}/*.dll"/> 
-            </references>
-          <resources basedir="." dynamicprefix="true" >
-              <include name="*.hbm.xml"/>
-          </resources>
-        </csc>   
-    </target>
-		
-		<target name="test-init">
-				<exec program="dbinit.bat" basedir="." />
-		</target>
+  <target name="compile-src" depends="init">
+    <mkdir dir="${output.dir}" />
+    <mkdir dir="${output.dir}/results" />
+    <copy todir="${output.dir}">
+      <fileset basedir="${lib.dir}">
+        <include name="*.dll" />
+      </fileset>
+    </copy>
+    <copy todir="${output.dir}">
+      <fileset basedir=".">
+        <include name="hibernate.cfg.xml"/>
+        <include name=".hbm.xml"/>
+      </fileset>
+    </copy>
+    <csc target="library" output="${output.dir}/${src.output.file}" debug="${build.debug}">
+      <sources failonempty="true">
+        <include name="${src.dir}/**/*.cs"/>
+      </sources>
+      <references>
+        <include name="${output.dir}/*.dll"/>
+      </references>
+      <resources>
+        <include name="${persistence.dir}/*.hbm.xml"/>
+      </resources>
+    </csc>
+  </target>
+  <target name="compile-test" depends="compile-src">
+    <csc target="library" output="${output.dir}/${test.output.file}" debug="${build.debug}">
+      <sources failonempty="true">
+        <include name="${test.dir}/**/*.cs"/>
+      </sources>
+      <references>
+        <include name="${output.dir}/*.dll"/>
+      </references>
+      <resources basedir="." dynamicprefix="true" >
+        <include name="*.hbm.xml"/>
+      </resources>
+    </csc>
+  </target>
 
-    <target name="test" depends="test-init">
-        <nunit2 verbose="true">
-		<formatter type="Xml" usefile="true" extension=".xml" outputdir="${output.dir}/testoutput/result" />
-            <test assemblyname="${output.dir}/${test.output.file}"/>     
-        </nunit2> 
-    </target> 
-    <target name="release" depends="init, compile-src, compile-test, test"/>
+  <target name="test-init">
+    <exec program="dbinit.bat" basedir="." />
+  </target>
+
+  <target name="test" depends="test-init">
+    <nunit2 verbose="true">
+      <formatter type="Xml" usefile="true" extension=".xml" outputdir="${output.dir}/testoutput/result" />
+      <test assemblyname="${output.dir}/${test.output.file}"/>
+    </nunit2>
+  </target>
+  <target name="release" depends="init, compile-src, compile-test, test"/>
 </project>

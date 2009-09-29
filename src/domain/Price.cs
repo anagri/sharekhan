@@ -22,9 +22,7 @@ namespace Sharekhan.domain
 
         public Price Compute(Func<double,double> func)
         {
-            double value = func(Value);
-            var newPrice = new Price(value);
-            return newPrice;
+            return new Price(func(Value));
         }
 
         public bool Equals(Price other)
