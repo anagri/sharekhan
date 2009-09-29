@@ -15,7 +15,7 @@ namespace ShareKhan.persist
 
         T LookupBySymbol<T>(Symbol symbol);
 
-        List<T> listByCriteria<T>(string criteria, string value);
+        List<T> ListTransactionsByInstrumentId<T>(int id);
 
         void Delete(Object entity);
 

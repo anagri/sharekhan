@@ -8,14 +8,22 @@ using ShareKhan.persist;
 namespace ShareKhan.domain
 {
     public class Portfolio
-    {
+    {   
+
+        public IRepository Repository { get; set;}
+        
+        public Portfolio()
+        {
+            this.Repository = new Repository();
+        }
+
         public Price CurrentMarketValue(Symbol symbol)
         {
-            IRepository repository = new Repository();
-            Instrument instrument = repository.LookupBySymbol<Instrument>(symbol);
-            Price unitPrice = instrument.CurrentPrice;
+           
+            Instrument instrument = Repository.LookupBySymbol<Instrument>(symbol);
+            Price CurrentPrice = instrument.CurrentPrice;
             Price value = new Price(0.0);
-            List<Transaction> list=repository.listByCriteria<Transaction>("instr_id", instrument.Id.ToString());
+            List<Transaction> list=Repository.ListTransactionsByInstrumentId<Transaction>(instrument.Id);
             int count=0;
 
             foreach(Transaction trans in list)
@@ -29,7 +37,7 @@ namespace ShareKhan.domain
                 }
             }
 
-            value.Value = count*unitPrice.Value;
+            value.Value = count*CurrentPrice.Value;
             return value;
         }
 

@@ -35,10 +35,11 @@ namespace ShareKhan.persist
 
         public T LookupBySymbol<T>(Symbol symbol)
         {
-            return (T)session.CreateQuery("from Instrument where symbol=:symbol").SetParameter("symbol", symbol.Value).UniqueResult();
+            //return (T)session.CreateQuery("from Instrument where symbol=:symbol").SetParameter("symbol", symbol.Value).UniqueResult();
+            throw new NotImplementedException();
         }
 
-        public List<T> listByCriteria<T>(string criteria, string value)
+        public List<T> ListTransactionsByInstrumentId<T>(int id)
         {
             throw new NotImplementedException();
         }
