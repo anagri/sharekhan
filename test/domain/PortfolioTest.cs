@@ -1,16 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using NUnit.Framework;
-using Sharekhan.domain;
-using ShareKhan.domain;
 
 namespace ShareKhan.domain
 {
     [TestFixture]
     public class PorfolioTest
     {
-       
+        [Test]
+        public void ShouldBeAbleToCalcSTCGTax()
+        {
+            Portfolio portfolio = new Portfolio();
+            portfolio.CalcShortTermCapitalGainTax(new FinYear(2009, 2010));
+        }
     }
 }
