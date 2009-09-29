@@ -11,7 +11,7 @@ namespace ShareKhan.domain
     public class PorfolioTest
     {
         [Test]
-        public void CurrentMarketValue()
+        public void ShouldAbleToGetCurrentMarketValueOfInstrument()
         {
             Portfolio portfolio = new Portfolio();
             Symbol symbol = new Symbol("RILMF");

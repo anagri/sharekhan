@@ -6,7 +6,7 @@ using Sharekhan.domain;
 
 namespace ShareKhan.domain
 {
-    public class TransactionStatement:Statement
+    public class TransactionStatement : Statement
     {
         private List<Transaction> transactionList = new List<Transaction>();
 
@@ -14,7 +14,7 @@ namespace ShareKhan.domain
         {
             double investedValue = 0.0;
 
-            foreach(Transaction transaction in transactionList)
+            foreach (Transaction transaction in transactionList)
             {
                 investedValue += transaction.UnitPrice.Value;
             }

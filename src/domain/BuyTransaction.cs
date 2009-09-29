@@ -6,15 +6,18 @@ using Sharekhan.domain;
 
 namespace ShareKhan.domain
 {
-    public class BuyTransaction:Transaction
+    public class BuyTransaction : Transaction
     {
         public virtual double Tax { get; set; }
         public virtual double Brokerage { get; set; }
 
-        public BuyTransaction(){}
+        public BuyTransaction()
+        {
+        }
 
 
-        public BuyTransaction(DateTime date, Instrument instrument, int quantity, Price amount, double tax, double brokerage)
+        public BuyTransaction(DateTime date, Instrument instrument, int quantity, Price amount, double tax,
+                              double brokerage)
             : base(date, instrument, quantity, amount)
         {
             this.Tax = tax;
@@ -24,8 +27,7 @@ namespace ShareKhan.domain
 
         public override Price TransactionAmount()
         {
-
-            return new Price((UnitPrice.Value * Quantity) +Tax+Brokerage);
+            return new Price((UnitPrice.Value*Quantity) + Tax + Brokerage);
         }
     }
 }
