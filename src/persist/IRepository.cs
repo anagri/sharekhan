@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Sharekhan.domain;
 
 namespace ShareKhan.persist
 {
@@ -11,6 +12,10 @@ namespace ShareKhan.persist
         void Save(Object entity);
 
         T Lookup<T>(int id);
+
+        T LookupBySymbol<T>(Symbol symbol);
+
+        List<T> ListTransactionsByInstrumentId<T>(int id);
 
         void Delete(Object entity);
 

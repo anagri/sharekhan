@@ -10,6 +10,5 @@
             : base(symbol, currentPrice, description)
         {
         }
-
     }
 }

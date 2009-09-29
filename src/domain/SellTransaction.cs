@@ -6,7 +6,7 @@ using Sharekhan.domain;
 
 namespace ShareKhan.domain
 {
-    class SellTransaction:Transaction
+    public class SellTransaction:Transaction
     {
         public virtual double Tax { get; set; }
         public virtual double Brokerage { get; set; }

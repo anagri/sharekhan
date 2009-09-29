@@ -13,5 +13,8 @@ namespace Sharekhan.domain
             instrument.UpdateCurrentPrice(four);
             Assert.AreEqual(four, instrument.CurrentPrice);
         }
+
+
+
     }
 }

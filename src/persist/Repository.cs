@@ -1,7 +1,11 @@
-﻿using System.Data;
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
 using NHibernate;
 using NHibernate.Cfg;
 using NHibernate.Tool.hbm2ddl;
+using Sharekhan.domain;
+
 namespace ShareKhan.persist
 {
     public class Repository : IRepository
@@ -27,6 +31,17 @@ namespace ShareKhan.persist
         public T Lookup<T>(int id)
         {
             return session.Get<T>(id);
+        }
+
+        public T LookupBySymbol<T>(Symbol symbol)
+        {
+            //return (T)session.CreateQuery("from Instrument where symbol=:symbol").SetParameter("symbol", symbol.Value).UniqueResult();
+            throw new NotImplementedException();
+        }
+
+        public List<T> ListTransactionsByInstrumentId<T>(int id)
+        {
+            throw new NotImplementedException();
         }
 
         public void Delete(object entity)
