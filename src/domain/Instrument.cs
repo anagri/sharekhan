@@ -1,5 +1,5 @@
 ﻿using System;
-using ShareKhan.service;
+using ShareKhan.persist;
 
 namespace Sharekhan.domain
 {

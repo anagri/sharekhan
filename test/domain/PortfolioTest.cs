@@ -16,10 +16,21 @@ namespace ShareKhan.domain
             Transaction buy = new BuyTransaction(DateTime.Today, mutualFund, 10, new Price(1000), 100, 100);
 
          }
+
+        [Test]
+        
         public void ShouldBeAbleToCalcSTCGTax()
         {
             Portfolio portfolio = new Portfolio();
-            portfolio.CalcShortTermCapitalGainTax(new FinYear(2009, 2010));
+            try
+            {
+                portfolio.CalcShortTermCapitalGainTax(new FinYear(2009, 2010));
+                Assert.Fail("Should Throw Exception for now");
+            }catch(NotImplementedException e)
+            {
+                
+            }
+            
         }
     }
 }

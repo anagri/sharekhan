@@ -1,8 +1,8 @@
 ﻿using NUnit.Framework;
 using Sharekhan.domain;
-using ShareKhan.service;
+using ShareKhan.persist;
 
-namespace Sharekhan.service
+namespace ShareKhan.persist
 {
     [TestFixture]
     public class RepositoryTest

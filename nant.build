@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <project name="Sharekhan" default="release">
   <property name="src.dir" value="./src"/>
-  <property name="persistence.dir" value="./persistence"/>
+  <property name="persistence.dir" value="./src/persist"/>
   <property name="test.dir" value="./test"/>
   <property name="lib.dir" value="./Lib"/>
   <property name="nant.settings.currentframework" value="net-3.5"/>
@@ -22,12 +22,6 @@
         <include name="*.dll" />
       </fileset>
     </copy>
-    <copy todir="${output.dir}">
-      <fileset basedir=".">
-        <include name="hibernate.cfg.xml"/>
-        <include name=".hbm.xml"/>
-      </fileset>
-    </copy>
     <csc target="library" output="${output.dir}/${src.output.file}" debug="${build.debug}">
       <sources failonempty="true">
         <include name="${src.dir}/**/*.cs"/>
@@ -37,6 +31,7 @@
       </references>
       <resources>
         <include name="${persistence.dir}/*.hbm.xml"/>
+        <include name="${persistence.dir}/*.cfg.xml"/>
       </resources>
     </csc>
   </target>
@@ -60,7 +55,7 @@
 
   <target name="test" depends="test-init">
     <nunit2 verbose="true">
-      <formatter type="Xml" usefile="true" extension=".xml" outputdir="${output.dir}/testoutput/result" />
+      <formatter type="Xml" usefile="false" extension=".xml" outputdir="${output.dir}/testoutput/result" />
       <test assemblyname="${output.dir}/${test.output.file}"/>
     </nunit2>
   </target>
