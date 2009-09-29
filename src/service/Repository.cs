@@ -2,8 +2,6 @@
 using NHibernate;
 using NHibernate.Cfg;
 using NHibernate.Tool.hbm2ddl;
-using Sharekhan.common;
-
 namespace ShareKhan.service
 {
     public class Repository : IRepository
@@ -24,29 +22,21 @@ namespace ShareKhan.service
 
         public void Save(object entity)
         {
-            if (null == session)
-                throw new InvalidStateException("session is not created. call beginTransaction first;");
             session.Save(entity);
         }
 
         public T Lookup<T>(int id)
         {
-            if (null == session)
-                throw new InvalidStateException("session is not created. call beginTransaction first;");
             return session.Get<T>(id);
         }
 
         public void Delete(object entity)
         {
-            if (null == session)
-                throw new InvalidStateException("session is not created. call beginTransaction first;");
             session.Delete(entity);
         }
 
         public void Attach(object entity)
         {
-            if (null == session)
-                throw new InvalidStateException("session is not created. call beginTransaction first;");
             session.Persist(entity);
         }
 
