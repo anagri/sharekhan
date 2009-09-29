@@ -55,7 +55,7 @@
 
   <target name="test" depends="test-init">
     <nunit2 verbose="true">
-      <formatter type="Xml" usefile="false" extension=".xml" outputdir="${output.dir}/testoutput/result" />
+      <formatter type="Plain" usefile="false" extension=".xml" outputdir="${output.dir}/testoutput/result" />
       <test assemblyname="${output.dir}/${test.output.file}"/>
     </nunit2>
   </target>

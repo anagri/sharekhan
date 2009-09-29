@@ -11,11 +11,11 @@ namespace ShareKhan.domain
         {
             try
             {
-                FinYear finYear = new FinYear(2009, 2011);
+                var finYear = new FinYear(2009, 2011);
                 Assert.Fail("Should Throw an exception");
-            }catch(ArgumentException e)
+            }
+            catch (ArgumentException e)
             {
-                Console.WriteLine(e);
             }
         }
 
@@ -24,12 +24,11 @@ namespace ShareKhan.domain
         {
             try
             {
-                FinYear finYear = new FinYear(-2009, -2011);
+                var finYear = new FinYear(-2009, -2011);
                 Assert.Fail("Should Throw an exception");
             }
             catch (ArgumentException e)
             {
-                Console.WriteLine(e);
             }
         }
     }
