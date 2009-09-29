@@ -5,7 +5,7 @@ using ShareKhan.service;
 namespace Sharekhan.service
 {
     [TestFixture]
-    class RepositoryTest
+    public class RepositoryTest
     {
 
         private IRepository repository;
