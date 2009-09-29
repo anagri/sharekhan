@@ -6,12 +6,9 @@ using Sharekhan.domain;
 
 namespace ShareKhan.domain
 {
-    class TransactionStatement:Statement
+    public class TransactionStatement:Statement
     {
         private List<Transaction> transactionList = new List<Transaction>();
-
-        
-
 
         public Price getInvestedValue()
         {
@@ -19,7 +16,7 @@ namespace ShareKhan.domain
 
             foreach(Transaction transaction in transactionList)
             {
-                investedValue += (transaction.Amount*transaction.Quantity) + transaction.Brokerage + transaction.Tax;
+                investedValue += transaction.Amount;
             }
             return new Price(investedValue);
         }
