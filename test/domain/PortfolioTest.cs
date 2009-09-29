@@ -12,7 +12,7 @@ namespace ShareKhan.domain
     public class PorfolioTest
     {
         [Test]
-        public void should_get_realised_value()
+        public void should_get_invested_value()
         {
             Portfolio portfolio = new Portfolio();
             portfolio.addTransaction(new Transaction("Trans001", 10,
