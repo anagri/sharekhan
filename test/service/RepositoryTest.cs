@@ -7,8 +7,9 @@ namespace Sharekhan.service
     [TestFixture]
     public class RepositoryTest
     {
-        #region Setup/Teardown
 
+        private IRepository repository;
+        
         [SetUp]
         public void SetUp()
         {
@@ -21,14 +22,23 @@ namespace Sharekhan.service
             repository.RollbackTransaction();
         }
 
-        #endregion
-
-        private IRepository repository;
-
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
         {
             repository = new Repository();
+        }
+
+        [Test]
+        public void TestSave()
+        {
+            var hundredRuppees = new Price(100);
+            var relianceMutuals = new Symbol("RELTICK");
+            Instrument instrument = new MutualFund(relianceMutuals, hundredRuppees, "Test Fund");
+
+            Assert.AreEqual(0, instrument.Id);
+            repository.Save(instrument);
+            Assert.AreNotEqual(0, instrument.Id);
+            Assert.True(instrument.Id > 0);
         }
 
 
@@ -44,24 +54,14 @@ namespace Sharekhan.service
 
             var actual = repository.Lookup<Instrument>(instrument.Id);
 
-            Assert.AreEqual(typeof (MutualFund), actual.GetType());
-            Assert.AreEqual(instrument, actual);
+            Assert.AreEqual(typeof(MutualFund), actual.GetType());
 
-
-            //Instrument actual = repository.Lookup<Instrument>();
-        }
-
-        [Test]
-        public void TestSave()
-        {
-            var hundredRuppees = new Price(100);
-            var relianceMutuals = new Symbol("RELTICK");
-            Instrument instrument = new MutualFund(relianceMutuals, hundredRuppees, "Test Fund");
-
-            Assert.AreEqual(0, instrument.Id);
-            repository.Save(instrument);
+            MutualFund expectedMutualFund = new MutualFund(relianceMutuals, hundredRuppees, "Test Fund");
+            expectedMutualFund.Id = actual.Id;
+            Assert.AreEqual(expectedMutualFund, actual);
             Assert.AreNotEqual(0, instrument.Id);
             Assert.True(instrument.Id > 0);
+
         }
     }
 }
