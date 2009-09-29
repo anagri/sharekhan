@@ -1,11 +1,11 @@
 ﻿using NUnit.Framework;
 using Sharekhan.domain;
-using ShareKhan.service;
+using ShareKhan.persist;
 
-namespace Sharekhan.service
+namespace ShareKhan.persist
 {
     [TestFixture]
-    class RepositoryTest
+    public class RepositoryTest
     {
 
         private IRepository repository;

@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using NUnit.Framework;
 using Sharekhan.domain;
-using ShareKhan.domain;
 
 namespace ShareKhan.domain
 {
@@ -16,9 +12,21 @@ namespace ShareKhan.domain
         {
             Portfolio portfolio = new Portfolio();
             portfolio.CurrentMarketValue(new Symbol("RILMF"));
+         }
 
-            
-
+        [Test]
+        
+        public void ShouldBeAbleToCalcSTCGTax()
+        {
+            Portfolio portfolio = new Portfolio();
+            try
+            {
+                portfolio.CalcShortTermCapitalGainTax(new FinYear(2009, 2010));
+                Assert.Fail("Should Throw Exception for now");
+            }catch(NotImplementedException e)
+            {
+                
+            }
         }
     }
 }

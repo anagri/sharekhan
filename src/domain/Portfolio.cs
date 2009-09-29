@@ -1,7 +1,9 @@
 ﻿using System;
+
 using System.Collections.Generic;
 using Sharekhan.domain;
-using ShareKhan.service;
+using ShareKhan.persist;
+
 
 namespace ShareKhan.domain
 {
@@ -16,7 +18,6 @@ namespace ShareKhan.domain
             List<Transaction> list=repository.listByCriteria<Transaction>("instr_id", instrument.Id.ToString());
             int count=0;
 
-
             foreach(Transaction trans in list)
             {
                 if(trans is BuyTransaction)
@@ -30,6 +31,11 @@ namespace ShareKhan.domain
 
             value.Value = count*unitPrice.Value;
             return value;
+        }
+
+        public void CalcShortTermCapitalGainTax(FinYear year)
+        {
+            throw new NotImplementedException();
         }
     }
 }

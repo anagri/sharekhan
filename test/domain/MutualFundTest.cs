@@ -2,17 +2,17 @@
 using Sharekhan.domain;
 using Sharekhan.service;
 
-namespace ShareKhan.domain
+namespace Sharekhan.test.domain
 {
     [TestFixture]
-    public class StockTest : PersistenceTestBase
+    public class MutualFundTest : PersistenceTestBase
     {
         [Test]
-        public void ShouldUpdateStockPrice()
+        public void ShouldUpdatePriceForMutualFund()
         {
             var fourThousand = new Price(4000);
 
-            Instrument instrument = new Stock(new Symbol("SUN"), fourThousand, "Sun MF");
+            Instrument instrument = new MutualFund(new Symbol("SUN"), fourThousand, "Sun MF");
             repository.Save(instrument);
 
             var lookedUpObject = repository.Lookup<Instrument>(instrument.Id);

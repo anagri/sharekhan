@@ -1,8 +1,12 @@
-﻿using System.Data;
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
 using NHibernate;
 using NHibernate.Cfg;
 using NHibernate.Tool.hbm2ddl;
-namespace ShareKhan.service
+using Sharekhan.domain;
+
+namespace ShareKhan.persist
 {
     public class Repository : IRepository
     {
@@ -13,9 +17,8 @@ namespace ShareKhan.service
 
         public Repository()
         {
-            configuration = new Configuration().Configure(@"src\persist\hibernate.cfg.xml");
+            configuration = new Configuration().Configure("hibernate.cfg.xml");
             _sessionFactory = configuration.BuildSessionFactory();
-            ;
         }
 
         #region IRepository Members
@@ -28,6 +31,16 @@ namespace ShareKhan.service
         public T Lookup<T>(int id)
         {
             return session.Get<T>(id);
+        }
+
+        public T LookupBySymbol<T>(Symbol symbol)
+        {
+            return (T)session.CreateQuery("from Instrument where symbol=:symbol").SetParameter("symbol", symbol.Value).UniqueResult();
+        }
+
+        public List<T> listByCriteria<T>(string criteria, string value)
+        {
+            throw new NotImplementedException();
         }
 
         public void Delete(object entity)
