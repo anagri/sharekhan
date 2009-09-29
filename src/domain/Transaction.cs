@@ -12,21 +12,23 @@ namespace Sharekhan.domain
         public virtual int Quantity { get; set; }
         public virtual Instrument Instrument { get; set; }
         public virtual DateTime Date{ get; set; }
-        public virtual double Amount{ get; set; }
+        public virtual Price UnitPrice{ get; set; }
 
 
         public Transaction(){ }
 
-        public Transaction( DateTime date,Instrument instrument,int quantity, double amount)
+        public Transaction( DateTime date,Instrument instrument,int quantity, Price unitPrice)
         {
             this.Quantity = quantity;
             this.Instrument = instrument;
             this.Date = date;
-            this.Amount = amount;
+            this.UnitPrice = unitPrice;
 
         }
 
         public abstract Price TransactionAmount();
+
+       
       
     }
 }

@@ -16,7 +16,7 @@ namespace ShareKhan.domain
 
             foreach(Transaction transaction in transactionList)
             {
-                investedValue += transaction.Amount;
+                investedValue += transaction.UnitPrice.Value;
             }
             return new Price(investedValue);
         }

@@ -14,7 +14,7 @@ namespace ShareKhan.domain
         public SellTransaction(){}
 
 
-        public SellTransaction(DateTime date, Instrument instrument, int quantity, double amount, double tax, double brokerage)
+        public SellTransaction(DateTime date, Instrument instrument, int quantity, Price amount, double tax, double brokerage)
             : base(date, instrument, quantity, amount)
         {
             this.Tax = tax;
@@ -24,7 +24,7 @@ namespace ShareKhan.domain
 
         public override Price TransactionAmount()
         {
-            return new Price(Amount+Tax+Brokerage);
+            return new Price( ( UnitPrice.Value * Quantity )+Tax+Brokerage);
         }
     }
 }

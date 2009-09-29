@@ -6,6 +6,6 @@
             : base(symbol, currentPrice, description)
         {
         }
-        public Stock()        {        }
+
     }
 }
