@@ -7,7 +7,6 @@ namespace ShareKhan.domain
     public class FinYearTest
     {
         [Test]
-        [Ignore]
         public void DifferenceBetweenTheStartAndEndYearShouldBeOne()
         {
             try
@@ -21,7 +20,6 @@ namespace ShareKhan.domain
         }
 
         [Test]
-        [Ignore]
         public void FinYearInputShouldNotBeNegative()
         {
             try
