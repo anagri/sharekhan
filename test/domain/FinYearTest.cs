@@ -7,7 +7,6 @@ namespace ShareKhan.domain
     public class FinYearTest
     {
         [Test]
-        [Ignore]
         public void DifferenceBetweenTheStartAndEndYearShouldBeOne()
         {
             try
@@ -15,6 +14,20 @@ namespace ShareKhan.domain
                 FinYear finYear = new FinYear(2009, 2011);
                 Assert.Fail("Should Throw an exception");
             }catch(ArgumentException e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
+        [Test]
+        public void FinYearInputShouldNotBeNegative()
+        {
+            try
+            {
+                FinYear finYear = new FinYear(-2009, -2011);
+                Assert.Fail("Should Throw an exception");
+            }
+            catch (ArgumentException e)
             {
                 Console.WriteLine(e);
             }
