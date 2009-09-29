@@ -26,5 +26,10 @@ namespace ShareKhan.domain
         {
             transactionList.Add(transaction);
         }
+
+        public List<Transaction> listOfTransactions()
+        {
+            return new List<Transaction>(transactionList);
+        }
     }
 }
