@@ -1,0 +1,145 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{77CF5C49-3FC3-42AA-82A7-BB9E85BB8417}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Sharekhan</RootNamespace>
+    <AssemblyName>Sharekhan</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Castle.Core, Version=1.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Lib\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.DynamicProxy2, Version=2.0.3.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Lib\Castle.DynamicProxy2.dll</HintPath>
+    </Reference>
+    <Reference Include="Iesi.Collections, Version=1.0.0.3, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Lib\Iesi.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Lib\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Moq, Version=3.1.416.3, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Lib\Moq.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate, Version=2.1.0.1001, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Lib\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.core, Version=2.4.8.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Lib\nunit.core.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework, Version=2.5.1.9189, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.SQLite, Version=1.0.61.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Lib\System.Data.SQLite.DLL</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="src\domain\BuyTransaction.cs" />
+    <Compile Include="src\domain\FinYear.cs" />
+    <Compile Include="src\domain\Instrument.cs" />
+    <Compile Include="src\domain\Portfolio.cs" />
+    <Compile Include="src\domain\PortfolioStatement.cs" />
+    <Compile Include="src\domain\Price.cs" />
+    <Compile Include="src\domain\SellTransaction.cs" />
+    <Compile Include="src\domain\Statement.cs" />
+    <Compile Include="src\domain\Stock.cs" />
+    <Compile Include="src\domain\Symbol.cs" />
+    <Compile Include="src\domain\Transaction.cs" />
+    <Compile Include="src\domain\TransactionStatement.cs" />
+    <Compile Include="src\persist\IRepository.cs" />
+    <Compile Include="src\persist\Repository.cs" />
+    <Compile Include="test\domain\FinYearTest.cs" />
+    <Compile Include="test\domain\InstrumentTest.cs" />
+    <Compile Include="src\domain\MutualFund.cs" />
+    <Compile Include="test\domain\MutualFundTest.cs" />
+    <Compile Include="test\domain\PortfolioTest.cs" />
+    <Compile Include="test\domain\PriceTest.cs" />
+    <Compile Include="test\domain\StockTest.cs" />
+    <Compile Include="test\domain\SymbolTest.cs" />
+    <Compile Include="test\persist\NHibernateInMemoryTestFixtureBase.cs" />
+    <Compile Include="test\persist\RepositoryTest.cs" />
+    <Compile Include="test\service\PersistenceTestBase.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="db\sqlite3.exe" />
+    <Content Include="Lib\Castle.Core.dll" />
+    <Content Include="Lib\Castle.DynamicProxy2.dll" />
+    <Content Include="Lib\Iesi.Collections.dll" />
+    <Content Include="Lib\log4net.dll" />
+    <Content Include="Lib\Moq.dll" />
+    <Content Include="Lib\Moq.xml" />
+    <Content Include="Lib\NHibernate.dll" />
+    <Content Include="Lib\nunit.core.dll" />
+    <Content Include="Lib\nunit.framework.dll" />
+    <Content Include="Lib\nunit.framework.xml" />
+    <Content Include="Lib\System.Data.SQLite.DLL" />
+    <Content Include="Lib\System.Data.SQLite.xml" />
+    <None Include="hibernate.cfg.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <EmbeddedResource Include="src\persist\Instrument.hbm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".gitignore" />
+    <None Include="dbinit.bat" />
+    <None Include="db\sharekhan.sql" />
+    <None Include="nant.build" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
