@@ -38,7 +38,7 @@ namespace Sharekhan.service
             Assert.AreEqual(0, instrument.Id);
             repository.Save(instrument);
             Assert.AreNotEqual(0, instrument.Id);
-            Assert.True(instrument.Id > 0);
+            Assert.IsNotNull(instrument.Id);
         }
 
 

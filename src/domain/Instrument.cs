@@ -30,7 +30,7 @@ namespace Sharekhan.domain
         {
             CurrentPrice = price;
         }
-
+        
         public virtual bool Equals(Instrument other)
         {
             if (ReferenceEquals(null, other)) return false;
