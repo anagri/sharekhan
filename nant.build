@@ -22,6 +22,7 @@
         <include name="*.dll" />
       </fileset>
     </copy>
+    <copy file="hibernate.cfg.xml" todir="${output.dir}" /> 
     <csc target="library" output="${output.dir}/${src.output.file}" debug="${build.debug}">
       <sources failonempty="true">
         <include name="${src.dir}/**/*.cs"/>
@@ -31,7 +32,6 @@
       </references>
       <resources>
         <include name="${persistence.dir}/*.hbm.xml"/>
-        <include name="${persistence.dir}/*.cfg.xml"/>
       </resources>
     </csc>
   </target>

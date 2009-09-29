@@ -13,7 +13,7 @@ namespace ShareKhan.persist
 
         public Repository()
         {
-            configuration = new Configuration().Configure(typeof(Repository).Assembly,"hibernate.cfg.xml");
+            configuration = new Configuration().Configure("hibernate.cfg.xml");
             _sessionFactory = configuration.BuildSessionFactory();
         }
 
