@@ -8,7 +8,7 @@ namespace Sharekhan.domain
     public class Price
     {
 
-        protected virtual double Value { get; set; }
+        public virtual double Value { get; set; }
 
         public static readonly Price Null = new Price(0.0);
         private Price()
