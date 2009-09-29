@@ -8,7 +8,7 @@ namespace Sharekhan.test.domain
     public class MutualFundTest : PersistenceTestBase
     {
         [Test]
-        public void ShouldPersistMutualFund()
+        public void ShouldUpdatePriceForMutualFund()
         {
             var fourThousand = new Price(4000);
 
