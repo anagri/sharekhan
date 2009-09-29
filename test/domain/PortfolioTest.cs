@@ -12,13 +12,13 @@ namespace ShareKhan.domain
     public class PorfolioTest
     {
         [Test]
-        public void should_get_invested_value()
+        public void CurrentMarketValue()
         {
             Portfolio portfolio = new Portfolio();
-            Instrument mutualFund = new MutualFund(new Symbol("RIL"), new Price(100.00), "Rel MF");
+            portfolio.CurrentMarketValue(new Symbol("RILMF"));
 
-            Transaction buy = new BuyTransaction(DateTime.Today, mutualFund, 10, new Price(1000), 100, 100);
+            
 
-         }
+        }
     }
 }
