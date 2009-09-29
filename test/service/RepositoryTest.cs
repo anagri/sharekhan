@@ -42,16 +42,7 @@ namespace Sharekhan.service
         [Test]
         public void TestSave()
         {
-<<<<<<< HEAD:test/service/RepositoryTest.cs
-            /*
-            Instrument instrument = new MutualFund("Mutual003","MF001","Mutal Fund1",new Price(100));
-            IRepository repository = new Repository(session);
-            Assert.AreEqual("Mutual003", instrument.Id);
-            repository.Save(instrument);
-            Assert.AreNotEqual("",instrument.Id);
-            Assert.AreEqual("Mutual003", instrument.Id);
-             */
-=======
+
             Price hundredRuppees = new Price(100);
             Symbol relianceMutuals = new Symbol("RELTICK");
             Instrument instrument = new MutualFund(relianceMutuals,hundredRuppees,"Test Fund");
@@ -60,7 +51,6 @@ namespace Sharekhan.service
             repository.Save(instrument);
             Assert.AreNotEqual(0, instrument.Id);
             Assert.True(instrument.Id > 0);
->>>>>>> e855e45eebbb02c10271b68afb938583ab9af207:test/service/RepositoryTest.cs
         }
 
         [Test]
@@ -78,9 +68,6 @@ namespace Sharekhan.service
             Assert.AreEqual(typeof(MutualFund), actual.GetType());
             Assert.AreEqual(instrument,actual);
             
-
-
-            //Instrument actual = repository.Lookup<Instrument>();
 
            
         }

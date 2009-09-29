@@ -16,11 +16,9 @@ namespace ShareKhan.domain
         {
             Portfolio portfolio = new Portfolio();
             portfolio.addTransaction(new Transaction("Trans001", 10,
-                                                     new MutualFund("Mutual001", "RIL", "Reliance MF", new Price(1000)),
+                                                     new MutualFund(new Symbol("RIL"), new Price(1000),"Reliance MF"),
                                                      DateTime.Today, 100, 100));
 
-
-            Assert.AreEqual(10200,portfolio.getInvestedValue().Value);
 
         }
     }
