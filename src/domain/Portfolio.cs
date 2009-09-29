@@ -7,26 +7,7 @@ using Sharekhan.domain;
 
 namespace ShareKhan.domain
 {
-    [TestFixture]
-    public class PorfolioTest
-    {
-        [Test]
-        public void should_get_realised_value()
-        {
-            Portfolio portfolio = new Portfolio();
-            portfolio.addTransaction(new Transaction("Trans001", 10,
-                                                     new MutualFund(new Symbol("RELMF"), new Price(1000),"Reliance MF"),
-                                                     DateTime.Today, 100, 100));
-
-            Price expectedInvestment = new Price(10200); // got to expand as formula
-            Assert.AreEqual(expectedInvestment, portfolio.getInvestedValue());
-
-        }
-    }
-
-
-
-    class Portfolio
+    public class Portfolio
     {
         private PortfolioStatement portfolioStatement=new PortfolioStatement();
         private TransactionStatement transactionStatement=new TransactionStatement();

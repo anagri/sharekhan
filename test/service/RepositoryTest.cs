@@ -42,6 +42,7 @@ namespace Sharekhan.service
         [Test]
         public void TestSave()
         {
+
             Price hundredRuppees = new Price(100);
             Symbol relianceMutuals = new Symbol("RELTICK");
             Instrument instrument = new MutualFund(relianceMutuals,hundredRuppees,"Test Fund");
@@ -67,9 +68,6 @@ namespace Sharekhan.service
             Assert.AreEqual(typeof(MutualFund), actual.GetType());
             Assert.AreEqual(instrument,actual);
             
-
-
-            //Instrument actual = repository.Lookup<Instrument>();
 
            
         }

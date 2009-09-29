@@ -24,7 +24,6 @@ namespace Sharekhan.domain
             this.Quantity = quantity;
             this.Instrument = instrument;
             this.Date = date;
-            //this.Amount = instrument.CurrentPrice.Value;
             this.Tax = tax;
             this.Brokerage = brokerage;
         }

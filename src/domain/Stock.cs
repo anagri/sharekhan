@@ -8,8 +8,8 @@ namespace ShareKhan.src.domain
 {
     public class Stock :Instrument
     {
-        public Stock(string id, Symbol symbol, Price currentPrice, string description)
-            : base(id, symbol, currentPrice, description)
+        public Stock(Symbol symbol, Price currentPrice, string description)
+            : base(symbol, currentPrice, description)
         {
 
         }
