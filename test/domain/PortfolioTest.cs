@@ -35,13 +35,5 @@ namespace ShareKhan.domain
             mock.VerifyAll();
          }
 
-        [Test]
-        
-        public void ShouldBeAbleToCalcSTCGTax()
-        {
-            Portfolio portfolio = new Portfolio();
-                portfolio.CalcShortTermCapitalGainTax(new FinYear(2009, 2010));
-                Assert.Fail("Should Throw Exception for now");
-        }
     }
 }
