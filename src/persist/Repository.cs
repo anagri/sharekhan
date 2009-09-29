@@ -2,7 +2,7 @@
 using NHibernate;
 using NHibernate.Cfg;
 using NHibernate.Tool.hbm2ddl;
-namespace ShareKhan.service
+namespace ShareKhan.persist
 {
     public class Repository : IRepository
     {
@@ -13,7 +13,7 @@ namespace ShareKhan.service
 
         public Repository()
         {
-            configuration = new Configuration().Configure(@"src\persist\hibernate.cfg.xml");
+            configuration = new Configuration().Configure(typeof(Repository).Assembly,"hibernate.cfg.xml");
             _sessionFactory = configuration.BuildSessionFactory();
         }
 

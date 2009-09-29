@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using NUnit.Framework;
 using Sharekhan.domain;
-using ShareKhan.domain;
 
 namespace ShareKhan.domain
 {
@@ -12,7 +8,7 @@ namespace ShareKhan.domain
     public class PorfolioTest
     {
         [Test]
-        public void should_get_invested_value()
+        public void ShouldGetInvestedValue()
         {
             Portfolio portfolio = new Portfolio();
             Instrument mutualFund = new MutualFund(new Symbol("RIL"), new Price(100.00), "Rel MF");
@@ -20,5 +16,21 @@ namespace ShareKhan.domain
             Transaction buy = new BuyTransaction(DateTime.Today, mutualFund, 10, new Price(1000), 100, 100);
 
          }
+
+        [Test]
+        
+        public void ShouldBeAbleToCalcSTCGTax()
+        {
+            Portfolio portfolio = new Portfolio();
+            try
+            {
+                portfolio.CalcShortTermCapitalGainTax(new FinYear(2009, 2010));
+                Assert.Fail("Should Throw Exception for now");
+            }catch(NotImplementedException e)
+            {
+                
+            }
+            
+        }
     }
 }
