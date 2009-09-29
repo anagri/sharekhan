@@ -49,7 +49,7 @@ namespace Sharekhan.service
             Assert.AreEqual(0, instrument.Id);
             repository.Save(instrument);
             Assert.AreNotEqual(0, instrument.Id);
-            Assert.True(instrument.Id > 0);
+            Assert.IsNotNull(instrument.Id);
         }
 
         [Test]
@@ -62,7 +62,7 @@ namespace Sharekhan.service
             
             repository.Save(instrument);
 
-            Instrument actual = repository.Lookup<Instrument>(instrument.Id);
+            Instrument actual = repository.Lookup<Instrument>(Convert.ToInt16(instrument.Id));
 
             Assert.AreEqual(typeof(MutualFund), actual.GetType());
             Assert.AreEqual(instrument,actual);
