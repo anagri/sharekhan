@@ -20,8 +20,8 @@ namespace ShareKhan.test.domain
             TransactionStatement ts = new TransactionStatement();
             Stock relianceShare = new Stock(new Symbol("RIL"), new Price(10.00), "Reliance Industries");
             Stock suzlonEnergyShare = new Stock(new Symbol("SUZ"), new Price(1000.00), "Suzlon Energy");
-            ts.addTransaction(new BuyTransaction(new DateTime(1999, 3, 20),relianceShare, 10, 1200, 0,0));
-            ts.addTransaction(new SellTransaction(new DateTime(1999, 5, 20), relianceShare, 5, 1300, 0, 0));
+            ts.addTransaction(new BuyTransaction(new DateTime(1999, 3, 20),relianceShare, 10, new Price(1200), 0,0));
+            ts.addTransaction(new SellTransaction(new DateTime(1999, 5, 20), relianceShare, 5, new Price(1300), 0, 0));
             Assert.AreEqual(500, d.CalculateRealizedProfits(ts));
         }
     }
@@ -43,7 +43,7 @@ namespace ShareKhan.test.domain
                     realizedProfitsDictionary[transaction.Instrument] = 0;
                     qty[transaction.Instrument] = 0;
                 }
-                realizedProfitsDictionary[transaction.Instrument] += transaction.Amount * transaction.Quantity;
+                realizedProfitsDictionary[transaction.Instrument] += transaction.UnitPrice.Value * transaction.Quantity;
                 qty[transaction.Instrument] += transaction.Quantity;
                     
             }
@@ -57,11 +57,11 @@ namespace ShareKhan.test.domain
                 double buyingPrice;
                 if (qty[transaction.Instrument] < transaction.Quantity)
                 {
-                    buyingPrice = qty[transaction.Instrument]*transaction.Amount;
+                    buyingPrice = qty[transaction.Instrument] * transaction.UnitPrice.Value;
                 } 
                 else
                 {
-                    buyingPrice = transaction.Quantity*transaction.Amount;
+                    buyingPrice = transaction.Quantity * transaction.UnitPrice.Value;
                     qty[transaction.Instrument] -= transaction.Quantity;
                 }
                 realizedProfitsDictionary[transaction.Instrument] -= buyingPrice;
