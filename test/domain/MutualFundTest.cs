@@ -15,12 +15,14 @@ namespace Sharekhan.test.domain
             Instrument instrument = new MutualFund(new Symbol("SUN"), fourThousand, "Sun MF");
             repository.Save(instrument);
 
-            Instrument lookedUpObject = repository.Lookup<Instrument>(instrument.Id);
+            var lookedUpObject = repository.Lookup<Instrument>(instrument.Id);
+            Assert.AreEqual(new Price(4000), lookedUpObject.CurrentPrice);
 
-//            instrument.CurrentPrice = new Price();
-//            lookedUpObject.CurrentPrice
-//            instrument.UpdateCurrentPrice(four);
-            
+            var newPrice = new Price(2500);
+            instrument.UpdateCurrentPrice(newPrice);
+
+            lookedUpObject = repository.Lookup<Instrument>(instrument.Id);
+            Assert.AreEqual(new Price(2500), lookedUpObject.CurrentPrice);
         }
     }
 }

@@ -15,7 +15,6 @@ namespace ShareKhan.service
         {
             configuration = new Configuration().Configure(@"src\persist\hibernate.cfg.xml");
             _sessionFactory = configuration.BuildSessionFactory();
-            ;
         }
 
         #region IRepository Members

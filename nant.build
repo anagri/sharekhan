@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <project name="Sharekhan" default="release">
   <property name="src.dir" value="./src"/>
-  <property name="persistence.dir" value="./persistence"/>
+  <property name="persistence.dir" value="./src/persist"/>
   <property name="test.dir" value="./test"/>
   <property name="lib.dir" value="./Lib"/>
   <property name="nant.settings.currentframework" value="net-3.5"/>
