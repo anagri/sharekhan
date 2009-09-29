@@ -13,12 +13,12 @@ namespace Sharekhan.domain
         [Test]
         public void should_be_able_to_update_instrument_current_price()
         {
-            
-            Instrument instrument = new MutualFund("Mutual002","SUN","Sun MF",new Price(1000));
-            Price four = new Price(4000.0d);
+
+            Instrument instrument = new MutualFund(new Symbol("SUN"), new Price(1000), "Sun MF");
+            Price four = new Price(4);
             instrument.UpdateCurrentPrice(four);
 
-            Assert.AreEqual(four, instrument.currentPrice());
+            Assert.AreEqual(four, instrument.CurrentPrice);
             
         }
 

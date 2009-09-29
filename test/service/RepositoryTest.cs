@@ -12,29 +12,29 @@ using ShareKhan.service;
 
 
 
-namespace Sharekhan.service 
+namespace Sharekhan.service
 {
     [TestFixture]
-    public class RepositoryTest : NHibernateInMemoryTestFixtureBase
+    class RepositoryTest 
     {
-        private ISession session;
+        private IRepository repository;
 
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
         {
-            InitalizeSessionFactory(new FileInfo("src/domain/Instrument.hbm.xml"));
+            repository = new Repository();
         }
 
         [SetUp]
         public void SetUp()
         {
-            session = this.CreateSession();
+            repository.BeginTransaction();
         }
 
         [TearDown]
         public void TearDown()
         {
-            session.Dispose();
+            repository.RollbackTransaction();
         }
 
 
@@ -42,6 +42,7 @@ namespace Sharekhan.service
         [Test]
         public void TestSave()
         {
+<<<<<<< HEAD:test/service/RepositoryTest.cs
             /*
             Instrument instrument = new MutualFund("Mutual003","MF001","Mutal Fund1",new Price(100));
             IRepository repository = new Repository(session);
@@ -50,6 +51,38 @@ namespace Sharekhan.service
             Assert.AreNotEqual("",instrument.Id);
             Assert.AreEqual("Mutual003", instrument.Id);
              */
+=======
+            Price hundredRuppees = new Price(100);
+            Symbol relianceMutuals = new Symbol("RELTICK");
+            Instrument instrument = new MutualFund(relianceMutuals,hundredRuppees,"Test Fund");
+
+            Assert.AreEqual(0, instrument.Id);
+            repository.Save(instrument);
+            Assert.AreNotEqual(0, instrument.Id);
+            Assert.True(instrument.Id > 0);
+>>>>>>> e855e45eebbb02c10271b68afb938583ab9af207:test/service/RepositoryTest.cs
+        }
+
+        [Test]
+        public void TestLookupAfterSave()
+        {
+            Price hundredRuppees = new Price(100);
+            Symbol relianceMutuals = new Symbol("RELTICK");
+            Instrument instrument = new MutualFund(relianceMutuals, hundredRuppees, "Test Fund");
+
+            
+            repository.Save(instrument);
+
+            Instrument actual = repository.Lookup<Instrument>(instrument.Id);
+
+            Assert.AreEqual(typeof(MutualFund), actual.GetType());
+            Assert.AreEqual(instrument,actual);
+            
+
+
+            //Instrument actual = repository.Lookup<Instrument>();
+
+           
         }
     }
 }

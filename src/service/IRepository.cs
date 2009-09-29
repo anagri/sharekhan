@@ -15,5 +15,9 @@ namespace ShareKhan.service
         void Delete(Object entity);
 
         void Attach(Object entity);
+
+        void BeginTransaction();
+        void CommitTransaction();
+        void RollbackTransaction();
     }
 }

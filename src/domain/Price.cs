@@ -7,7 +7,8 @@ namespace Sharekhan.domain
 {
     public class Price
     {
-        public virtual double Value { get; set; }
+
+        protected virtual double Value { get; set; }
 
         public static readonly Price Null = new Price(0.0);
         private Price()
@@ -19,19 +20,41 @@ namespace Sharekhan.domain
             Value = price;
         }
 
-        
+        public Price Compute(Func<double,double> func)
+        {
+            double value = func(Value);
+            var newPrice = new Price(value);
+            return newPrice;
+        }
 
-        public override bool Equals(Object other)
+        public bool Equals(Price other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            if (other.GetType() != this.GetType()) return false; 
-            return ((Price )other).Value == Value;
+            return other.Value == Value;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != typeof (Price)) return false;
+            return Equals((Price) obj);
         }
 
         public override int GetHashCode()
         {
             return Value.GetHashCode();
+        }
+
+        public static bool operator ==(Price left, Price right)
+        {
+            return Equals(left, right);
+        }
+
+        public static bool operator !=(Price left, Price right)
+        {
+            return !Equals(left, right);
         }
     }
 }
