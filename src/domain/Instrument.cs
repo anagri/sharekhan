@@ -9,12 +9,12 @@ namespace Sharekhan.domain
 {
     public abstract class Instrument
     {
-        public virtual String Id { get; set; }
+        public virtual int Id { get; set; }
         public virtual String Symbol { get; set; }
         public virtual String Description { get; set; }
         public virtual Price CurrentPrice { get; set; }
 
-        public Instrument(String id, String Symbol, String Description, Price CurrentPrice)
+        public Instrument(int id, String Symbol, String Description, Price CurrentPrice)
         {
             this.Id = Id;
             this.Symbol = Symbol;
