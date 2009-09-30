@@ -8,14 +8,25 @@ namespace ShareKhan.domain
         {
             MARCH = 3,
             APRIL = 4
-        } ;
+        };
 
         private enum Dates
         {
             THIRTY_FIRST = 31,
             FIRST = 1
-        } ;
+        };
 
+        public struct TaxableDateRange
+        {
+            public DateTime StartDate { get; set; }
+            public DateTime EndDate { get; set; }
+
+            public TaxableDateRange(DateTime startDate, DateTime endDate) : this()
+            {
+                StartDate = startDate;
+                EndDate = endDate;
+            }
+        } ;
 
         public int StartYear { get; private set; }
         public int EndYear { get; private set; }
@@ -50,7 +61,7 @@ namespace ShareKhan.domain
             return (minDate <= DateTime.Now && DateTime.Now <= maxDate);
         }
 
-        public DateTime GetLastTaxableDay()
+        public TaxableDateRange GetTaxableDays()
         {
             if (IsCurrent())
                 return new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);

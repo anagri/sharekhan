@@ -40,9 +40,29 @@ namespace ShareKhan.domain
         [Test]
         public void ShouldGetTheTaxableDayForFinYear()
         {
-            Assert.Equals(DateTime.Today, new FinYear(2009, 2010).GetLastTaxableDay());
-            Assert.Equals(new DateTime(2009,3,31)/*31st March 2009*/, new FinYear(2008, 2009).GetLastTaxableDay());
-            Assert.Equals(new DateTime(2010,4,1)/*1st April 2010*/, new FinYear(2010, 2011).GetLastTaxableDay());
+            int curYear = DateTime.Today.Year;
+            int nextYear = DateTime.Today.Year+1;
+            int prevYear = curYear-1;
+            int nextToNextYear = curYear + 2;
+            int nextToNextToNextYear = curYear + 3; //I should get award for variable names
+
+            var apr1StPrevYear = new DateTime(prevYear, 4, 1);
+            
+            var apr1StThisYear = new DateTime(curYear, 4, 1);
+            var mar31StThisYear = new DateTime(curYear, 3, 31);
+
+            
+            var apr1StNextToNextYear = new DateTime(nextToNextYear, 4, 1);
+            
+
+            var taxableDaysOfThisYear = new FinYear.TaxableDateRange(apr1StThisYear, DateTime.Now);
+            Assert.AreEqual(taxableDaysOfThisYear,new FinYear(curYear, nextYear).GetTaxableDays());
+
+            var taxableDaysOfLastYear = new FinYear.TaxableDateRange(apr1StPrevYear, mar31StThisYear);
+            Assert.AreEqual(taxableDaysOfLastYear, new FinYear(prevYear, curYear).GetTaxableDays());
+
+            var taxableDaysOfNextToNextYear = new FinYear.TaxableDateRange(apr1StNextToNextYear, apr1StNextToNextYear);
+            Assert.AreEqual(taxableDaysOfNextToNextYear, new FinYear(nextToNextYear, nextToNextToNextYear).GetTaxableDays());
         }
     }
 }
