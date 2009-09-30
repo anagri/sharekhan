@@ -72,7 +72,7 @@ namespace ShareKhan.domain
             mock.VerifyAll();
         }
         [Test]
-        public void ShouldReturnCSaleofMf()
+        public void ShouldRecordSaleofMf()
         {
             Portfolio portfolio = new Portfolio();
             Symbol symbol = new Symbol("RILMF");
@@ -140,7 +140,7 @@ namespace ShareKhan.domain
             mock.Setup(repo => repo.ListTransactionsByInstrumentId<Transaction>(instrument2.Id)).Returns(listTransaction2);
             
             portfolio.Repository = mock.Object;
-            Assert.AreEqual(2500.00, portfolio.CurrentMarketValue().Value);
+            Assert.AreEqual(2500 , portfolio.CurrentMarketValue().Value);
         }
 
     }
