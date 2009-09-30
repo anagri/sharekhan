@@ -6,6 +6,7 @@ namespace ShareKhan.domain
     [TestFixture]
     public class FinYearTest
     {
+        [Test]
         [TestCase(2009, 2011)]
         [TestCase(2009, 2008)]
         [ExpectedException(typeof (ArgumentException))]
@@ -14,6 +15,7 @@ namespace ShareKhan.domain
             new FinYear(startYear, endYear);
         }
 
+        [Test]
         [TestCase(-2009, -2010)]
         [TestCase(2009, -2010)]
         [TestCase(-2009, 2010)]
@@ -23,7 +25,6 @@ namespace ShareKhan.domain
             new FinYear(startYear, endYear);
         }
 
-        [Ignore]
         [Test]
         [TestCase(2009, 2010, Result = true)]
         [TestCase(2008, 2009, Result = false)]
