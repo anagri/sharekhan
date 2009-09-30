@@ -17,6 +17,8 @@ namespace ShareKhan.persist
 
         List<T> ListTransactionsByInstrumentId<T>(int id);
 
+        List<T> ListAllSymbols<T>();
+
         void Delete(Object entity);
 
         void Attach(Object entity);

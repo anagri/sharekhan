@@ -74,6 +74,16 @@ namespace Sharekhan.domain
         public double NoOfUnits { get; set; }
         public double UnitPrice { get; set; }
         public string DivOption { get; set; }
+
+        public MutualFundParams(){}
+        public MutualFundParams(string fundNm, string fundHouse,double noOfUnits,double unitPrice, string divOption)
+        {
+            this.FundNm = fundNm;
+            this.FundHouse = fundHouse;
+            this.NoOfUnits = noOfUnits;
+            this.UnitPrice = unitPrice;
+            this.DivOption = divOption;
+        }
     }
     /// <summary>
     /// 
