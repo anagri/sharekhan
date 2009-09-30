@@ -167,6 +167,21 @@ namespace Sharekhan.test.domain
             
         }
 
+        [Test,Ignore]
+        public void ShouldCalculateRealizedProfitsComplexCaseWithDateMismatch()
+        {
+            DummyPortFolio d = new DummyPortFolio();
+            TransactionStatement ts = new TransactionStatement();
+            Stock relianceShare = new Stock(new Symbol("RIL"), new Price(10.00), "Reliance Industries");
+            ts.addTransaction(new BuyTransaction(new DateTime(1999, 3, 20), relianceShare, 5, new Price(12), 0, 0));
+            ts.addTransaction(new BuyTransaction(new DateTime(1999, 2, 20), relianceShare, 5, new Price(10), 0, 0));
+            ts.addTransaction(new SellTransaction(new DateTime(1999, 5, 20), relianceShare, 5, new Price(13), 0, 0));
+            ts.addTransaction(new SellTransaction(new DateTime(1999, 7, 20), relianceShare, 3, new Price(13), 0, 0));
+            Assert.AreEqual(18, d.CalculateRealizedProfits(ts));
+        }
+
+
+
     }
 
     public class DummyPortFolio
