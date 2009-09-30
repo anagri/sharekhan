@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Sharekhan.domain;
 
-namespace ShareKhan.domain
+namespace Sharekhan.domain
 {
     public class SellTransaction:Transaction
     {
