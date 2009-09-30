@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,9 +16,9 @@ namespace ShareKhan.persist
 
         T LookupBySymbol<T>(Symbol symbol);
 
-        List<T> ListTransactionsByInstrumentId<T>(int id);
+        IList<T> ListTransactionsByInstrumentId<T>(int id);
 
-        List<T> ListAllSymbols<T>();
+        IList<T> ListAllSymbols<T>();
 
         void Delete(Object entity);
 

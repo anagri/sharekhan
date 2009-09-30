@@ -116,7 +116,10 @@
     <Compile Include="test\domain\SymbolTest.cs" />
     <Compile Include="test\domain\TransactionStatementTest.cs" />
     <Compile Include="test\domain\TransactionTest.cs" />
+<<<<<<< HEAD
     <Compile Include="test\domain\UnitDividendTransaction.cs" />
+=======
+>>>>>>> wip
     <Compile Include="test\persist\NHibernateInMemoryTestFixtureBase.cs" />
     <Compile Include="test\persist\RepositoryTest.cs" />
     <Compile Include="test\service\PersistenceTestBase.cs" />
