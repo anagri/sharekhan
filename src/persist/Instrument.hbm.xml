@@ -16,11 +16,11 @@
 
     <subclass name="Sharekhan.domain.MutualFund" discriminator-value="MF" dynamic-update="true" dynamic-insert="true">
       <property name="FundNm" type="String" length="120"/>
-      <property name="FundHouse" type="String" length="120"/>
-      <property name="NoOfUnits" type="double"/>
-      <property name="UnitPrice" type="double"/>
+      <property name="FundHouse" type="String" length="120"/>     
       <property name="DivOption" type="String" length="120"/>      
     </subclass>
     <subclass name="Sharekhan.domain.Stock" discriminator-value="ST" dynamic-update="true" dynamic-insert="true" />
+    
   </class>
+  
 </hibernate-mapping>
