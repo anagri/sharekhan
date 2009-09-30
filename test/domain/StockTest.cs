@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System;
+using NUnit.Framework;
 using Sharekhan.domain;
 using Sharekhan.service;
 
@@ -7,6 +8,39 @@ namespace ShareKhan.domain
     [TestFixture]
     public class StockTest : PersistenceTestBase
     {
+        [Test]
+        public void ShouldBeAbleToCreateSaveAStock()
+        {
+            Price stockUnitPrice = new Price(10.00);
+
+            Instrument relianceStock = new Stock(new Symbol("REL"), stockUnitPrice, "Reliance Power Stock");
+            repository.Save(relianceStock);
+            Console.WriteLine(relianceStock.Id);
+            Assert.IsTrue(relianceStock.Id>0);
+
+            var savedStock = repository.Lookup<Instrument>(relianceStock.Id);
+            Console.WriteLine(savedStock.Id);
+
+            Assert.AreEqual(relianceStock.Id,savedStock.Id);
+
+        }
+
+
+//        [Test]
+//        public void ShouldBeAbleToViewTheStockGivenTheSymbol()
+//        {
+//            Price stockUnitPrice = new Price(10.00);
+//
+//            Instrument relianceStock = new Stock(new Symbol("REL"), stockUnitPrice, "Reliance Power Stock");
+//            repository.Save(relianceStock);
+//            Console.WriteLine(relianceStock.Symbol.Value);
+//
+//            var savedStockSymbol = repository.LookupBySymbol<Instrument>(new Symbol("REL"));
+//
+//            Assert.AreEqual(savedStockSymbol.Symbol,relianceStock.Symbol);
+//
+//        }
+
         [Test]
         public void ShouldUpdateStockPrice()
         {
