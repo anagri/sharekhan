@@ -84,6 +84,8 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="src\domain\BuyTransaction.cs" />
+    <Compile Include="src\domain\CashDividendTransaction.cs" />
+    <Compile Include="src\domain\DividendTransaction.cs" />
     <Compile Include="src\domain\FinYear.cs" />
     <Compile Include="src\domain\Instrument.cs" />
     <Compile Include="src\domain\IPortfolio.cs" />
@@ -100,8 +102,10 @@
     <Compile Include="src\domain\Transaction.cs" />
     <Compile Include="src\domain\TransactionCollection.cs" />
     <Compile Include="src\domain\TransactionStatement.cs" />
+    <Compile Include="src\domain\UnitDividendTransaction.cs" />
     <Compile Include="src\persist\IRepository.cs" />
     <Compile Include="src\persist\Repository.cs" />
+    <Compile Include="test\domain\DividendTest.cs" />
     <Compile Include="test\domain\FinYearTest.cs" />
     <Compile Include="test\domain\InstrumentTest.cs" />
     <Compile Include="src\domain\MutualFund.cs" />

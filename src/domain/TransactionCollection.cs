@@ -19,39 +19,40 @@ namespace Sharekhan.domain
             throw new NotImplementedException();
         }
 
-        public void Add(Transaction item)
+
+        public bool MoveNext()
         {
             throw new NotImplementedException();
         }
 
-        public void Clear()
+        public void Reset()
         {
             throw new NotImplementedException();
         }
 
-        public bool Contains(Transaction item)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void CopyTo(Transaction[] array, int arrayIndex)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Remove(Transaction item)
-        {
-            throw new NotImplementedException();
-        }
-
-        public int Count
+        public Transaction Current
         {
             get { throw new NotImplementedException(); }
         }
 
-        public bool IsReadOnly
+        object IEnumerator.Current
         {
-            get { throw new NotImplementedException(); }
+            get { return Current; }
+        }
+
+        public bool Add(Transaction transaction)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Remove(int Id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
         }
     }
 }
