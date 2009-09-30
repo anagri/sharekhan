@@ -52,7 +52,10 @@ namespace ShareKhan.domain
 
         public DateTime GetLastTaxableDay()
         {
-            throw new NotImplementedException();
+            if (IsCurrent())
+                return new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+
+            return new DateTime(EndYear, (int) Month.MARCH, (int) Dates.THIRTY_FIRST);
         }
     }
 }
