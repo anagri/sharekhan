@@ -3,6 +3,8 @@
   <property name="src.dir" value="./src"/>
   <property name="persistence.dir" value="./src/persist"/>
   <property name="test.dir" value="./test"/>
+  <property name="tools.dir" value="./tools"/>
+  <property name="nunit.dir" value="./tools/nunit"/>
   <property name="lib.dir" value="./Lib"/>
   <property name="nant.settings.currentframework" value="net-3.5"/>
   <property name="nantcontrib.dir" value=""/>
@@ -61,10 +63,15 @@
   </target>
 
   <target name="test" depends="test-init">
-    <nunit2 verbose="true">
-      <formatter type="Plain" usefile="false" extension=".xml" outputdir="${output.dir}/testoutput/result" />
-      <test assemblyname="${output.dir}/${src.output.file}"/>
-    </nunit2>
+    <mkdir dir="${output.dir}/results" />
+    <exec program="${nunit.dir}\bin\net-2.0\nunit-console-x86.exe">
+             <arg path="${output.dir}/${src.output.file}" />
+             <arg value="/xml:${output.dir}/results/${test.output.file}" />
+             <arg value="/noshadow" />
+             <arg value="/nothread" />
+             <arg value="/domain=Multiple" />
+             <arg value="/process=Single" />
+          </exec>
   </target>
   <target name="release" depends="init, build, test"/>
 </project>
