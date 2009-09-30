@@ -47,7 +47,7 @@ namespace Sharekhan.service
         {
             ISession openSession = sessionFactory.OpenSession();
             IDbConnection connection = openSession.Connection;
-            new SchemaExport(configuration).Execute(false, true, false, true, connection, null);
+//            new SchemaExport(configuration).Execute(false, true, false, true, connection, null);
             return openSession;
         }
 

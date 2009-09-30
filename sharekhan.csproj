@@ -112,6 +112,7 @@
     <Compile Include="test\domain\StockTest.cs" />
     <Compile Include="test\domain\SymbolTest.cs" />
     <Compile Include="test\domain\TransactionStatementTest.cs" />
+    <Compile Include="test\domain\TransactionTest.cs" />
     <Compile Include="test\persist\NHibernateInMemoryTestFixtureBase.cs" />
     <Compile Include="test\persist\RepositoryTest.cs" />
     <Compile Include="test\service\PersistenceTestBase.cs" />
@@ -130,13 +131,13 @@
     <Content Include="Lib\nunit.framework.xml" />
     <Content Include="Lib\System.Data.SQLite.DLL" />
     <Content Include="Lib\System.Data.SQLite.xml" />
+    <EmbeddedResource Include="src\persist\Transaction.hbm.xml" />
     <None Include="hibernate.cfg.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <EmbeddedResource Include="src\persist\Instrument.hbm.xml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include=".gitignore" />
     <None Include="dbinit.bat" />
     <None Include="db\sharekhan.sql" />
     <None Include="nant.build" />
