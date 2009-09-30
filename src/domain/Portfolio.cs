@@ -24,6 +24,20 @@ namespace ShareKhan.domain
             PortfolioBalance = portfolioBalance;
         }
 
+        public Price CurrentMarketValue()
+        {
+            List<Symbol> symbolList = Repository.ListAllSymbols<Symbol>();
+
+            Price portfolioPrice = new Price(0.0);
+
+            foreach (Symbol symbol in symbolList)
+            {
+                portfolioPrice.Value += CurrentMarketValue(symbol).Value;
+            }
+
+            return portfolioPrice;
+        }
+
         public Price CurrentMarketValue(Symbol symbol)
         {
             Instrument instrument = Repository.LookupBySymbol<Instrument>(symbol);
