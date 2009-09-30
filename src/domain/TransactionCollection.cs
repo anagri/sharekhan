@@ -19,11 +19,6 @@ namespace Sharekhan.domain
             throw new NotImplementedException();
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-
         public void Add(Transaction item)
         {
             throw new NotImplementedException();

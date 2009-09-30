@@ -6,6 +6,7 @@ namespace ShareKhan.domain
     [TestFixture]
     public class FinYearTest
     {
+        [Test]
         [TestCase(2009, 2011)]
         [TestCase(2009, 2008)]
         [ExpectedException(typeof (ArgumentException))]
@@ -14,6 +15,7 @@ namespace ShareKhan.domain
             new FinYear(startYear, endYear);
         }
 
+        [Test]
         [TestCase(-2009, -2010)]
         [TestCase(2009, -2010)]
         [TestCase(-2009, 2010)]
@@ -23,7 +25,6 @@ namespace ShareKhan.domain
             new FinYear(startYear, endYear);
         }
 
-        [Ignore]
         [Test]
         [TestCase(2009, 2010, Result = true)]
         [TestCase(2008, 2009, Result = false)]
@@ -33,6 +34,15 @@ namespace ShareKhan.domain
         {
             var year = new FinYear(startYear, endYear);
             return year.IsCurrent();
+        }
+
+        [Ignore]
+        [Test]
+        public void ShouldGetTheTaxableDayForFinYear()
+        {
+            Assert.Equals(DateTime.Today, new FinYear(2009, 2010).GetLastTaxableDay());
+            Assert.Equals(new DateTime(2009,3,31)/*31st March 2009*/, new FinYear(2008, 2009).GetLastTaxableDay());
+            Assert.Equals(new DateTime(2010,4,1)/*1st April 2010*/, new FinYear(2010, 2011).GetLastTaxableDay());
         }
     }
 }
