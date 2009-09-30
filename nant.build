@@ -3,12 +3,18 @@
   <property name="src.dir" value="./src"/>
   <property name="persistence.dir" value="./src/persist"/>
   <property name="test.dir" value="./test"/>
+  <property name="tools.dir" value="./tools"/>
+  <property name="nunit.dir" value="./tools/nunit"/>
   <property name="lib.dir" value="./Lib"/>
   <property name="nant.settings.currentframework" value="net-3.5"/>
+  <property name="nantcontrib.dir" value=""/>
   <property name="build.debug" value="true" />
   <property name="src.output.file" value="Sharekhan.dll" />
   <property name="test.output.file" value="Sharekhantest.dll" />
   <property name="output.dir" value="./bin/Debug"/>
+  <property name="nantcontrib-dir" value="./nantcontrib"
+     overwrite="false" />
+  <loadtasks assembly="${path::combine(nantcontrib-dir, 'bin/NAnt.Contrib.Tasks.dll')}" />
 
   <target name="init">
     <delete dir="${output.dir}"/>
@@ -22,7 +28,7 @@
         <include name="*.dll" />
       </fileset>
     </copy>
-    <copy file="hibernate.cfg.xml" todir="${output.dir}" /> 
+    <copy file="hibernate.cfg.xml" todir="${output.dir}" />
     <csc target="library" output="${output.dir}/${src.output.file}" debug="${build.debug}">
       <sources failonempty="true">
         <include name="${src.dir}/**/*.cs"/>
@@ -48,16 +54,24 @@
       </resources>
     </csc>
   </target>
-
+  <target name="build" depends="init" description="Builds all C# code">
+    <msbuild project="sharekhan.sln">
+    </msbuild>
+  </target>
   <target name="test-init">
     <exec program="dbinit.bat" basedir="." />
   </target>
 
   <target name="test" depends="test-init">
-    <nunit2 verbose="true">
-      <formatter type="Plain" usefile="false" extension=".xml" outputdir="${output.dir}/testoutput/result" />
-      <test assemblyname="${output.dir}/${test.output.file}"/>
-    </nunit2>
+    <mkdir dir="${output.dir}/results" />
+    <exec program="${nunit.dir}\bin\net-2.0\nunit-console-x86.exe">
+             <arg path="${output.dir}/${src.output.file}" />
+             <arg value="/xml:${output.dir}/results/${test.output.file}" />
+             <arg value="/noshadow" />
+             <arg value="/nothread" />
+             <arg value="/domain=Multiple" />
+             <arg value="/process=Single" />
+          </exec>
   </target>
-  <target name="release" depends="init, compile-src, compile-test, test"/>
+  <target name="release" depends="init, build, test"/>
 </project>
