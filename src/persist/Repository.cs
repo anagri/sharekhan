@@ -41,6 +41,15 @@ namespace ShareKhan.persist
 
         public List<T> ListTransactionsByInstrumentId<T>(int id)
         {
+            //should return the list of all transactions which involve the passed in Instrument (Instrument ID)
+            throw new NotImplementedException();
+        }
+
+        public List<T> ListAllSymbols<T>()
+        {
+
+            //should fetch set of all symbols which represent all Instruments present in the DB
+            // Fetch set of unique symbols from the Instrument Table
             throw new NotImplementedException();
         }
 
