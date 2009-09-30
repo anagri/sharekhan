@@ -33,5 +33,10 @@ namespace ShareKhan.domain
 
             return current;
         }
+
+        public DateTime GetLastTaxableDay()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
