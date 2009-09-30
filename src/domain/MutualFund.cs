@@ -6,13 +6,25 @@ namespace Sharekhan.domain
 {
     public class MutualFund : Instrument
     {
+        public virtual string FundNm { get; set; }
+        public virtual string FundHouse { get; set; }
+        public virtual double NoOfUnits { get; set; }
+        public virtual double UnitPrice { get; set; }
+        public virtual string DivOption { get; set; }
+
         protected MutualFund()
         {
         }
 
-        public MutualFund(Symbol symbol, Price currentPrice, String description)
+        public MutualFund(Symbol symbol, Price currentPrice, String description, MutualFundParams parameters)
             : base(symbol, currentPrice, description)
         {
+            FundNm = parameters.FundNm;
+            FundHouse = parameters.FundHouse;
+            NoOfUnits = parameters.NoOfUnits;
+            UnitPrice = parameters.UnitPrice;
+            DivOption = parameters.DivOption;
+
         }
 
         public virtual bool Equals(MutualFund other)
@@ -41,5 +53,23 @@ namespace Sharekhan.domain
         {
             return !Equals(left, right);
         }
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    public class MutualFundParams
+    {
+        public string FundNm { get; set; }
+        public string FundHouse { get; set; }
+        public double NoOfUnits { get; set; }
+        public double UnitPrice { get; set; }
+        public string DivOption { get; set; }
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    public enum DivOption
+    {
+        Growth,Dividend
     }
 }
