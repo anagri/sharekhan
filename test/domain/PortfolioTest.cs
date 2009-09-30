@@ -67,7 +67,7 @@ namespace ShareKhan.domain
             mock.Setup(repo => repo.ListTransactionsByInstrumentId<Transaction>(instrument.Id)).Returns(listTransaction);
 
             portfolio.Repository = mock.Object;
-            Assert.AreEqual(100, portfolio.CurrentMarketValue(symbol).Value);
+            Assert.AreEqual(1000, portfolio.CurrentMarketValue(symbol).Value);
 
             mock.VerifyAll();
         }
@@ -96,7 +96,7 @@ namespace ShareKhan.domain
             mock.Setup(repo => repo.ListTransactionsByInstrumentId<Transaction>(instrument.Id)).Returns(listTransaction);
 
             portfolio.Repository = mock.Object;
-            Assert.AreEqual(-100, portfolio.CurrentMarketValue(symbol).Value);
+            Assert.AreEqual(-1000, portfolio.CurrentMarketValue(symbol).Value);
 
             mock.VerifyAll();
         }
