@@ -6,13 +6,22 @@ using ShareKhan.persist;
 
 namespace ShareKhan.domain
 {
-    public class Portfolio
+    public class Portfolio :IPortfolio
     {
+        public ITransactionCollection TransactionCollection { get; set; }
+        public IPortfolioBalance PortfolioBalance { get; set; }
         public IRepository Repository { get; set; }
 
         public Portfolio()
         {
             this.Repository = new Repository();
+        }
+
+        public  Portfolio(ITransactionCollection transactionCollection,
+            IPortfolioBalance portfolioBalance)
+        {
+            TransactionCollection = transactionCollection;
+            PortfolioBalance = portfolioBalance;
         }
 
         public Price CurrentMarketValue(Symbol symbol)

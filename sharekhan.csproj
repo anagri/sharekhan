@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{77CF5C49-3FC3-42AA-82A7-BB9E85BB8417}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -84,7 +84,11 @@
     <Compile Include="src\domain\BuyTransaction.cs" />
     <Compile Include="src\domain\FinYear.cs" />
     <Compile Include="src\domain\Instrument.cs" />
+    <Compile Include="src\domain\IPortfolio.cs" />
+    <Compile Include="src\domain\IPortfolioBalance.cs" />
+    <Compile Include="src\domain\ITransactionCollection.cs" />
     <Compile Include="src\domain\Portfolio.cs" />
+    <Compile Include="src\domain\PortfolioBalance.cs" />
     <Compile Include="src\domain\PortfolioStatement.cs" />
     <Compile Include="src\domain\Price.cs" />
     <Compile Include="src\domain\SellTransaction.cs" />
@@ -92,6 +96,7 @@
     <Compile Include="src\domain\Stock.cs" />
     <Compile Include="src\domain\Symbol.cs" />
     <Compile Include="src\domain\Transaction.cs" />
+    <Compile Include="src\domain\TransactionCollection.cs" />
     <Compile Include="src\domain\TransactionStatement.cs" />
     <Compile Include="src\persist\IRepository.cs" />
     <Compile Include="src\persist\Repository.cs" />
