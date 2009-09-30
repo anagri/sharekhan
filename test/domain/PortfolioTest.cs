@@ -72,7 +72,7 @@ namespace ShareKhan.domain
             mock.VerifyAll();
         }
         [Test]
-        public void ShouldRecordSaleofMf()
+        public void ShouldReturnCSaleofMf()
         {
             Portfolio portfolio = new Portfolio();
             Symbol symbol = new Symbol("RILMF");
