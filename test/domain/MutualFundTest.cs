@@ -12,7 +12,14 @@ namespace Sharekhan.test.domain
         {
             var fourThousand = new Price(4000);
 
-            Instrument instrument = new MutualFund(new Symbol("SUN"), fourThousand, "Sun MF");
+            MutualFundParams parameters = new MutualFundParams();
+            parameters.FundHouse = "SBI";
+            parameters.FundNm = "Magnum";
+            parameters.DivOption = DivOption.Growth.ToString();
+            parameters.NoOfUnits = 100;
+            parameters.UnitPrice = 23;
+
+            Instrument instrument = new MutualFund(new Symbol("SUN"), fourThousand, "Sun MF", parameters);
             repository.Save(instrument);
 
             var lookedUpObject = repository.Lookup<Instrument>(instrument.Id);

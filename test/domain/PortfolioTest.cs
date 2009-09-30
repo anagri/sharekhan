@@ -16,7 +16,14 @@ namespace ShareKhan.domain
             Portfolio portfolio = new Portfolio();
             Symbol symbol = new Symbol("RILMF");
 
-            Instrument instrument = new MutualFund(symbol, new Price(100.00), "Reliance Mutual Fund");
+            MutualFundParams parameters = new MutualFundParams();
+            parameters.FundHouse = "RIL";
+            parameters.FundNm = "Magnum";
+            parameters.DivOption = DivOption.Growth.ToString();
+            parameters.NoOfUnits = 100;
+            parameters.UnitPrice = 23;
+
+            Instrument instrument = new MutualFund(symbol, new Price(100.00), "Reliance Mutual Fund", parameters);
             instrument.Id = 10;
 
             Transaction transaction1 = new BuyTransaction(new DateTime(2009, 09, 09), instrument, 10, new Price(100.00), 10, 10);
@@ -33,7 +40,66 @@ namespace ShareKhan.domain
             Assert.AreEqual(500.00, portfolio.CurrentMarketValue(symbol).Value);
 
             mock.VerifyAll();
-         }
+        }
+
+        [Test]
+        public void ShouldRecordBuyofMf()
+        {
+            Portfolio portfolio = new Portfolio();
+            Symbol symbol = new Symbol("RILMF");
+
+            MutualFundParams parameters = new MutualFundParams();
+            parameters.FundHouse = "RIL";
+            parameters.FundNm = "Magnum";
+            parameters.DivOption = DivOption.Growth.ToString();
+            parameters.NoOfUnits = 100;
+            parameters.UnitPrice = 23;
+
+            Instrument instrument = new MutualFund(symbol, new Price(100.00), "Reliance Mutual Fund", parameters);
+            instrument.Id = 10;
+
+            Transaction transaction1 = new BuyTransaction(new DateTime(2009, 09, 09), instrument, 10, new Price(100.00), 10, 10);
+            List<Transaction> listTransaction = new List<Transaction> {transaction1};
+
+
+            var mock = new Mock<IRepository>();
+            mock.Setup(repo => repo.LookupBySymbol<Instrument>(symbol)).Returns(instrument);
+            mock.Setup(repo => repo.ListTransactionsByInstrumentId<Transaction>(instrument.Id)).Returns(listTransaction);
+
+            portfolio.Repository = mock.Object;
+            Assert.AreEqual(100, portfolio.CurrentMarketValue(symbol).Value);
+
+            mock.VerifyAll();
+        }
+        [Test]
+        public void ShouldRecordSaleofMf()
+        {
+            Portfolio portfolio = new Portfolio();
+            Symbol symbol = new Symbol("RILMF");
+
+            MutualFundParams parameters = new MutualFundParams();
+            parameters.FundHouse = "RIL";
+            parameters.FundNm = "Magnum";
+            parameters.DivOption = DivOption.Growth.ToString();
+            parameters.NoOfUnits = 100;
+            parameters.UnitPrice = 23;
+
+            Instrument instrument = new MutualFund(symbol, new Price(100.00), "Reliance Mutual Fund", parameters);
+            instrument.Id = 10;
+
+            Transaction transaction1 = new SellTransaction(new DateTime(2009, 09, 09), instrument, 10, new Price(100.00), 10, 10);
+            List<Transaction> listTransaction = new List<Transaction> { transaction1 };
+
+
+            var mock = new Mock<IRepository>();
+            mock.Setup(repo => repo.LookupBySymbol<Instrument>(symbol)).Returns(instrument);
+            mock.Setup(repo => repo.ListTransactionsByInstrumentId<Transaction>(instrument.Id)).Returns(listTransaction);
+
+            portfolio.Repository = mock.Object;
+            Assert.AreEqual(-100, portfolio.CurrentMarketValue(symbol).Value);
+
+            mock.VerifyAll();
+        }
 
     }
 }

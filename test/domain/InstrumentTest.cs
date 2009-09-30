@@ -8,7 +8,13 @@ namespace Sharekhan.domain
         [Test]
         public void ShouldBeAbleToUpdateInstrumentCurrentPrice()
         {
-            Instrument instrument = new MutualFund(new Symbol("SUN"), new Price(1000), "Sun MF");
+            MutualFundParams parameters = new MutualFundParams();
+            parameters.FundHouse = "SBI";
+            parameters.FundNm = "Magnum";
+            parameters.DivOption = DivOption.Growth.ToString();
+            parameters.NoOfUnits = 100;
+            parameters.UnitPrice = 23;
+            Instrument instrument = new MutualFund(new Symbol("SUN"), new Price(1000), "Sun MF", parameters);
             var four = new Price(4);
             instrument.UpdateCurrentPrice(four);
             Assert.AreEqual(four, instrument.CurrentPrice);
