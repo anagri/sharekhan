@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{77CF5C49-3FC3-42AA-82A7-BB9E85BB8417}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -55,13 +55,11 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Lib\NHibernate.dll</HintPath>
     </Reference>
-    <Reference Include="nunit.core, Version=2.4.8.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Lib\nunit.core.dll</HintPath>
-    </Reference>
+    <Reference Include="nunit.core, Version=2.5.1.9189, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL" />
+    <Reference Include="nunit.core.interfaces, Version=2.5.1.9189, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL" />
     <Reference Include="nunit.framework, Version=2.5.1.9189, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>Lib\nunit.framework.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\software\nunit\bin\net-2.0\framework\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -86,7 +84,11 @@
     <Compile Include="src\domain\BuyTransaction.cs" />
     <Compile Include="src\domain\FinYear.cs" />
     <Compile Include="src\domain\Instrument.cs" />
+    <Compile Include="src\domain\IPortfolio.cs" />
+    <Compile Include="src\domain\IPortfolioBalance.cs" />
+    <Compile Include="src\domain\ITransactionCollection.cs" />
     <Compile Include="src\domain\Portfolio.cs" />
+    <Compile Include="src\domain\PortfolioBalance.cs" />
     <Compile Include="src\domain\PortfolioStatement.cs" />
     <Compile Include="src\domain\Price.cs" />
     <Compile Include="src\domain\SellTransaction.cs" />
@@ -94,6 +96,7 @@
     <Compile Include="src\domain\Stock.cs" />
     <Compile Include="src\domain\Symbol.cs" />
     <Compile Include="src\domain\Transaction.cs" />
+    <Compile Include="src\domain\TransactionCollection.cs" />
     <Compile Include="src\domain\TransactionStatement.cs" />
     <Compile Include="src\persist\IRepository.cs" />
     <Compile Include="src\persist\Repository.cs" />
@@ -121,6 +124,7 @@
     <Content Include="Lib\Moq.xml" />
     <Content Include="Lib\NHibernate.dll" />
     <Content Include="Lib\nunit.core.dll" />
+    <Content Include="Lib\nunit.core.interfaces.dll" />
     <Content Include="Lib\nunit.framework.dll" />
     <Content Include="Lib\nunit.framework.xml" />
     <Content Include="Lib\System.Data.SQLite.DLL" />
