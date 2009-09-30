@@ -36,33 +36,34 @@ namespace ShareKhan.domain
             return year.IsCurrent();
         }
 
-        [Ignore]
         [Test]
-        public void ShouldGetTheTaxableDayForFinYear()
+        public void ShouldGetTheTaxationPeriodForFinYear()
         {
             int curYear = DateTime.Today.Year;
-            int nextYear = DateTime.Today.Year+1;
-            int prevYear = curYear-1;
+            int nextYear = DateTime.Today.Year + 1;
+            int prevYear = curYear - 1;
             int nextToNextYear = curYear + 2;
             int nextToNextToNextYear = curYear + 3; //I should get award for variable names
 
             var apr1StPrevYear = new DateTime(prevYear, 4, 1);
-            
+
             var apr1StThisYear = new DateTime(curYear, 4, 1);
             var mar31StThisYear = new DateTime(curYear, 3, 31);
 
-            
+
             var apr1StNextToNextYear = new DateTime(nextToNextYear, 4, 1);
-            
+            var today = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day);
 
-            var taxableDaysOfThisYear = new FinYear.TaxableDateRange(apr1StThisYear, DateTime.Now);
-            Assert.AreEqual(taxableDaysOfThisYear,new FinYear(curYear, nextYear).GetTaxableDays());
 
-            var taxableDaysOfLastYear = new FinYear.TaxableDateRange(apr1StPrevYear, mar31StThisYear);
-            Assert.AreEqual(taxableDaysOfLastYear, new FinYear(prevYear, curYear).GetTaxableDays());
+            var taxableDaysOfThisYear = new FinYear.TaxationPeriod(apr1StThisYear, today);
+            Assert.AreEqual(taxableDaysOfThisYear, new FinYear(curYear, nextYear).GetTaxationPeriod());
 
-            var taxableDaysOfNextToNextYear = new FinYear.TaxableDateRange(apr1StNextToNextYear, apr1StNextToNextYear);
-            Assert.AreEqual(taxableDaysOfNextToNextYear, new FinYear(nextToNextYear, nextToNextToNextYear).GetTaxableDays());
+            var taxableDaysOfLastYear = new FinYear.TaxationPeriod(apr1StPrevYear, mar31StThisYear);
+            Assert.AreEqual(taxableDaysOfLastYear, new FinYear(prevYear, curYear).GetTaxationPeriod());
+
+            var taxableDaysOfNextToNextYear = new FinYear.TaxationPeriod(apr1StNextToNextYear, apr1StNextToNextYear);
+            Assert.AreEqual(taxableDaysOfNextToNextYear,
+                            new FinYear(nextToNextYear, nextToNextToNextYear).GetTaxationPeriod());
         }
     }
 }
