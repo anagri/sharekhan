@@ -55,13 +55,11 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Lib\NHibernate.dll</HintPath>
     </Reference>
-    <Reference Include="nunit.core, Version=2.4.8.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Lib\nunit.core.dll</HintPath>
-    </Reference>
+    <Reference Include="nunit.core, Version=2.5.1.9189, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL" />
+    <Reference Include="nunit.core.interfaces, Version=2.5.1.9189, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL" />
     <Reference Include="nunit.framework, Version=2.5.1.9189, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>Lib\nunit.framework.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\software\nunit\bin\net-2.0\framework\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -121,6 +119,7 @@
     <Content Include="Lib\Moq.xml" />
     <Content Include="Lib\NHibernate.dll" />
     <Content Include="Lib\nunit.core.dll" />
+    <Content Include="Lib\nunit.core.interfaces.dll" />
     <Content Include="Lib\nunit.framework.dll" />
     <Content Include="Lib\nunit.framework.xml" />
     <Content Include="Lib\System.Data.SQLite.DLL" />
