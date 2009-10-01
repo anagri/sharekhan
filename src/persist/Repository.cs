@@ -70,7 +70,7 @@ namespace ShareKhan.persist
                 session = _sessionFactory.OpenSession();
                 session.BeginTransaction();
                 IDbConnection connection = session.Connection;
-                new SchemaExport(configuration).Execute(false, true, false, true, connection, null);
+//                new SchemaExport(configuration).Execute(false, true, false, true, connection, null);
             }
             ++transactionCounter;
         }

@@ -53,6 +53,16 @@ namespace Sharekhan.domain
         {
             return !Equals(left, right);
         }
+
+        public virtual CashDividendTransaction CreateCashDividendTransaction(Price price, DateTime transactionDate)
+        {
+            return new CashDividendTransaction(this, price, transactionDate);
+        }
+
+        public virtual UnitDividendTransaction CreateUnitDividendTransaction(int quantity, DateTime transactionDate)
+        {
+            return new UnitDividendTransaction(this, quantity, transactionDate);
+        }
     }
     /// <summary>
     /// 
