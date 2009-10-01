@@ -8,8 +8,6 @@ namespace Sharekhan.domain
     {
         public virtual string FundNm { get; set; }
         public virtual string FundHouse { get; set; }
-        public virtual double NoOfUnits { get; set; }
-        public virtual double UnitPrice { get; set; }
         public virtual string DivOption { get; set; }
 
         protected MutualFund()
