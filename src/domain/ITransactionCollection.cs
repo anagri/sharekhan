@@ -3,9 +3,8 @@ using System.Collections.Generic;
 
 namespace Sharekhan.domain
 {
-    public interface ITransactionCollection : IEnumerator<Transaction>
+    public interface ITransactionCollection
     {
         bool Add(Transaction transaction);
-        bool Remove(int Id);
     }
 }

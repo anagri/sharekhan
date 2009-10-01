@@ -9,90 +9,60 @@ namespace Sharekhan.domain
     {
         private readonly IList<Transaction> _transactionList = new List<Transaction>();
 
-        public bool MoveNext()
+        public IEnumerable<Transaction> TransactionList
         {
-            throw new NotImplementedException();
+            get { return _transactionList; }
         }
 
-        public void Reset()
+        public bool Add(Transaction transaction)
         {
-            throw new NotImplementedException();
+            if (transaction != null && _transactionList.IndexOf(transaction) == -1)
+            {
+                _transactionList.Add(transaction);
+                return true;
+            }
+            return false;
         }
 
-        public Transaction Current
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        object IEnumerator.Current
-        {
-            get { return Current; }
-        }
-
-
-        public bool Add(Transaction item)
-        {
-            _transactionList.Add(item);
-            return true;
-        }
-
-        public IEnumerator<Transaction> GetEnumerator()
-        {
-            return _transactionList.GetEnumerator();
-        }
-
-        public bool Remove(int Id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Dispose()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void BuildDictionariesWithSellingAmounts(Dictionary<Instrument, double> realizedProfitsDictionary,
+        public void BuildDictionariesWithSellingAmounts(Dictionary<Instrument, Price> realizedProfitsDictionary,
                                                         Dictionary<Instrument, int> instrumentQuantities)
         {
-            foreach (var transaction in this)
+            foreach (var transaction in TransactionList)
             {
                 if (transaction.GetType() != typeof (SellTransaction))
                     continue;
                 if (!realizedProfitsDictionary.ContainsKey(transaction.Instrument))
                 {
-                    realizedProfitsDictionary[transaction.Instrument] = 0;
+                    realizedProfitsDictionary[transaction.Instrument] = Price.Null;
                     instrumentQuantities[transaction.Instrument] = 0;
                 }
-                realizedProfitsDictionary[transaction.Instrument] += transaction.UnitPrice.Value*transaction.Quantity;
-                realizedProfitsDictionary[transaction.Instrument] -= ((SellTransaction) transaction).Tax +
-                                                                     ((SellTransaction) transaction).Brokerage;
+                realizedProfitsDictionary[transaction.Instrument] += transaction.EffectiveTransactionAmount();
                 instrumentQuantities[transaction.Instrument] += transaction.Quantity;
             }
         }
 
-        public void UpdateRealizedProfits(Dictionary<Instrument, double> realizedProfitsDictionary,
+        public void UpdateRealizedProfits(Dictionary<Instrument, Price> realizedProfitsDictionary,
                                           Dictionary<Instrument, int> instrumentQuantities)
         {
-            foreach (var transaction in this)
+            foreach (var transaction in TransactionList)
             {
                 if (transaction.GetType() != typeof (BuyTransaction) ||
                     !instrumentQuantities.ContainsKey(transaction.Instrument) ||
                     instrumentQuantities[transaction.Instrument] == 0)
                     continue;
 
-                double buyingPrice;
                 if (instrumentQuantities[transaction.Instrument] < transaction.Quantity)
                 {
-                    buyingPrice = instrumentQuantities[transaction.Instrument]*transaction.UnitPrice.Value;
+                    realizedProfitsDictionary[transaction.Instrument] -=
+                        new Price(instrumentQuantities[transaction.Instrument]*transaction.UnitPrice.Value +
+                                  ((BuyTransaction) transaction).Tax + ((BuyTransaction) transaction).Brokerage);
                     instrumentQuantities[transaction.Instrument] = 0;
                 }
                 else
                 {
-                    buyingPrice = transaction.Quantity*transaction.UnitPrice.Value;
+                    realizedProfitsDictionary[transaction.Instrument] -= transaction.EffectiveTransactionAmount();
                     instrumentQuantities[transaction.Instrument] -= transaction.Quantity;
                 }
-                realizedProfitsDictionary[transaction.Instrument] -= buyingPrice + ((BuyTransaction) transaction).Tax +
-                                                                     ((BuyTransaction) transaction).Brokerage;
             }
         }
     }

@@ -19,7 +19,7 @@ namespace ShareKhan.domain
         {
             double investedValue = 0.0;
 
-            foreach (Transaction transaction in _transactionList)
+            foreach (Transaction transaction in _transactionList.TransactionList)
             {
                 investedValue += transaction.UnitPrice.Value;
             }

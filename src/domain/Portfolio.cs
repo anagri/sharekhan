@@ -70,20 +70,20 @@ namespace ShareKhan.domain
         
         public double CalculateRealizedProfits(TransactionStatement statement)
         {
-            Dictionary<Instrument, double> realizedProfitsTbl = new Dictionary<Instrument, double>();
+            Dictionary<Instrument, Price> realizedProfitsTbl = new Dictionary<Instrument, Price>();
             Dictionary<Instrument, int> qty = new Dictionary<Instrument, int>();
-            double realizedProfits = 0.0;
+            Price realizedProfits = Price.Null;
             TransactionCollection listOfTransactions = statement.GetTransactionCollection();
 
             listOfTransactions.BuildDictionariesWithSellingAmounts(realizedProfitsTbl, qty);
 
             listOfTransactions.UpdateRealizedProfits(realizedProfitsTbl, qty);
 
-            foreach (KeyValuePair<Instrument, double> kvp in realizedProfitsTbl)
+            foreach (KeyValuePair<Instrument, Price> kvp in realizedProfitsTbl)
             {
                 realizedProfits += kvp.Value;
             }
-            return realizedProfits;
+            return realizedProfits.Value;
         }
 
 
@@ -93,7 +93,7 @@ namespace ShareKhan.domain
         public object CalculateRealizedProfits(TransactionStatement statement, Instrument instrument)
         {
             TransactionStatement InstrumentSpecificTransaction = new TransactionStatement();
-            foreach (Transaction transaction in statement.GetTransactionCollection())
+            foreach (Transaction transaction in statement.GetTransactionCollection().TransactionList)
             {
                 if (transaction.Instrument == instrument)
                 {
