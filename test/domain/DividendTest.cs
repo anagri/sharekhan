@@ -10,8 +10,8 @@ namespace Sharekhan.domain
         public void ShouldCreateCashDividendTransactionForMutualFund()
         {
             var firstOfJan2008 = new DateTime(2008, 1, 1);
-            var mutualFundParams = new MutualFundParams();
-            var selectedMutualFund = new MutualFund(null, null, null, mutualFundParams);
+           
+            var selectedMutualFund = new MutualFund(null, null, null, "SUNMF", "SUN Magma", "Growth");
             DividendTransaction expectedTransaction = new CashDividendTransaction(selectedMutualFund, new Price(100), firstOfJan2008);
 
             CashDividendTransaction actualTransaction =
@@ -41,8 +41,8 @@ namespace Sharekhan.domain
         public void ShouldCreateUnitDividendTransactionForMutualFund()
         {
             var firstOfJan2008 = new DateTime(2008, 1, 1);
-            var mutualFundParams = new MutualFundParams();
-            var selectedMutualFund = new MutualFund(null, null, null, mutualFundParams);
+            
+            var selectedMutualFund = new MutualFund(null, null, null, "SUNMF", "SUN Magma", "Growth");
             var expectedTransaction = new UnitDividendTransaction(selectedMutualFund,
                                                                   100,
                                                                   firstOfJan2008);

@@ -11,15 +11,8 @@ namespace Sharekhan.test.domain
         public void ShouldUpdatePriceForMutualFund()
         {
             var fourThousand = new Price(4000);
-
-            MutualFundParams parameters = new MutualFundParams();
-            parameters.FundHouse = "SBI";
-            parameters.FundNm = "Magnum";
-            parameters.DivOption = DivOption.Growth.ToString();
-            parameters.NoOfUnits = 100;
-            parameters.UnitPrice = 23;
-
-            Instrument instrument = new MutualFund(new Symbol("SUN"), fourThousand, "Sun MF", parameters);
+          
+            Instrument instrument = new MutualFund(new Symbol("SUN"), fourThousand, "Sun MF", "SUNMF","SUN Magma","Growth");
             repository.Save(instrument);
 
             var lookedUpObject = repository.Lookup<Instrument>(instrument.Id);
@@ -35,11 +28,8 @@ namespace Sharekhan.test.domain
         public void ShouldPersistMutualFund()
         {
             var fourThousand = new Price(4000);
-            MutualFundParams parameters = new MutualFundParams();
-            parameters.FundHouse = "SBI";
-            parameters.FundNm = "Magnum";
-            parameters.DivOption = DivOption.Growth.ToString();
-            Instrument instrument = new MutualFund(new Symbol("SUN"), fourThousand, "Sun MF", parameters);
+
+            Instrument instrument = new MutualFund(new Symbol("SUN"), fourThousand, "Sun MF", "SUNMF", "SUN Magma", "Growth");
             repository.Save(instrument);
             var lookedUpObject = repository.Lookup<Instrument>(instrument.Id);
             Assert.AreEqual(new Price(4000), lookedUpObject.CurrentPrice);
@@ -48,11 +38,8 @@ namespace Sharekhan.test.domain
         public void ShouldDeleteMutualFund()
         {
             var fourThousand = new Price(4000);
-            MutualFundParams parameters = new MutualFundParams();
-            parameters.FundHouse = "SBI";
-            parameters.FundNm = "Magnum";
-            parameters.DivOption = DivOption.Growth.ToString();
-            Instrument instrument = new MutualFund(new Symbol("SUN"), fourThousand, "Sun MF", parameters);
+           
+            Instrument instrument = new MutualFund(new Symbol("SUN"), fourThousand, "Sun MF", "SUNMF", "SUN Magma", "Growth");
             repository.Delete(instrument);
             var lookedUpObject = repository.Lookup<Instrument>(instrument.Id);
             Assert.IsNull(lookedUpObject);
