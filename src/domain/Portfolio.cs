@@ -6,7 +6,7 @@ using ShareKhan.persist;
 
 namespace ShareKhan.domain
 {
-    public class Portfolio :IPortfolio
+    public class Portfolio : IPortfolio
     {
         public ITransactionCollection TransactionCollection { get; set; }
         public IPortfolioBalance PortfolioBalance { get; set; }
@@ -17,8 +17,8 @@ namespace ShareKhan.domain
             this.Repository = new Repository();
         }
 
-        public  Portfolio(ITransactionCollection transactionCollection,
-            IPortfolioBalance portfolioBalance)
+        public Portfolio(ITransactionCollection transactionCollection,
+                         IPortfolioBalance portfolioBalance) : this()
         {
             TransactionCollection = transactionCollection;
             PortfolioBalance = portfolioBalance;
@@ -67,40 +67,35 @@ namespace ShareKhan.domain
             throw new NotImplementedException();
         }
 
-        
-        public double CalculateRealizedProfits(TransactionStatement statement)
+
+        public double CalculateRealizedProfits(ITransactionCollection listOfTransactions)
         {
             Dictionary<Instrument, Price> realizedProfitsTbl = new Dictionary<Instrument, Price>();
             Dictionary<Instrument, int> qty = new Dictionary<Instrument, int>();
             Price realizedProfits = Price.Null;
-            TransactionCollection listOfTransactions = statement.GetTransactionCollection();
 
             listOfTransactions.BuildDictionariesWithSellingAmounts(realizedProfitsTbl, qty);
-
             listOfTransactions.UpdateRealizedProfits(realizedProfitsTbl, qty);
 
-            foreach (KeyValuePair<Instrument, Price> kvp in realizedProfitsTbl)
+            foreach (Price price in realizedProfitsTbl.Values)
             {
-                realizedProfits += kvp.Value;
+                realizedProfits += price;
             }
             return realizedProfits.Value;
         }
 
 
-
-        
-
-        public object CalculateRealizedProfits(TransactionStatement statement, Instrument instrument)
+        public object CalculateRealizedProfits(ITransactionCollection statement, Instrument instrument)
         {
-            TransactionStatement InstrumentSpecificTransaction = new TransactionStatement();
-            foreach (Transaction transaction in statement.GetTransactionCollection().TransactionList)
+            ITransactionCollection instrumentSpecificTransaction = new TransactionCollection();
+            foreach (Transaction transaction in statement.TransactionList)
             {
                 if (transaction.Instrument == instrument)
                 {
-                    InstrumentSpecificTransaction.addTransaction(transaction);
+                    instrumentSpecificTransaction.Add(transaction);
                 }
             }
-            return CalculateRealizedProfits(InstrumentSpecificTransaction);
+            return CalculateRealizedProfits(instrumentSpecificTransaction);
         }
     }
 }

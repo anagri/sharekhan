@@ -24,8 +24,8 @@ namespace Sharekhan.domain
             return false;
         }
 
-        public void BuildDictionariesWithSellingAmounts(Dictionary<Instrument, Price> realizedProfitsDictionary,
-                                                        Dictionary<Instrument, int> instrumentQuantities)
+        public void BuildDictionariesWithSellingAmounts(IDictionary<Instrument, Price> realizedProfitsDictionary,
+                                                        IDictionary<Instrument, int> instrumentQuantities)
         {
             foreach (var transaction in TransactionList)
             {
@@ -41,8 +41,8 @@ namespace Sharekhan.domain
             }
         }
 
-        public void UpdateRealizedProfits(Dictionary<Instrument, Price> realizedProfitsDictionary,
-                                          Dictionary<Instrument, int> instrumentQuantities)
+        public void UpdateRealizedProfits(IDictionary<Instrument, Price> realizedProfitsDictionary,
+                                          IDictionary<Instrument, int> instrumentQuantities)
         {
             foreach (var transaction in TransactionList)
             {
