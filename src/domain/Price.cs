@@ -54,5 +54,15 @@ namespace Sharekhan.domain
         {
             return !Equals(left, right);
         }
+
+        public static Price operator +(Price left, Price right)
+        {
+            return new Price(left.Value + right.Value);
+        }
+
+        public static Price operator -(Price left, Price right)
+        {
+            return new Price(left.Value - right.Value);
+        }
     }
 }

@@ -16,14 +16,7 @@ namespace ShareKhan.domain
             Portfolio portfolio = new Portfolio();
             Symbol symbol = new Symbol("RILMF");
 
-            MutualFundParams parameters = new MutualFundParams();
-            parameters.FundHouse = "RIL";
-            parameters.FundNm = "Magnum";
-            parameters.DivOption = DivOption.Growth.ToString();
-            parameters.NoOfUnits = 100;
-            parameters.UnitPrice = 23;
-
-            Instrument instrument = new MutualFund(symbol, new Price(100.00), "Reliance Mutual Fund", parameters);
+            Instrument instrument = new MutualFund(symbol, new Price(100.00), "Reliance Mutual Fund", "SUNMF", "SUN Magma", "Growth");
             instrument.Id = 10;
 
             Transaction transaction1 = new BuyTransaction(new DateTime(2009, 09, 09), instrument, 10, new Price(100.00), 10, 10);
@@ -47,15 +40,8 @@ namespace ShareKhan.domain
         {
             Portfolio portfolio = new Portfolio();
             Symbol symbol = new Symbol("RILMF");
-
-            MutualFundParams parameters = new MutualFundParams();
-            parameters.FundHouse = "RIL";
-            parameters.FundNm = "Magnum";
-            parameters.DivOption = DivOption.Growth.ToString();
-            parameters.NoOfUnits = 100;
-            parameters.UnitPrice = 23;
-
-            Instrument instrument = new MutualFund(symbol, new Price(100.00), "Reliance Mutual Fund", parameters);
+            
+            Instrument instrument = new MutualFund(symbol, new Price(100.00), "Reliance Mutual Fund", "SUNMF", "SUN Magma", "Growth");
             instrument.Id = 10;
 
             Transaction transaction1 = new BuyTransaction(new DateTime(2009, 09, 09), instrument, 10, new Price(100.00), 10, 10);
@@ -77,14 +63,8 @@ namespace ShareKhan.domain
             Portfolio portfolio = new Portfolio();
             Symbol symbol = new Symbol("RILMF");
 
-            MutualFundParams parameters = new MutualFundParams();
-            parameters.FundHouse = "RIL";
-            parameters.FundNm = "Magnum";
-            parameters.DivOption = DivOption.Growth.ToString();
-            parameters.NoOfUnits = 100;
-            parameters.UnitPrice = 23;
 
-            Instrument instrument = new MutualFund(symbol, new Price(100.00), "Reliance Mutual Fund", parameters);
+            Instrument instrument = new MutualFund(symbol, new Price(100.00), "Reliance Mutual Fund", "SUNMF", "SUN Magma", "Growth");
             instrument.Id = 10;
 
             Transaction transaction1 = new SellTransaction(new DateTime(2009, 09, 09), instrument, 10, new Price(100.00), 10, 10);
@@ -107,11 +87,11 @@ namespace ShareKhan.domain
             Portfolio portfolio = new Portfolio();
 
             Symbol symbol = new Symbol("RILMF");
-            Instrument instrument = new MutualFund(symbol, new Price(100.00), "Reliance Mutual Fund",new MutualFundParams("Reliance MF","Reliance",10,100,"reinvestment"));
+            Instrument instrument = new MutualFund(symbol, new Price(100.00), "Reliance Mutual Fund", "SUNMF", "SUN Magma", "Growth");
             instrument.Id = 10;
 
             Symbol symbol2 = new Symbol("FICO");
-            Instrument instrument2 = new MutualFund(symbol2, new Price(200.00), "FICO Corp", new MutualFundParams("Reliance MF", "Reliance", 10, 100, "reinvestment"));
+            Instrument instrument2 = new MutualFund(symbol2, new Price(200.00), "FICO Corp", "SUNMF", "SUN Magma", "Growth");
             instrument2.Id = 11;
 
             Transaction transaction1 = new BuyTransaction(new DateTime(2009, 09, 09), instrument, 10, new Price(100.00), 10, 10);

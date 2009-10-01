@@ -35,22 +35,20 @@ namespace ShareKhan.persist
 
         public T LookupBySymbol<T>(Symbol symbol)
         {
-            //return (T)session.CreateQuery("from Instrument where symbol=:symbol").SetParameter("symbol", symbol.Value).UniqueResult();
-            throw new NotImplementedException();
+            return (T)session.CreateQuery("from Instrument where symbol=:symbol").
+                SetParameter("symbol", symbol.Value).UniqueResult();
+        } 
+
+        public IList<T> ListTransactionsByInstrumentId<T>(int id)
+        {
+            //return (IList<T>)session.CreateQuery("from Transaction  inner join Instrument.Id where Instrument.Id=:id").SetParameter("id", id).List();
+            return (IList<T>)session.CreateQuery("from Transaction where Instrument=:id").SetParameter("id", id).List<T>();
+            //throw new NotImplementedException();
         }
 
-        public List<T> ListTransactionsByInstrumentId<T>(int id)
+        public IList<T> ListAllSymbols<T>()
         {
-            //should return the list of all transactions which involve the passed in Instrument (Instrument ID)
-            throw new NotImplementedException();
-        }
-
-        public List<T> ListAllSymbols<T>()
-        {
-
-            //should fetch set of all symbols which represent all Instruments present in the DB
-            // Fetch set of unique symbols from the Instrument Table
-            throw new NotImplementedException();
+            return session.CreateQuery("Select distinct i.Symbol from Instrument i").List<T>();
         }
 
         public void Delete(object entity)

@@ -24,7 +24,12 @@ namespace Sharekhan.domain
 
         public override Price TransactionAmount()
         {
-            return new Price( ( UnitPrice.Value * Quantity )+Tax+Brokerage);
+            throw new NotImplementedException();
+        }
+
+        public override Price EffectiveTransactionAmount()
+        {
+            return new Price((UnitPrice.Value*Quantity) - Tax - Brokerage);
         }
     }
 }
