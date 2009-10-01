@@ -101,7 +101,6 @@
     <Compile Include="src\domain\Symbol.cs" />
     <Compile Include="src\domain\Transaction.cs" />
     <Compile Include="src\domain\TransactionCollection.cs" />
-    <Compile Include="src\domain\TransactionStatement.cs" />
     <Compile Include="src\domain\UnitDividendTransaction.cs" />
     <Compile Include="src\persist\IRepository.cs" />
     <Compile Include="src\persist\Repository.cs" />
@@ -115,7 +114,6 @@
     <Compile Include="test\domain\RealizedProfitsTest.cs" />
     <Compile Include="test\domain\StockTest.cs" />
     <Compile Include="test\domain\SymbolTest.cs" />
-    <Compile Include="test\domain\TransactionStatementTest.cs" />
     <Compile Include="test\domain\TransactionTest.cs" />
     <Compile Include="test\persist\NHibernateInMemoryTestFixtureBase.cs" />
     <Compile Include="test\persist\RepositoryTest.cs" />
