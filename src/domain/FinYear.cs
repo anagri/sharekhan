@@ -8,23 +8,48 @@ namespace ShareKhan.domain
         {
             MARCH = 3,
             APRIL = 4
-        };
+        } ;
 
         private enum Dates
         {
             THIRTY_FIRST = 31,
             FIRST = 1
-        };
+        } ;
 
-        public struct TaxableDateRange
+        public struct TaxationPeriod
         {
             public DateTime StartDate { get; set; }
             public DateTime EndDate { get; set; }
 
-            public TaxableDateRange(DateTime startDate, DateTime endDate) : this()
+            public TaxationPeriod(DateTime startDate, DateTime endDate) : this()
             {
                 StartDate = startDate;
                 EndDate = endDate;
+            }
+
+            public bool Equals(TaxationPeriod other)
+            {
+                return other.StartDate.Equals(StartDate) && other.EndDate.Equals(EndDate);
+            }
+
+            public override bool Equals(object obj)
+            {
+                if (ReferenceEquals(null, obj)) return false;
+                if (obj.GetType() != typeof (TaxationPeriod)) return false;
+                return Equals((TaxationPeriod) obj);
+            }
+
+            public override int GetHashCode()
+            {
+                unchecked
+                {
+                    return (StartDate.GetHashCode()*397) ^ EndDate.GetHashCode();
+                }
+            }
+
+            public override string ToString()
+            {
+                return string.Format("StartDate: {0}, EndDate: {1}", StartDate, EndDate);
             }
         } ;
 
@@ -61,9 +86,29 @@ namespace ShareKhan.domain
             return (minDate <= DateTime.Now && DateTime.Now <= maxDate);
         }
 
-        public TaxableDateRange GetTaxableDays()
+        public bool IsFuture()
         {
-            throw new NotImplementedException();
+            return (StartYear > DateTime.Now.Year);
+        }
+
+        public TaxationPeriod? GetTaxationPeriod()
+        {
+            var finYearStart = new DateTime(StartYear, (int) Month.APRIL, (int) Dates.FIRST);
+            var finYearEnd = new DateTime(EndYear, (int) Month.MARCH, (int) Dates.THIRTY_FIRST);
+            var today = new DateTime(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day);
+
+            if (IsCurrent())
+            {
+                return new TaxationPeriod(finYearStart, today);
+            }
+
+            if (IsFuture())
+            {
+                return new TaxationPeriod(finYearStart, finYearStart);
+            }
+
+
+            return new TaxationPeriod(finYearStart, finYearEnd);
         }
     }
 }

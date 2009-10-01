@@ -84,6 +84,8 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="src\domain\BuyTransaction.cs" />
+    <Compile Include="src\domain\CashDividendTransaction.cs" />
+    <Compile Include="src\domain\DividendTransaction.cs" />
     <Compile Include="src\domain\FinYear.cs" />
     <Compile Include="src\domain\Instrument.cs" />
     <Compile Include="src\domain\IPortfolio.cs" />
@@ -100,11 +102,10 @@
     <Compile Include="src\domain\Transaction.cs" />
     <Compile Include="src\domain\TransactionCollection.cs" />
     <Compile Include="src\domain\TransactionStatement.cs" />
+    <Compile Include="src\domain\UnitDividendTransaction.cs" />
     <Compile Include="src\persist\IRepository.cs" />
     <Compile Include="src\persist\Repository.cs" />
-    <Compile Include="test\domain\CashDividendTransaction.cs" />
     <Compile Include="test\domain\DividendTest.cs" />
-    <Compile Include="test\domain\DividendTransaction.cs" />
     <Compile Include="test\domain\FinYearTest.cs" />
     <Compile Include="test\domain\InstrumentTest.cs" />
     <Compile Include="src\domain\MutualFund.cs" />
@@ -116,7 +117,6 @@
     <Compile Include="test\domain\SymbolTest.cs" />
     <Compile Include="test\domain\TransactionStatementTest.cs" />
     <Compile Include="test\domain\TransactionTest.cs" />
-    <Compile Include="test\domain\UnitDividendTransaction.cs" />
     <Compile Include="test\persist\NHibernateInMemoryTestFixtureBase.cs" />
     <Compile Include="test\persist\RepositoryTest.cs" />
     <Compile Include="test\service\PersistenceTestBase.cs" />
@@ -142,7 +142,6 @@
     <EmbeddedResource Include="src\persist\Instrument.hbm.xml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include=".gitignore" />
     <None Include="dbinit.bat" />
     <None Include="db\sharekhan.sql" />
     <None Include="nant.build" />
