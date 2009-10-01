@@ -77,13 +77,9 @@ namespace ShareKhan.persist
             var hundredRuppees = new Price(100);
             var relianceMutuals = new Symbol("RELTICK");
 
-            MutualFundParams parameters = new MutualFundParams();
-            parameters.FundHouse = "Reliance";
-            parameters.FundNm = "Magnum";
-            parameters.DivOption = DivOption.Growth.ToString();
-            parameters.NoOfUnits = 100;
-            parameters.UnitPrice = 23;
-            Instrument instrument = new MutualFund(relianceMutuals, hundredRuppees, "Test Fund", parameters);
+            Instrument instrument = new MutualFund(relianceMutuals, hundredRuppees, "Test Fund", "SUNMF", "SUN Magma", "Growth");
+
+
             repository.Save(instrument);
             
             IList<Symbol> list = repository.ListAllSymbols<Symbol>();
@@ -98,13 +94,7 @@ namespace ShareKhan.persist
             var hundredRuppees = new Price(100);
             var relianceMutuals = new Symbol("RELTICK");
 
-            MutualFundParams parameters = new MutualFundParams();
-            parameters.FundHouse = "Reliance";
-            parameters.FundNm = "Magnum";
-            parameters.DivOption = DivOption.Growth.ToString();
-            parameters.NoOfUnits = 100;
-            parameters.UnitPrice = 23;
-            Instrument instrument = new MutualFund(relianceMutuals, hundredRuppees, "Test Fund", parameters);
+            Instrument instrument = new MutualFund(relianceMutuals, hundredRuppees, "Test Fund", "SUNMF", "SUN Magma", "Growth");
             repository.Save(instrument);
 
             var symbol = new Symbol("RELTICK");
@@ -113,6 +103,7 @@ namespace ShareKhan.persist
         }
 
        // [Test]
+        /*
         public void TestListTransactionsByInstrumentId()
         {
             var hundredRuppees = new Price(100);
@@ -133,6 +124,6 @@ namespace ShareKhan.persist
 
             Assert.AreEqual(1,repository.ListTransactionsByInstrumentId<Instrument>(instrument.Id).Count);
 
-        }
+        } */
     }
 }
