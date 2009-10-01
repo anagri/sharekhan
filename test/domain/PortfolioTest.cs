@@ -143,5 +143,8 @@ namespace ShareKhan.domain
             Assert.AreEqual(2500 , portfolio.CurrentMarketValue().Value);
         }
 
+
+
+
     }
 }

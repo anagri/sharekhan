@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using ShareKhan.domain;
 
 
 namespace Sharekhan.domain
@@ -25,10 +26,13 @@ namespace Sharekhan.domain
             this.UnitPrice = unitPrice;
 
         }
-
+       
         public abstract Price TransactionAmount();
 
-       
-      
+        public virtual bool IsLongTerm(FinYear year)
+        {
+            return (this.Date < year.GetTaxationPeriod().Value.StartDate);
+        }
+
     }
 }
