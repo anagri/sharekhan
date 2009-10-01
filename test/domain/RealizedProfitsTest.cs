@@ -16,32 +16,30 @@ namespace Sharekhan.test.domain
         [Test]
         public void ShouldBuildDictionariesWithSoldAmountsForDumbCase()
         {
-            Portfolio d = new Portfolio();
-            TransactionStatement ts = new TransactionStatement();
-            Dictionary<Instrument,double> tbl = new Dictionary<Instrument, double>();
-            Dictionary<Instrument,int> qty = new Dictionary<Instrument, int>();
+            TransactionCollection ts =  new TransactionCollection();
+            Dictionary<Instrument, double> tbl = new Dictionary<Instrument, double>();
+            Dictionary<Instrument, int> qty = new Dictionary<Instrument, int>();
             Stock relianceShare = new Stock(new Symbol("RIL"), new Price(10.00), "Reliance Industries");
-            ts.addTransaction(new SellTransaction(new DateTime(1999, 5, 20), relianceShare, 5, new Price(1300), 0, 0));
-            d.BuildDictionariesWithSellingAmounts(ts.listOfTransactions(), tbl, qty);
-            
-            Assert.AreEqual(1300*5, tbl[relianceShare]);
+            ts.Add(new SellTransaction(new DateTime(1999, 5, 20), relianceShare, 5, new Price(1300), 0, 0));
+            ts.BuildDictionariesWithSellingAmounts(tbl, qty);
+
+            Assert.AreEqual(1300 * 5, tbl[relianceShare]);
             Assert.AreEqual(5, qty[relianceShare]);
         }
 
         [Test]
         public void ShouldBuildDictionariesWithSoldAmountsForCaseWithoutTaxOrBrokerage()
         {
-            Portfolio d = new Portfolio();
-            TransactionStatement ts = new TransactionStatement();
+            TransactionCollection ts = new TransactionCollection();
             Dictionary<Instrument, double> tbl = new Dictionary<Instrument, double>();
             Dictionary<Instrument, int> qty = new Dictionary<Instrument, int>();
             Stock relianceShare = new Stock(new Symbol("RIL"), new Price(10.00), "Reliance Industries");
             Stock suzlonEnergyShare = new Stock(new Symbol("SUZ"), new Price(1000.00), "Suzlon Energy");
-            ts.addTransaction(new SellTransaction(new DateTime(1999, 5, 20), relianceShare, 5, new Price(13), 0, 0));
-            ts.addTransaction(new SellTransaction(new DateTime(1999, 7, 20), relianceShare, 5, new Price(10), 0, 0));
-            ts.addTransaction(new SellTransaction(new DateTime(1999, 5, 15), suzlonEnergyShare, 8, new Price(20), 0, 0));
-            ts.addTransaction(new SellTransaction(new DateTime(1999, 5, 25), suzlonEnergyShare, 10, new Price(10), 0, 0));
-            d.BuildDictionariesWithSellingAmounts(ts.listOfTransactions(), tbl, qty);
+            ts.Add(new SellTransaction(new DateTime(1999, 5, 20), relianceShare, 5, new Price(13), 0, 0));
+            ts.Add(new SellTransaction(new DateTime(1999, 7, 20), relianceShare, 5, new Price(10), 0, 0));
+            ts.Add(new SellTransaction(new DateTime(1999, 5, 15), suzlonEnergyShare, 8, new Price(20), 0, 0));
+            ts.Add(new SellTransaction(new DateTime(1999, 5, 25), suzlonEnergyShare, 10, new Price(10), 0, 0));
+            ts.BuildDictionariesWithSellingAmounts(tbl, qty);
             Assert.AreEqual(115, tbl[relianceShare]);
             Assert.AreEqual(260, tbl[suzlonEnergyShare]);
             Assert.AreEqual(10, qty[relianceShare]);
@@ -52,16 +50,15 @@ namespace Sharekhan.test.domain
         [Test]
         public void ShouldUpdateRealizedProfitsTrivialCase()
         {
-            Portfolio d = new Portfolio();
+            TransactionCollection ts = new TransactionCollection();
             Stock relianceShare = new Stock(new Symbol("RIL"), new Price(10.00), "Reliance Industries");
             Dictionary<Instrument, double> mockRP = new Dictionary<Instrument, double>();
             mockRP.Add(relianceShare, 677.25);
             Dictionary<Instrument, int> mockQty = new Dictionary<Instrument, int>();
             mockQty.Add(relianceShare, 22);
-            
-            TransactionStatement ts = new TransactionStatement();
-            ts.addTransaction(new BuyTransaction(new DateTime(1999, 3, 20), relianceShare, 10, new Price(25), 0, 0));
-            d.UpdateRealizedProfits(ts.listOfTransactions(), mockRP, mockQty);
+
+            ts.Add(new BuyTransaction(new DateTime(1999, 3, 20), relianceShare, 10, new Price(25), 0, 0));
+            ts.UpdateRealizedProfits(mockRP, mockQty);
             Assert.AreEqual(427.25, mockRP[relianceShare]);
             Assert.AreEqual(12, mockQty[relianceShare]);
         }
@@ -69,16 +66,15 @@ namespace Sharekhan.test.domain
         [Test]
         public void ShouldUpdateRealizedProfitsCaseWithMoreBuyThanSell()
         {
-            Portfolio d = new Portfolio();
+            TransactionCollection ts = new TransactionCollection();
             Stock relianceShare = new Stock(new Symbol("RIL"), new Price(10.00), "Reliance Industries");
             Dictionary<Instrument, double> mockRP = new Dictionary<Instrument, double>();
             mockRP.Add(relianceShare, 677.25);
             Dictionary<Instrument, int> mockQty = new Dictionary<Instrument, int>();
             mockQty.Add(relianceShare, 5);
 
-            TransactionStatement ts = new TransactionStatement();
-            ts.addTransaction(new BuyTransaction(new DateTime(1999, 3, 20), relianceShare, 10, new Price(25), 0, 0));
-            d.UpdateRealizedProfits(ts.listOfTransactions(), mockRP, mockQty);
+            ts.Add(new BuyTransaction(new DateTime(1999, 3, 20), relianceShare, 10, new Price(25), 0, 0));
+            ts.UpdateRealizedProfits(mockRP, mockQty);
             Assert.AreEqual(552.25, mockRP[relianceShare]);
             Assert.AreEqual(0, mockQty[relianceShare]);
         }
