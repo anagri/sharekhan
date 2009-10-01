@@ -26,9 +26,7 @@ namespace Sharekhan.domain
 
         }
 
-        public abstract Price TransactionAmount();
-
-       
-      
+        public abstract Price EffectiveTransactionAmount();
+        
     }
 }
