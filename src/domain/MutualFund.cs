@@ -16,14 +16,12 @@ namespace Sharekhan.domain
         {
         }
 
-        public MutualFund(Symbol symbol, Price currentPrice, String description, MutualFundParams parameters)
+        public MutualFund(Symbol symbol, Price currentPrice, String description, String fundNm, String fundHouse, String divOption)
             : base(symbol, currentPrice, description)
         {
-            FundNm = parameters.FundNm;
-            FundHouse = parameters.FundHouse;
-            NoOfUnits = parameters.NoOfUnits;
-            UnitPrice = parameters.UnitPrice;
-            DivOption = parameters.DivOption;
+            FundNm = fundNm;
+            FundHouse = fundHouse;
+            DivOption = divOption;
 
         }
 
@@ -64,32 +62,6 @@ namespace Sharekhan.domain
             return new UnitDividendTransaction(this, quantity, transactionDate);
         }
     }
-    /// <summary>
-    /// 
-    /// </summary>
-    public class MutualFundParams
-    {
-        public string FundNm { get; set; }
-        public string FundHouse { get; set; }
-        public double NoOfUnits { get; set; }
-        public double UnitPrice { get; set; }
-        public string DivOption { get; set; }
-
-        public MutualFundParams(){}
-        public MutualFundParams(string fundNm, string fundHouse,double noOfUnits,double unitPrice, string divOption)
-        {
-            this.FundNm = fundNm;
-            this.FundHouse = fundHouse;
-            this.NoOfUnits = noOfUnits;
-            this.UnitPrice = unitPrice;
-            this.DivOption = divOption;
-        }
-    }
-    /// <summary>
-    /// 
-    /// </summary>
-    public enum DivOption
-    {
-        Growth,Dividend
-    }
+   
+  
 }

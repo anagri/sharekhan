@@ -73,11 +73,11 @@ namespace ShareKhan.domain
             Dictionary<Instrument, double> realizedProfitsTbl = new Dictionary<Instrument, double>();
             Dictionary<Instrument, int> qty = new Dictionary<Instrument, int>();
             double realizedProfits = 0.0;
-            List<Transaction> listOfTransactions = statement.listOfTransactions();
+            TransactionCollection listOfTransactions = statement.GetTransactionCollection();
 
-            BuildDictionariesWithSellingAmounts(listOfTransactions, realizedProfitsTbl, qty);
+            listOfTransactions.BuildDictionariesWithSellingAmounts(realizedProfitsTbl, qty);
 
-            UpdateRealizedProfits(listOfTransactions, realizedProfitsTbl, qty);
+            listOfTransactions.UpdateRealizedProfits(realizedProfitsTbl, qty);
 
             foreach (KeyValuePair<Instrument, double> kvp in realizedProfitsTbl)
             {
@@ -86,50 +86,14 @@ namespace ShareKhan.domain
             return realizedProfits;
         }
 
-        public void BuildDictionariesWithSellingAmounts(List<Transaction> listOfTransactions, Dictionary<Instrument, double> realizedProfitsDictionary, Dictionary<Instrument, int> instrumentQuantities)
-        {
-            foreach (var transaction in listOfTransactions)
-            {
-                if (transaction.GetType() != typeof(SellTransaction))
-                    continue;
-                if (!realizedProfitsDictionary.ContainsKey(transaction.Instrument))
-                {
-                    realizedProfitsDictionary[transaction.Instrument] = 0;
-                    instrumentQuantities[transaction.Instrument] = 0;
-                }
-                realizedProfitsDictionary[transaction.Instrument] += transaction.UnitPrice.Value * transaction.Quantity;
-                realizedProfitsDictionary[transaction.Instrument] -= ((SellTransaction)transaction).Tax +
-                                                                     ((SellTransaction)transaction).Brokerage;
-                instrumentQuantities[transaction.Instrument] += transaction.Quantity;
-            }
-        }
 
-        public void UpdateRealizedProfits(List<Transaction> listOfTransactions, Dictionary<Instrument, double> realizedProfitsDictionary, Dictionary<Instrument, int> instrumentQuantities)
-        {
-            foreach (var transaction in listOfTransactions)
-            {
-                if (transaction.GetType() != typeof(BuyTransaction) || !instrumentQuantities.ContainsKey(transaction.Instrument) || instrumentQuantities[transaction.Instrument] == 0)
-                    continue;
 
-                double buyingPrice;
-                if (instrumentQuantities[transaction.Instrument] < transaction.Quantity)
-                {
-                    buyingPrice = instrumentQuantities[transaction.Instrument] * transaction.UnitPrice.Value;
-                    instrumentQuantities[transaction.Instrument] = 0;
-                }
-                else
-                {
-                    buyingPrice = transaction.Quantity * transaction.UnitPrice.Value;
-                    instrumentQuantities[transaction.Instrument] -= transaction.Quantity;
-                }
-                realizedProfitsDictionary[transaction.Instrument] -= buyingPrice + ((BuyTransaction)transaction).Tax + ((BuyTransaction)transaction).Brokerage;
-            }
-        }
+        
 
         public object CalculateRealizedProfits(TransactionStatement statement, Instrument instrument)
         {
             TransactionStatement InstrumentSpecificTransaction = new TransactionStatement();
-            foreach (Transaction transaction in statement.listOfTransactions())
+            foreach (Transaction transaction in statement.GetTransactionCollection())
             {
                 if (transaction.Instrument == instrument)
                 {

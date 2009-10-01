@@ -8,13 +8,18 @@ namespace ShareKhan.domain
 {
     public class TransactionStatement : Statement
     {
-        private List<Transaction> transactionList = new List<Transaction>();
+        private readonly TransactionCollection _transactionList;
+
+        public TransactionStatement()
+        {
+            _transactionList = new TransactionCollection();
+        }
 
         public Price getInvestedValue()
         {
             double investedValue = 0.0;
 
-            foreach (Transaction transaction in transactionList)
+            foreach (Transaction transaction in _transactionList)
             {
                 investedValue += transaction.UnitPrice.Value;
             }
@@ -24,12 +29,12 @@ namespace ShareKhan.domain
 
         public void addTransaction(Transaction transaction)
         {
-            transactionList.Add(transaction);
+            _transactionList.Add(transaction);
         }
 
-        public List<Transaction> listOfTransactions()
+        public TransactionCollection GetTransactionCollection()
         {
-            return new List<Transaction>(transactionList);
+            return _transactionList;
         }
     }
 }
