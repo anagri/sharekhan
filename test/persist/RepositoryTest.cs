@@ -102,28 +102,25 @@ namespace ShareKhan.persist
             Assert.AreEqual(instrument, resultInstrument);
         }
 
-       // [Test]
-        /*
+       [Test]
+        
         public void TestListTransactionsByInstrumentId()
         {
             var hundredRuppees = new Price(100);
             var relianceMutuals = new Symbol("RELTICK");
-
-            MutualFundParams parameters = new MutualFundParams();
-            parameters.FundHouse = "Reliance";
-            parameters.FundNm = "Magnum";
-            parameters.DivOption = DivOption.Growth.ToString();
-            parameters.NoOfUnits = 100;
-            parameters.UnitPrice = 23;
-            Instrument instrument = new MutualFund(relianceMutuals, hundredRuppees, "Test Fund", parameters);
+            Instrument instrument = new MutualFund(relianceMutuals, hundredRuppees, "Test Fund", "SUNMF", "SUN Magma", "Growth");
             repository.Save(instrument);
 
             Transaction buyTransaction = new BuyTransaction(DateTime.Now, instrument, 10, new Price(1000), 100, 100);
             repository.Save(buyTransaction);
 
+            IList<Transaction> translist=repository.ListTransactionsByInstrumentId<Transaction>(instrument.Id);
 
-            Assert.AreEqual(1,repository.ListTransactionsByInstrumentId<Instrument>(instrument.Id).Count);
+            Assert.AreEqual(1,repository.ListTransactionsByInstrumentId<Transaction>(instrument.Id).Count);
 
-        } */
+        } 
+
+
+
     }
 }

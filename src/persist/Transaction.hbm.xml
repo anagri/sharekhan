@@ -10,7 +10,7 @@
     <component name="UnitPrice" class="Sharekhan.domain.Price" insert="true" update="true">
       <property name="Value" column="UnitPrice" type="Double" length="120"/>
     </component>
-    <one-to-one  name="Instrument" class="Sharekhan.domain.Instrument" />
+    <one-to-one  name="Instrument" class="Sharekhan.domain.Instrument" fetch="join" constrained="false" />
       
      
 

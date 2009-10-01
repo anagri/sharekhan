@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using NHibernate;
 using NHibernate.Cfg;
+using NHibernate.Criterion;
 using NHibernate.Tool.hbm2ddl;
 using Sharekhan.domain;
 
@@ -41,9 +42,10 @@ namespace ShareKhan.persist
 
         public IList<T> ListTransactionsByInstrumentId<T>(int id)
         {
-            //return (IList<T>)session.CreateQuery("from Transaction  inner join Instrument.Id where Instrument.Id=:id").SetParameter("id", id).List();
-            return (IList<T>)session.CreateQuery("from Transaction where Instrument=:id").SetParameter("id", id).List<T>();
-            //throw new NotImplementedException();
+            //return (IList<T>)session.CreateQuery("from Transaction where Instrument=:id").SetParameter("id", id).List<T>();
+
+            return session.CreateCriteria(typeof (Transaction)).Add(Expression.Eq("Instrument.Id", id)).List<T>();
+
         }
 
         public IList<T> ListAllSymbols<T>()
