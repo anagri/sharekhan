@@ -26,7 +26,7 @@ namespace ShareKhan.domain
 
         public Price CurrentMarketValue()
         {
-            List<Symbol> symbolList = Repository.ListAllSymbols<Symbol>();
+            IList<Symbol> symbolList = Repository.ListAllSymbols<Symbol>();
 
             Price portfolioPrice = new Price(0.0);
 
@@ -43,7 +43,7 @@ namespace ShareKhan.domain
             Instrument instrument = Repository.LookupBySymbol<Instrument>(symbol);
             Price CurrentPrice = instrument.CurrentPrice;
             Price value = new Price(0.0);
-            List<Transaction> list = Repository.ListTransactionsByInstrumentId<Transaction>(instrument.Id);
+            IList<Transaction> list = Repository.ListTransactionsByInstrumentId<Transaction>(instrument.Id);
             int count = 0;
 
             foreach (Transaction trans in list)
