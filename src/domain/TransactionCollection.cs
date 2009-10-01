@@ -29,15 +29,8 @@ namespace Sharekhan.domain
         {
             foreach (var transaction in TransactionList)
             {
-                if (transaction.GetType() != typeof (SellTransaction))
-                    continue;
-                if (!realizedProfitsDictionary.ContainsKey(transaction.Instrument))
-                {
-                    realizedProfitsDictionary[transaction.Instrument] = Price.Null;
-                    instrumentQuantities[transaction.Instrument] = 0;
-                }
-                realizedProfitsDictionary[transaction.Instrument] += transaction.EffectiveTransactionAmount();
-                instrumentQuantities[transaction.Instrument] += transaction.Quantity;
+                transaction.UpdateSoldAmounts(realizedProfitsDictionary);
+                transaction.UpdateSoldQuantities(instrumentQuantities);
             }
         }
 
@@ -46,23 +39,12 @@ namespace Sharekhan.domain
         {
             foreach (var transaction in TransactionList)
             {
-                if (transaction.GetType() != typeof (BuyTransaction) ||
-                    !instrumentQuantities.ContainsKey(transaction.Instrument) ||
+                if (!instrumentQuantities.ContainsKey(transaction.Instrument) ||
                     instrumentQuantities[transaction.Instrument] == 0)
                     continue;
 
-                if (instrumentQuantities[transaction.Instrument] < transaction.Quantity)
-                {
-                    realizedProfitsDictionary[transaction.Instrument] -=
-                        new Price(instrumentQuantities[transaction.Instrument]*transaction.UnitPrice.Value +
-                                  ((BuyTransaction) transaction).Tax + ((BuyTransaction) transaction).Brokerage);
-                    instrumentQuantities[transaction.Instrument] = 0;
-                }
-                else
-                {
-                    realizedProfitsDictionary[transaction.Instrument] -= transaction.EffectiveTransactionAmount();
-                    instrumentQuantities[transaction.Instrument] -= transaction.Quantity;
-                }
+                transaction.UpdateBoughtAmounts(realizedProfitsDictionary, instrumentQuantities[transaction.Instrument]);
+                transaction.UpdateBoughtQuantities(instrumentQuantities);
             }
         }
     }

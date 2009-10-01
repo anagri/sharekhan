@@ -27,6 +27,14 @@ namespace Sharekhan.domain
         }
 
         public abstract Price EffectiveTransactionAmount();
+
+        public abstract void UpdateSoldAmounts(IDictionary<Instrument, Price> realizedProfitsDictionary);
+
+        public abstract void UpdateSoldQuantities(IDictionary<Instrument, int> instrumentQuantities);
+
+        public abstract void UpdateBoughtAmounts(IDictionary<Instrument, Price> dictionary, int quantity);
+
+        public abstract void UpdateBoughtQuantities(IDictionary<Instrument, int> dictionary);
         
     }
 }
