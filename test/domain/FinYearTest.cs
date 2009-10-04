@@ -7,29 +7,31 @@ namespace ShareKhan.domain
     public class FinYearTest
     {
         [Test]
-        public void DifferenceBetweenTheStartAndEndYearShouldBeOne()
+        [TestCase(-2009)]
+        [TestCase(-2008)]
+        [ExpectedException(typeof (ArgumentException))]
+        public void FinYearInputShouldBeNonZeroPositive(int startYear)
         {
-            try
-            {
-                var finYear = new FinYear(2009, 2011);
-                Assert.Fail("Should Throw an exception");
-            }
-            catch (ArgumentException e)
-            {
-            }
+            new FinYear(startYear);
         }
 
+
         [Test]
-        public void FinYearInputShouldNotBeNegative()
+        public void ShouldGetTheTaxationPeriodForFinYear()
         {
-            try
-            {
-                var finYear = new FinYear(-2009, -2011);
-                Assert.Fail("Should Throw an exception");
-            }
-            catch (ArgumentException e)
-            {
-            }
+            int curYear = DateTime.Today.Year;
+            int nextYear = DateTime.Today.Year + 1;
+            int prevYear = curYear - 1;
+
+            var finYear = new FinYear(curYear);
+            var taxationPeriod = new FinYear.TaxationPeriod(new DateTime(curYear, 4, 1),
+                                                            new DateTime(nextYear, 3, 31));
+            Assert.AreEqual(taxationPeriod, finYear.GetTaxationPeriod());
+
+            var finYearPrev = new FinYear(prevYear);
+            var prevtaxationPeriod = new FinYear.TaxationPeriod(new DateTime(prevYear, 4, 1),
+                                                                new DateTime(curYear, 3, 31));
+            Assert.AreEqual(prevtaxationPeriod, finYearPrev.GetTaxationPeriod());
         }
     }
 }

@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" auto-import="true" assembly="Sharekhan">
+  <class name="Sharekhan.domain.Transaction" table="transactiontbl">
+    <id name="Id">
+      <generator class="native" />
+    </id>
+    <discriminator column="transaction_Type" type="String" />
+    <property name="Quantity" column="Quantity" type="Int32" />
+    <property name="Date" column="TransactionDate" type="DateTime" />
+    <component name="UnitPrice" class="Sharekhan.domain.Price" insert="true" update="true">
+      <property name="Value" column="UnitPrice" type="Double" length="120"/>
+    </component>
+    <one-to-one  name="Instrument" class="Sharekhan.domain.Instrument" fetch="join" constrained="false" />
+      
+     
+
+    <subclass name="Sharekhan.domain.SellTransaction"  discriminator-value="SELL" dynamic-update="true" dynamic-insert="true">
+      <property name="Tax" type="Double"/>
+      <property name="Brokerage" type="Double"/>
+    </subclass>
+    <subclass name="Sharekhan.domain.BuyTransaction"  discriminator-value="BUY" dynamic-update="true" dynamic-insert="true">
+      <property name="Tax" type="Double"/>
+      <property name="Brokerage" type="Double"/>
+    </subclass>
+    
+    
+  </class> 
+</hibernate-mapping>

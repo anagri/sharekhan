@@ -16,161 +16,163 @@ namespace Sharekhan.test.domain
         [Test]
         public void ShouldBuildDictionariesWithSoldAmountsForDumbCase()
         {
-            DummyPortFolio d = new DummyPortFolio();
-            TransactionStatement ts = new TransactionStatement();
+            TransactionCollection ts =  new TransactionCollection();
+            Dictionary<Instrument, Price> tbl = new Dictionary<Instrument, Price>();
+            Dictionary<Instrument, int> qty = new Dictionary<Instrument, int>();
             Stock relianceShare = new Stock(new Symbol("RIL"), new Price(10.00), "Reliance Industries");
-            ts.addTransaction(new SellTransaction(new DateTime(1999, 5, 20), relianceShare, 5, new Price(1300), 0, 0));
-            d.BuildDictionariesWithSellingAmounts(ts.listOfTransactions());
-            Assert.AreEqual(1300*5, d.realizedProfitsDictionary[relianceShare]);
-            Assert.AreEqual(5, d.qty[relianceShare]);
+            ts.Add(new SellTransaction(new DateTime(1999, 5, 20), relianceShare, 5, new Price(1300), 0, 0));
+            ts.BuildDictionariesWithSellingAmounts(tbl, qty);
+
+            Assert.AreEqual(1300 * 5, tbl[relianceShare].Value);
+            Assert.AreEqual(5, qty[relianceShare]);
         }
 
         [Test]
         public void ShouldBuildDictionariesWithSoldAmountsForCaseWithoutTaxOrBrokerage()
         {
-            DummyPortFolio d = new DummyPortFolio();
-            TransactionStatement ts = new TransactionStatement();
+            TransactionCollection ts = new TransactionCollection();
+            Dictionary<Instrument, Price> tbl = new Dictionary<Instrument, Price>();
+            Dictionary<Instrument, int> qty = new Dictionary<Instrument, int>();
             Stock relianceShare = new Stock(new Symbol("RIL"), new Price(10.00), "Reliance Industries");
             Stock suzlonEnergyShare = new Stock(new Symbol("SUZ"), new Price(1000.00), "Suzlon Energy");
-            ts.addTransaction(new SellTransaction(new DateTime(1999, 5, 20), relianceShare, 5, new Price(13), 0, 0));
-            ts.addTransaction(new SellTransaction(new DateTime(1999, 7, 20), relianceShare, 5, new Price(10), 0, 0));
-            ts.addTransaction(new SellTransaction(new DateTime(1999, 5, 15), suzlonEnergyShare, 8, new Price(20), 0, 0));
-            ts.addTransaction(new SellTransaction(new DateTime(1999, 5, 25), suzlonEnergyShare, 10, new Price(10), 0, 0));
-            d.BuildDictionariesWithSellingAmounts(ts.listOfTransactions());
-            Assert.AreEqual(115, d.realizedProfitsDictionary[relianceShare]);
-            Assert.AreEqual(260, d.realizedProfitsDictionary[suzlonEnergyShare]);
-            Assert.AreEqual(10, d.qty[relianceShare]);
-            Assert.AreEqual(18, d.qty[suzlonEnergyShare]);
+            ts.Add(new SellTransaction(new DateTime(1999, 5, 20), relianceShare, 5, new Price(13), 0, 0));
+            ts.Add(new SellTransaction(new DateTime(1999, 7, 20), relianceShare, 5, new Price(10), 0, 0));
+            ts.Add(new SellTransaction(new DateTime(1999, 5, 15), suzlonEnergyShare, 8, new Price(20), 0, 0));
+            ts.Add(new SellTransaction(new DateTime(1999, 5, 25), suzlonEnergyShare, 10, new Price(10), 0, 0));
+            ts.BuildDictionariesWithSellingAmounts(tbl, qty);
+            Assert.AreEqual(115, tbl[relianceShare].Value);
+            Assert.AreEqual(260, tbl[suzlonEnergyShare].Value);
+            Assert.AreEqual(10, qty[relianceShare]);
+            Assert.AreEqual(18, qty[suzlonEnergyShare]);
         }
 
 
         [Test]
         public void ShouldUpdateRealizedProfitsTrivialCase()
         {
-            DummyPortFolio d = new DummyPortFolio();
+            TransactionCollection ts = new TransactionCollection();
             Stock relianceShare = new Stock(new Symbol("RIL"), new Price(10.00), "Reliance Industries");
-            Dictionary<Instrument, double> mockRP = new Dictionary<Instrument, double>();
-            mockRP.Add(relianceShare, 677.25);
+            Dictionary<Instrument, Price> mockRP = new Dictionary<Instrument, Price>();
+            mockRP.Add(relianceShare, new Price(677.25));
             Dictionary<Instrument, int> mockQty = new Dictionary<Instrument, int>();
             mockQty.Add(relianceShare, 22);
-            d.realizedProfitsDictionary = mockRP;
-            d.qty = mockQty;
 
-            TransactionStatement ts = new TransactionStatement();
-            ts.addTransaction(new BuyTransaction(new DateTime(1999, 3, 20), relianceShare, 10, new Price(25), 0, 0));
-            d.UpdateRealizedProfits(ts.listOfTransactions());
-            Assert.AreEqual(427.25, d.realizedProfitsDictionary[relianceShare]);
-            Assert.AreEqual(12, d.qty[relianceShare]);
+            ts.Add(new BuyTransaction(new DateTime(1999, 3, 20), relianceShare, 10, new Price(25), 0, 0));
+            ts.UpdateRealizedProfits(mockRP, mockQty);
+            Assert.AreEqual(427.25, mockRP[relianceShare].Value);
+            Assert.AreEqual(12, mockQty[relianceShare]);
         }
 
         [Test]
         public void ShouldUpdateRealizedProfitsCaseWithMoreBuyThanSell()
         {
-            DummyPortFolio d = new DummyPortFolio();
+            TransactionCollection ts = new TransactionCollection();
             Stock relianceShare = new Stock(new Symbol("RIL"), new Price(10.00), "Reliance Industries");
-            Dictionary<Instrument, double> mockRP = new Dictionary<Instrument, double>();
-            mockRP.Add(relianceShare, 677.25);
+            Dictionary<Instrument, Price> mockRP = new Dictionary<Instrument, Price>();
+            mockRP.Add(relianceShare, new Price(677.25));
             Dictionary<Instrument, int> mockQty = new Dictionary<Instrument, int>();
             mockQty.Add(relianceShare, 5);
-            d.realizedProfitsDictionary = mockRP;
-            d.qty = mockQty;
 
-            TransactionStatement ts = new TransactionStatement();
-            ts.addTransaction(new BuyTransaction(new DateTime(1999, 3, 20), relianceShare, 10, new Price(25), 0, 0));
-            d.UpdateRealizedProfits(ts.listOfTransactions());
-            Assert.AreEqual(552.25, d.realizedProfitsDictionary[relianceShare]);
-            Assert.AreEqual(0, d.qty[relianceShare]);
+            ts.Add(new BuyTransaction(new DateTime(1999, 3, 20), relianceShare, 10, new Price(25), 0, 0));
+            ts.UpdateRealizedProfits(mockRP, mockQty);
+            Assert.AreEqual(552.25, mockRP[relianceShare].Value);
+            Assert.AreEqual(0, mockQty[relianceShare]);
         }
 
         [Test]
         public void ShouldCalculateRealizedProfitsDumbCaseWithoutTaxOrBrokerage()
         {
-            DummyPortFolio d = new DummyPortFolio();
-            TransactionStatement ts = new TransactionStatement();
+            Portfolio d = new Portfolio();
+            TransactionCollection ts = new TransactionCollection();
             Stock relianceShare = new Stock(new Symbol("RIL"), new Price(10.00), "Reliance Industries");
-            Stock suzlonEnergyShare = new Stock(new Symbol("SUZ"), new Price(1000.00), "Suzlon Energy");
-            ts.addTransaction(new BuyTransaction(new DateTime(1999, 3, 20), relianceShare, 10, new Price(1200), 0, 0));
-            ts.addTransaction(new SellTransaction(new DateTime(1999, 5, 20), relianceShare, 5, new Price(1300), 0, 0));
+            ts.Add(new BuyTransaction(new DateTime(1999, 3, 20), relianceShare, 10, new Price(1200), 0, 0));
+            ts.Add(new SellTransaction(new DateTime(1999, 5, 20), relianceShare, 5, new Price(1300), 0, 0));
             Assert.AreEqual(500, d.CalculateRealizedProfits(ts));
         }
+
+
+        [Test]
+        public void ShouldCalculateRealizedLossesDumbCaseWithoutTaxOrBrokerage()
+        {
+            Portfolio d = new Portfolio();
+            TransactionCollection ts = new TransactionCollection();
+            Stock relianceShare = new Stock(new Symbol("RIL"), new Price(10.00), "Reliance Industries");
+            Stock suzlonEnergyShare = new Stock(new Symbol("SUZ"), new Price(1000.00), "Suzlon Energy");
+            ts.Add(new BuyTransaction(new DateTime(1999, 3, 20), relianceShare, 10, new Price(1300), 0, 0));
+            ts.Add(new SellTransaction(new DateTime(1999, 5, 20), relianceShare, 5, new Price(1200), 0, 0));
+            Assert.AreEqual(-500, d.CalculateRealizedProfits(ts));
+        }
+
+  
 
         [Test]
         public void ShouldCalculateRealizedProfitsComplexCaseWithoutTaxOrBrokerage()
         {
-            DummyPortFolio d = new DummyPortFolio();
-            TransactionStatement ts = new TransactionStatement();
+            Portfolio d = new Portfolio();
+            TransactionCollection ts = new TransactionCollection();
             Stock relianceShare = new Stock(new Symbol("RIL"), new Price(10.00), "Reliance Industries");
             Stock suzlonEnergyShare = new Stock(new Symbol("SUZ"), new Price(1000.00), "Suzlon Energy");
-            ts.addTransaction(new BuyTransaction(new DateTime(1999, 3, 20), relianceShare, 10, new Price(12), 0, 0));
-            ts.addTransaction(new SellTransaction(new DateTime(1999, 5, 20), relianceShare, 5, new Price(13), 0, 0));
-            ts.addTransaction(new SellTransaction(new DateTime(1999, 7, 20), relianceShare, 3, new Price(13), 0, 0));
-            ts.addTransaction(new BuyTransaction(new DateTime(1999, 7, 20), suzlonEnergyShare, 11, new Price(15), 0, 0));
-            ts.addTransaction(new SellTransaction(new DateTime(1999, 10, 20), suzlonEnergyShare, 5, new Price(20), 0, 0));
-            ts.addTransaction(new SellTransaction(new DateTime(1999, 10, 20), suzlonEnergyShare, 3, new Price(20), 0, 0));
-            ts.addTransaction(new BuyTransaction(new DateTime(1999, 10, 20), suzlonEnergyShare, 4, new Price(18), 0, 0));
+            ts.Add(new BuyTransaction(new DateTime(1999, 3, 20), relianceShare, 10, new Price(12), 0, 0));
+            ts.Add(new SellTransaction(new DateTime(1999, 5, 20), relianceShare, 5, new Price(13), 0, 0));
+            ts.Add(new SellTransaction(new DateTime(1999, 7, 20), relianceShare, 3, new Price(13), 0, 0));
+            ts.Add(new BuyTransaction(new DateTime(1999, 7, 20), suzlonEnergyShare, 11, new Price(15), 0, 0));
+            ts.Add(new SellTransaction(new DateTime(1999, 10, 20), suzlonEnergyShare, 5, new Price(20), 0, 0));
+            ts.Add(new SellTransaction(new DateTime(1999, 10, 20), suzlonEnergyShare, 3, new Price(20), 0, 0));
+            ts.Add(new BuyTransaction(new DateTime(1999, 10, 20), suzlonEnergyShare, 4, new Price(18), 0, 0));
             Assert.AreEqual(48, d.CalculateRealizedProfits(ts));
         }
 
-    }
-
-    public class DummyPortFolio
-    {
-        //TODO : Make Sure List is sorted in terms of Date
-        public Dictionary<Instrument, double> realizedProfitsDictionary = new Dictionary<Instrument, double>();
-        public Dictionary<Instrument, int> qty = new Dictionary<Instrument, int>();
-        
-        public double CalculateRealizedProfits(TransactionStatement statement)
+        [Test]
+        public void ShouldCalculateRealizedProfitsAtInstrumentLevel()
         {
-            double realizedProfits = 0.0;
-            List<Transaction> listOfTransactions = statement.listOfTransactions();
-
-            BuildDictionariesWithSellingAmounts(listOfTransactions);
-
-            UpdateRealizedProfits(listOfTransactions);
-
-            foreach (KeyValuePair<Instrument, double> kvp in realizedProfitsDictionary)
-            {
-                realizedProfits += kvp.Value;
-            }
-            return realizedProfits;
+            Portfolio d = new Portfolio();
+            TransactionCollection ts = new TransactionCollection();
+            Stock relianceShare = new Stock(new Symbol("RIL"), new Price(10.00), "Reliance Industries");
+            ts.Add(new BuyTransaction(new DateTime(1999, 3, 20), relianceShare, 10, new Price(1200), 0, 0));
+            ts.Add(new SellTransaction(new DateTime(1999, 5, 20), relianceShare, 5, new Price(1300), 0, 0));
+            Assert.AreEqual(500, d.CalculateRealizedProfits(ts,relianceShare));
         }
 
-        public void BuildDictionariesWithSellingAmounts(List<Transaction> listOfTransactions)
+        [Test]
+        public void ShouldCalculateRealizedProfitsAtInstrumentLevelComplexCase()
         {
-            foreach (var transaction in listOfTransactions)
-            {
-                if (transaction.GetType() != typeof (SellTransaction))
-                    continue;
-                if (!realizedProfitsDictionary.ContainsKey(transaction.Instrument))
-                {
-                    realizedProfitsDictionary[transaction.Instrument] = 0;
-                    qty[transaction.Instrument] = 0;
-                }
-                realizedProfitsDictionary[transaction.Instrument] += transaction.UnitPrice.Value*transaction.Quantity;
-                qty[transaction.Instrument] += transaction.Quantity;
-            }
+            Portfolio d = new Portfolio();
+            TransactionCollection ts = new TransactionCollection();
+            Stock relianceShare = new Stock(new Symbol("RIL"), new Price(10.00), "Reliance Industries");
+            Stock infyShare = new Stock(new Symbol("INF"), new Price(100.00), "Infosys");
+            ts.Add(new BuyTransaction(new DateTime(1999, 3, 20), relianceShare, 10, new Price(1200), 0, 0));
+            ts.Add(new SellTransaction(new DateTime(1999, 5, 20), relianceShare, 5, new Price(1300), 0, 0));
+            ts.Add(new BuyTransaction(new DateTime(1999, 8, 20), infyShare, 67, new Price(110), 0, 0));
+            ts.Add(new SellTransaction(new DateTime(2000, 9, 20), infyShare, 63, new Price(101), 0, 0));
+            Assert.AreEqual(500, d.CalculateRealizedProfits(ts, relianceShare));
+            Assert.AreEqual(-567, d.CalculateRealizedProfits(ts, infyShare));
         }
 
-        public void UpdateRealizedProfits(List<Transaction> listOfTransactions)
+        [Test]
+        public void ShouldCalculateRealizedProfitsWithTaxAndBrokerage()
         {
-            foreach (var transaction in listOfTransactions)
-            {
-                if (transaction.GetType() != typeof(BuyTransaction) || !qty.ContainsKey(transaction.Instrument) || qty[transaction.Instrument] == 0)
-                    continue;
+            Portfolio d = new Portfolio();
+            TransactionCollection ts = new TransactionCollection();
+            Stock relianceShare = new Stock(new Symbol("RIL"), new Price(10.00), "Reliance Industries");
+            Stock suzlonEnergyShare = new Stock(new Symbol("SUZ"), new Price(1000.00), "Suzlon Energy");
+            ts.Add(new BuyTransaction(new DateTime(1999, 3, 20), relianceShare, 10, new Price(1200), 1000, 0));
+            ts.Add(new SellTransaction(new DateTime(1999, 5, 20), relianceShare, 5, new Price(1300), 0, 1000));
+            Assert.AreEqual(-1500, d.CalculateRealizedProfits(ts));
+            
+        }
 
-                double buyingPrice;
-                if (qty[transaction.Instrument] < transaction.Quantity)
-                {
-                    buyingPrice = qty[transaction.Instrument]*transaction.UnitPrice.Value;
-                    qty[transaction.Instrument] = 0;
-                }
-                else
-                {
-                    buyingPrice = transaction.Quantity*transaction.UnitPrice.Value;
-                    qty[transaction.Instrument] -= transaction.Quantity;
-                }
-                realizedProfitsDictionary[transaction.Instrument] -= buyingPrice;
-            }
+        [Test,Ignore]
+        public void ShouldCalculateRealizedProfitsComplexCaseWithDateMismatch()
+        {
+            Portfolio d = new Portfolio();
+            TransactionCollection ts = new TransactionCollection();
+            Stock relianceShare = new Stock(new Symbol("RIL"), new Price(10.00), "Reliance Industries");
+            ts.Add(new BuyTransaction(new DateTime(1999, 3, 20), relianceShare, 5, new Price(12), 0, 0));
+            ts.Add(new BuyTransaction(new DateTime(1999, 2, 20), relianceShare, 5, new Price(10), 0, 0));
+            ts.Add(new SellTransaction(new DateTime(1999, 5, 20), relianceShare, 5, new Price(13), 0, 0));
+            ts.Add(new SellTransaction(new DateTime(1999, 7, 20), relianceShare, 3, new Price(13), 0, 0));
+            Assert.AreEqual(18, d.CalculateRealizedProfits(ts));
         }
     }
+
 }

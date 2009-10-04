@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using NHibernate;
 using NHibernate.Cfg;
+using NHibernate.Criterion;
 using NHibernate.Tool.hbm2ddl;
 using Sharekhan.domain;
 
@@ -35,13 +36,21 @@ namespace ShareKhan.persist
 
         public T LookupBySymbol<T>(Symbol symbol)
         {
-            //return (T)session.CreateQuery("from Instrument where symbol=:symbol").SetParameter("symbol", symbol.Value).UniqueResult();
-            throw new NotImplementedException();
+            return (T)session.CreateQuery("from Instrument where symbol=:symbol").
+                SetParameter("symbol", symbol.Value).UniqueResult();
+        } 
+
+        public IList<T> ListTransactionsByInstrumentId<T>(int id)
+        {
+            //return (IList<T>)session.CreateQuery("from Transaction where Instrument=:id").SetParameter("id", id).List<T>();
+
+            return session.CreateCriteria(typeof (Transaction)).Add(Expression.Eq("Instrument.Id", id)).List<T>();
+
         }
 
-        public List<T> ListTransactionsByInstrumentId<T>(int id)
+        public IList<T> ListAllSymbols<T>()
         {
-            throw new NotImplementedException();
+            return session.CreateQuery("Select distinct i.Symbol from Instrument i").List<T>();
         }
 
         public void Delete(object entity)
@@ -61,7 +70,7 @@ namespace ShareKhan.persist
                 session = _sessionFactory.OpenSession();
                 session.BeginTransaction();
                 IDbConnection connection = session.Connection;
-                new SchemaExport(configuration).Execute(false, true, false, true, connection, null);
+//                new SchemaExport(configuration).Execute(false, true, false, true, connection, null);
             }
             ++transactionCounter;
         }
