@@ -62,13 +62,6 @@ namespace ShareKhan.domain
             return value;
         }
 
-        public Price CurrentMarketValue()
-        {
-            return new Price(100);
-        }
-
-
-
         public void CalcShortTermCapitalGainTax(FinYear year)
         {
             throw new NotImplementedException();
