@@ -62,7 +62,7 @@ namespace ShareKhan.domain
             return value;
         }
 
-        public Price CurrentMarketValue()
+        public Price CurrentMarketValueOther()
         {
             return new Price(100);
         }
