@@ -1,5 +1,6 @@
 ﻿using System;
 using NUnit.Framework;
+using ShareKhan.domain;
 
 namespace Sharekhan.domain
 {
@@ -53,6 +54,33 @@ namespace Sharekhan.domain
             Assert.AreEqual(expectedTransaction.Quantity, actualTransaction.Quantity);
             Assert.AreEqual(expectedTransaction.Instrument, actualTransaction.Instrument);
             Assert.AreEqual(expectedTransaction.Date, actualTransaction.Date);
+        }
+
+        [Test]
+        public void ShouldUpdateQuantityOnAdditionOfUnitDividend()
+        {
+            Portfolio d = new Portfolio();
+            TransactionCollection ts = new TransactionCollection();
+            Stock relianceShare = new Stock(new Symbol("RIL"), new Price(10.00), "Reliance Industries");
+            ts.Add(new BuyTransaction(new DateTime(1999, 3, 20), relianceShare, 10, new Price(1200), 1000, 0));
+            ts.Add(new SellTransaction(new DateTime(1999, 5, 20), relianceShare, 5, new Price(1300), 0, 1000));
+            ts.Add(new UnitDividendTransaction(relianceShare, 2, new DateTime(1999, 5, 20)));
+
+            int actualQty = 0;
+
+            foreach (Transaction transaction in ts.TransactionList)
+            {
+                if ((transaction is BuyTransaction) || (transaction is UnitDividendTransaction))
+                {
+                    actualQty += transaction.Quantity;
+                }
+                else
+                {
+                    actualQty -= transaction.Quantity;
+                }
+            }
+
+            Assert.AreEqual(7, actualQty);
         }
     }
 }

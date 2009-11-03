@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Sharekhan.domain
 {
@@ -37,6 +38,20 @@ namespace Sharekhan.domain
         public static bool operator !=(CashDividendTransaction left, CashDividendTransaction right)
         {
             return !Equals(left, right);
+        }
+
+        public override void UpdateSoldAmounts(IDictionary<Instrument, Price> realizedProfitsDictionary)
+        {
+            if (!realizedProfitsDictionary.ContainsKey(Instrument))
+            {
+                realizedProfitsDictionary[Instrument] = Price.Null;
+            }
+            realizedProfitsDictionary[Instrument] += EffectiveTransactionAmount();
+        }
+    
+        public override Price EffectiveTransactionAmount()
+        {
+            return new Price((UnitPrice.Value));
         }
     }
 }
