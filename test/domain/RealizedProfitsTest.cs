@@ -160,6 +160,18 @@ namespace Sharekhan.test.domain
             Assert.AreEqual(-1500, d.CalculateRealizedProfits(ts));
             
         }
+        
+        [Test]
+        public void ShouldIncludeDividendInRealizedProfit()
+        {
+            Portfolio d = new Portfolio();
+            TransactionCollection ts = new TransactionCollection();
+            Stock relianceShare = new Stock(new Symbol("RIL"), new Price(10.00), "Reliance Industries");
+            ts.Add(new BuyTransaction(new DateTime(1999, 3, 20), relianceShare, 10, new Price(1200), 1000, 0));
+            ts.Add(new SellTransaction(new DateTime(1999, 5, 20), relianceShare, 5, new Price(1300), 0, 1000));
+            ts.Add(new CashDividendTransaction(relianceShare,new Price(50),new DateTime(1999, 5, 20)));
+            Assert.AreEqual(-1450, d.CalculateRealizedProfits(ts));
+        }
 
         [Test,Ignore]
         public void ShouldCalculateRealizedProfitsComplexCaseWithDateMismatch()

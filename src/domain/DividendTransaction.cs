@@ -12,27 +12,23 @@ namespace Sharekhan.domain
 
         public override Price EffectiveTransactionAmount()
         {
-            throw new NotImplementedException();
+            return Price.Null;
         }
 
         public override void UpdateSoldAmounts(IDictionary<Instrument, Price> realizedProfitsDictionary)
         {
-            throw new NotImplementedException();
         }
 
         public override void UpdateSoldQuantities(IDictionary<Instrument, int> instrumentQuantities)
         {
-            throw new NotImplementedException();
         }
 
         public override void UpdateBoughtAmounts(IDictionary<Instrument, Price> dictionary, int quantity)
         {
-            throw new NotImplementedException();
         }
 
         public override void UpdateBoughtQuantities(IDictionary<Instrument, int> dictionary)
         {
-            throw new NotImplementedException();
         }
 
         protected DividendTransaction()
