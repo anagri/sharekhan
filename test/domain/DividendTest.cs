@@ -17,9 +17,9 @@ namespace Sharekhan.domain
             CashDividendTransaction actualTransaction =
                 selectedMutualFund.CreateCashDividendTransaction(new Price(100),
                                                                  firstOfJan2008);
-            Assert.AreEqual(expectedTransaction.DividendAmount, actualTransaction.DividendAmount);
+            Assert.AreEqual(expectedTransaction.UnitPrice, actualTransaction.UnitPrice);
             Assert.AreEqual(expectedTransaction.Instrument, actualTransaction.Instrument);
-            Assert.AreEqual(expectedTransaction.TransactionDate, actualTransaction.TransactionDate);
+            Assert.AreEqual(expectedTransaction.Date, actualTransaction.Date);
         }
 
         [Test]
@@ -32,9 +32,9 @@ namespace Sharekhan.domain
             CashDividendTransaction actualTransaction =
                 selectedStock.CreateDividendTransaction(new Price(100),
                                                         firstOfJan2008);
-            Assert.AreEqual(expectedTransaction.DividendAmount, actualTransaction.DividendAmount);
+            Assert.AreEqual(expectedTransaction.Date, actualTransaction.Date);
             Assert.AreEqual(expectedTransaction.Instrument, actualTransaction.Instrument);
-            Assert.AreEqual(expectedTransaction.TransactionDate, actualTransaction.TransactionDate);
+            Assert.AreEqual(expectedTransaction.Date, actualTransaction.Date);
         }
 
         [Test]
@@ -52,8 +52,7 @@ namespace Sharekhan.domain
                                                                  firstOfJan2008);
             Assert.AreEqual(expectedTransaction.Quantity, actualTransaction.Quantity);
             Assert.AreEqual(expectedTransaction.Instrument, actualTransaction.Instrument);
-            Assert.AreEqual(expectedTransaction.TransactionDate, actualTransaction.TransactionDate);
-            Assert.AreEqual(expectedTransaction.TransactionDate, actualTransaction.TransactionDate);
+            Assert.AreEqual(expectedTransaction.Date, actualTransaction.Date);
         }
     }
 }
