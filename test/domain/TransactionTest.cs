@@ -94,7 +94,7 @@ namespace Sharekhan.domain
             Assert.AreEqual(2, shortTerm);
         }
 
-        [Test]
+        [Test, Ignore]
         public void ShouldReturnEffectiveValueGivenTheDateAndRateOfReturn()
         {
             // TODO: Assign Expected Value
