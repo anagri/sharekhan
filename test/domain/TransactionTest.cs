@@ -93,5 +93,23 @@ namespace Sharekhan.domain
             Assert.AreEqual(2, longTerm);
             Assert.AreEqual(2, shortTerm);
         }
+
+        [Test]
+        public void ShouldReturnEffectiveValueGivenTheDateAndRateOfReturn()
+        {
+            // TODO: Assign Expected Value
+            double expectedValue = 0.0;
+            DateTime transactionDate = new DateTime(2008, 3, 10);
+            DateTime effectiveDate = new DateTime(2009, 11, 3);
+            double effectiveRate = 0.3;
+
+            var tx = new BuyTransaction(transactionDate, 
+                new Stock(new Symbol("STOCK1"), new Price(100.0), "Stock 1" ),
+                100,
+                new Price(100.0), 
+                10,
+                0.5);
+            Assert.AreEqual(expectedValue, tx.GetEffectiveValue(effectiveDate, effectiveRate).Value, 0.005*expectedValue);
+        }
     }
 }
