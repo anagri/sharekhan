@@ -1,31 +1,50 @@
 using System;
+using System.Collections.Generic;
 
 namespace Sharekhan.domain
 {
-    public class DividendTransaction
+    public class DividendTransaction : Transaction
     {
-        public virtual int Id { get; set; }
-        public virtual Price DividendAmount { get; set; }
-        public virtual int Quantity { get; set; }
-        public virtual DateTime TransactionDate { get; set; }
-        public virtual Instrument Instrument { get; set; }
+        public override Price TransactionAmount()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override Price EffectiveTransactionAmount()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void UpdateSoldAmounts(IDictionary<Instrument, Price> realizedProfitsDictionary)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void UpdateSoldQuantities(IDictionary<Instrument, int> instrumentQuantities)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void UpdateBoughtAmounts(IDictionary<Instrument, Price> dictionary, int quantity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void UpdateBoughtQuantities(IDictionary<Instrument, int> dictionary)
+        {
+            throw new NotImplementedException();
+        }
 
         protected DividendTransaction()
         {
         }
 
-        public DividendTransaction(Instrument instrument, Price dividendAmount, DateTime transactionDate)
+        public DividendTransaction(Instrument instrument, Price dividendAmount, DateTime transactionDate) : base(transactionDate, instrument, 0,dividendAmount)
         {
-            DividendAmount = dividendAmount;
-            TransactionDate = transactionDate;
-            Instrument = instrument;
         }
 
-        public DividendTransaction(Instrument instrument, int quantity, DateTime transactionDate)
+        public DividendTransaction(Instrument instrument, int quantity, DateTime transactionDate) : base(transactionDate, instrument, quantity, Price.Null)
         {
-            Quantity = quantity;
-            TransactionDate = transactionDate;
-            Instrument = instrument;
         }
 
         public virtual bool Equals(DividendTransaction other)

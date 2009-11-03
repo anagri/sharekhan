@@ -124,6 +124,28 @@ namespace ShareKhan.domain
         }
 
 
+        [Test,Ignore]
+        public void CanCalculateEffectiveRateOfReturn()
+        {
+            Symbol s1 = new Symbol("STK1");
+            Symbol s2 = new Symbol("STK2");
+
+            Instrument i1 = new Stock(s1, new Price(100.00), "My first stock");
+            Instrument i2 = new Stock(s2, new Price(50.00), "Another Stock");
+
+            var transactions = new List<Transaction>
+                                   {
+                                       new BuyTransaction(new DateTime(2007, 1, 1), i1, 10, new Price(100.00), 10, 0.5),
+                                       new BuyTransaction(new DateTime(2007, 3, 1), i2, 20, new Price(50.0), 10, 0.5),
+                                       new SellTransaction(new DateTime(2008, 8, 1), i1, 5, new Price(600.0), 10, 0.5)
+                                   };
+
+            var mockRepository = new Mock<IRepository>();
+
+            Portfolio p = new Portfolio();
+            Assert.AreEqual(0.8, p.GetEffectiveRateOfReturn(), 0.005);           
+
+        }
 
 
         [Test]

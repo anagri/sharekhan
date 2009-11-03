@@ -103,6 +103,10 @@ namespace ShareKhan.domain
                 }
             }
             return CalculateRealizedProfits(instrumentSpecificTransaction);
+        }        
+        public double GetEffectiveRateOfReturn()
+        {
+            throw new NotImplementedException();
         }
     }
 }
