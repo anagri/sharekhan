@@ -22,6 +22,18 @@ namespace Sharekhan.domain
 
             Assert.AreNotEqual(fourRuppees, new AlternateClass());
         }
+
+        [Test]
+        public void ShouldReturnEffectiveValueOfThePriceForADurationAndRate()
+        {
+            double basePrice = 1000.0;
+            var price = new Price(basePrice);
+            double delta = 0.005 * basePrice;
+
+            Assert.AreEqual((new Price(1000*1.3)).Value, price.GetEffectiveValue(1, 0.3).Value, delta);
+            Assert.AreEqual((new Price(1000/(1.2*1.2))).Value, price.GetEffectiveValue(-2, 0.2).Value, delta);
+            Assert.AreEqual(1323.938, price.GetEffectiveValue(1.258, 0.25).Value, delta);
+        }
     }
 
     public class AlternateClass

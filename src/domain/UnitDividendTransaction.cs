@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Sharekhan.domain
 {
@@ -38,6 +39,18 @@ namespace Sharekhan.domain
         public static bool operator !=(UnitDividendTransaction left, UnitDividendTransaction right)
         {
             return !Equals(left, right);
+        }
+
+        public override void UpdateBoughtQuantities(IDictionary<Instrument, int> instrumentQuantities)
+        {
+            if (instrumentQuantities[Instrument] < Quantity)
+            {
+                instrumentQuantities[Instrument] = 0;
+            }
+            else
+            {
+                instrumentQuantities[Instrument] -= Quantity;
+            }
         }
     }
 }

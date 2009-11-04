@@ -96,6 +96,7 @@
     <Compile Include="src\domain\PortfolioStatement.cs" />
     <Compile Include="src\domain\Price.cs" />
     <Compile Include="src\domain\SellTransaction.cs" />
+    <Compile Include="src\domain\SinglePayOut.cs" />
     <Compile Include="src\domain\Statement.cs" />
     <Compile Include="src\domain\Stock.cs" />
     <Compile Include="src\domain\Symbol.cs" />
@@ -113,6 +114,7 @@
     <Compile Include="test\domain\PortfolioTest.cs" />
     <Compile Include="test\domain\PriceTest.cs" />
     <Compile Include="test\domain\RealizedProfitsTest.cs" />
+    <Compile Include="test\domain\SinglePayOutTest.cs" />
     <Compile Include="test\domain\StockTest.cs" />
     <Compile Include="test\domain\SymbolTest.cs" />
     <Compile Include="test\domain\TransactionTest.cs" />

@@ -33,6 +33,18 @@ namespace Sharekhan.domain
             Transaction transaction = repository.Lookup<Transaction>(sellTransaction.Id);
             Assert.IsNotNull(transaction);
             Assert.AreEqual(transaction.Id, sellTransaction.Id);
+        }        
+        
+        [Test]
+        public void Verify_Cash_Dividend_Transaction()
+        {
+            Stock share = new Stock(new Symbol("REL"), new Price(10.00), "Reliance Power");
+            Transaction cashDividendTransaction = new CashDividendTransaction(share, new Price(500), DateTime.Today);
+            repository.Save(cashDividendTransaction);
+            Assert.IsTrue(cashDividendTransaction.Id > 0);
+            Transaction transaction = repository.Lookup<Transaction>(cashDividendTransaction.Id);
+            Assert.IsNotNull(transaction);
+            Assert.AreEqual(transaction.Id, cashDividendTransaction.Id);
         }
 
         [Test]
@@ -114,6 +126,24 @@ namespace Sharekhan.domain
 
 
             Assert.AreEqual(4, list.Count);
+        }
+
+        [Test, Ignore]
+        public void ShouldReturnEffectiveValueGivenTheDateAndRateOfReturn()
+        {
+            // TODO: Assign Expected Value
+            double expectedValue = 0.0;
+            DateTime transactionDate = new DateTime(2008, 3, 10);
+            DateTime effectiveDate = new DateTime(2009, 11, 3);
+            double effectiveRate = 0.3;
+
+            var tx = new BuyTransaction(transactionDate, 
+                new Stock(new Symbol("STOCK1"), new Price(100.0), "Stock 1" ),
+                100,
+                new Price(100.0), 
+                10,
+                0.5);
+            Assert.AreEqual(expectedValue, tx.GetEffectiveValue(effectiveDate, effectiveRate).Value, 0.005*expectedValue);
         }
 
         [Test]
