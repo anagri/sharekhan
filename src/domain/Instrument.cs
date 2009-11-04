@@ -44,8 +44,8 @@ namespace Sharekhan.domain
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != typeof (Instrument)) return false;
-            return Equals((Instrument) obj);
+            if (obj.GetType() != typeof(Instrument)) return false;
+            return Equals((Instrument)obj);
         }
 
         public override int GetHashCode()
@@ -67,7 +67,7 @@ namespace Sharekhan.domain
         {
             return string.Format("Id: {0}", Id);
         }
-        
+
         public virtual Price CurrentMarketValue(IList<Transaction> transactions)
         {
             Price CurrentPrice = this.CurrentPrice;
@@ -86,8 +86,15 @@ namespace Sharekhan.domain
                 }
             }
 
-            value.Value = count * CurrentPrice.Value;
+            value.Value = count*CurrentPrice.Value;
             return value;
+        }
+
+        public virtual Price CalculateShortTermTax(BuyTransaction buyTransaction, SellTransaction sellTransaction)
+        {
+
+            return sellTransaction.CalculateShortTermTax(buyTransaction);
+           
         }
     }
 

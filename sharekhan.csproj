@@ -109,6 +109,7 @@
     <Compile Include="test\domain\FinYearTest.cs" />
     <Compile Include="test\domain\InstrumentTest.cs" />
     <Compile Include="src\domain\MutualFund.cs" />
+    <Compile Include="test\domain\LibraryTest.cs" />
     <Compile Include="test\domain\MutualFundTest.cs" />
     <Compile Include="test\domain\PortfolioTest.cs" />
     <Compile Include="test\domain\PriceTest.cs" />

@@ -145,5 +145,33 @@ namespace Sharekhan.domain
                 0.5);
             Assert.AreEqual(expectedValue, tx.GetEffectiveValue(effectiveDate, effectiveRate).Value, 0.005*expectedValue);
         }
+
+        [Test]
+        public void ShouldBeAbleToCalculateShortTermTaxForOneBuyAndSell()
+        {
+            Instrument share = new Stock(new Symbol("REL"), new Price(10.00), "Reliance Power");
+            BuyTransaction buyTransaction = new BuyTransaction(new DateTime(2008, 06, 01), share, 10, new Price(10.00), 5.00, 3.00);
+            SellTransaction sellTransaction = new SellTransaction(new DateTime(2008, 12, 01), share, 10, new Price(20.00), 5.00, 3.00);
+
+
+            Price price = share.CalculateShortTermTax(buyTransaction, sellTransaction);
+            Assert.AreEqual(20,price.Value);
+            
+        }
+
+
+        [Test]
+        public void ShouldNotCalculateShortTermTaxForLongTermTransactions()
+        {
+            Instrument share = new Stock(new Symbol("REL"), new Price(10.00), "Reliance Power");
+            BuyTransaction buyTransaction = new BuyTransaction(new DateTime(2008, 06, 01), share, 10, new Price(10.00), 5.00, 3.00);
+            SellTransaction sellTransaction = new SellTransaction(new DateTime(2009, 12, 01), share, 10, new Price(20.00), 5.00, 3.00);
+
+
+            Price price = share.CalculateShortTermTax(buyTransaction, sellTransaction);
+            Assert.AreEqual(0, price.Value);
+
+        }
+        
     }
 }
