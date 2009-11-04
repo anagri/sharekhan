@@ -15,6 +15,11 @@ namespace Sharekhan.domain
             return Amount();
         }
 
+        public override int EffectiveTransactionQuantity()
+        {
+            return 0;
+        }
+
         public override void UpdateSoldAmounts(IDictionary<Instrument, Price> realizedProfitsDictionary)
         {
         }

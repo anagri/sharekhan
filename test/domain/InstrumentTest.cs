@@ -32,6 +32,7 @@ namespace Sharekhan.domain
             List<Transaction> listTransaction = new List<Transaction>();
             listTransaction.Add(transaction1);
             listTransaction.Add(transaction2);
+            Assert.AreEqual(500.00, instrument.CurrentMarketValue(listTransaction).Value);
             listTransaction.Add(transaction3);
 
             Assert.AreEqual(1000.00, instrument.CurrentMarketValue(listTransaction).Value);
