@@ -33,6 +33,18 @@ namespace Sharekhan.domain
             Transaction transaction = repository.Lookup<Transaction>(sellTransaction.Id);
             Assert.IsNotNull(transaction);
             Assert.AreEqual(transaction.Id, sellTransaction.Id);
+        }        
+        
+        [Test]
+        public void Verify_Cash_Dividend_Transaction()
+        {
+            Stock share = new Stock(new Symbol("REL"), new Price(10.00), "Reliance Power");
+            Transaction cashDividendTransaction = new CashDividendTransaction(share, new Price(500), DateTime.Today);
+            repository.Save(cashDividendTransaction);
+            Assert.IsTrue(cashDividendTransaction.Id > 0);
+            Transaction transaction = repository.Lookup<Transaction>(cashDividendTransaction.Id);
+            Assert.IsNotNull(transaction);
+            Assert.AreEqual(transaction.Id, cashDividendTransaction.Id);
         }
 
         [Test]
