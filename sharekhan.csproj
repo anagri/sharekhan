@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{77CF5C49-3FC3-42AA-82A7-BB9E85BB8417}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -96,6 +96,7 @@
     <Compile Include="src\domain\PortfolioStatement.cs" />
     <Compile Include="src\domain\Price.cs" />
     <Compile Include="src\domain\SellTransaction.cs" />
+    <Compile Include="src\domain\SinglePayOut.cs" />
     <Compile Include="src\domain\Statement.cs" />
     <Compile Include="src\domain\Stock.cs" />
     <Compile Include="src\domain\Symbol.cs" />
@@ -112,6 +113,7 @@
     <Compile Include="test\domain\PortfolioTest.cs" />
     <Compile Include="test\domain\PriceTest.cs" />
     <Compile Include="test\domain\RealizedProfitsTest.cs" />
+    <Compile Include="test\domain\SinglePayOutTest.cs" />
     <Compile Include="test\domain\StockTest.cs" />
     <Compile Include="test\domain\SymbolTest.cs" />
     <Compile Include="test\domain\TransactionTest.cs" />
