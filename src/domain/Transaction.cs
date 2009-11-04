@@ -15,6 +15,8 @@ namespace Sharekhan.domain
         public virtual DateTime Date { get; set; }
         public virtual Price UnitPrice { get; set; }
 
+        public static int NUMBER_OF_DAYS_IN_YEAR = 365;
+
 
         public Transaction()
         {
@@ -35,6 +37,9 @@ namespace Sharekhan.domain
         {
             return (this.Date < year.GetTaxationPeriod().Value.StartDate);
         }
+
+        
+
 
 
         public abstract Price EffectiveTransactionAmount();
