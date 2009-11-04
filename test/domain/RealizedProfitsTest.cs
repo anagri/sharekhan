@@ -6,6 +6,7 @@ using NUnit.Framework;
 using Sharekhan.domain;
 using ShareKhan.domain;
 using Moq;
+using Sharekhan.src.domain;
 
 
 namespace Sharekhan.test.domain
@@ -185,6 +186,15 @@ namespace Sharekhan.test.domain
             ts.Add(new SellTransaction(new DateTime(1999, 7, 20), relianceShare, 3, new Price(13), 0, 0));
             Assert.AreEqual(18, d.CalculateRealizedProfits(ts));
         }
-    }
 
+        [Test,Ignore]
+        public void ShouldCalculateARealisedProfitForTermDeposit()
+        {
+            Portfolio portfolio = new Portfolio();
+            TransactionCollection tc = new TransactionCollection();
+            Instrument singliePayout = new SinglePayOut(new Term(2),new Price(10000),new Symbol("CITI"),"Two year deposit at CITI",new InterestRate(10),new DepositDate(new DateTime(2009,11,01)));
+            tc.Add(new BuyTransaction(new DateTime(2009, 11, 01), singliePayout, 1, new Price(10000), 0, 0));
+            Assert.AreEqual(0,portfolio.CalculateRealizedProfits(tc));
+        }
+    }
 }

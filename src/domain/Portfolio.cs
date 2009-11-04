@@ -41,25 +41,9 @@ namespace ShareKhan.domain
         public Price CurrentMarketValue(Symbol symbol)
         {
             Instrument instrument = Repository.LookupBySymbol<Instrument>(symbol);
-            Price CurrentPrice = instrument.CurrentPrice;
-            Price value = new Price(0.0);
             IList<Transaction> list = Repository.ListTransactionsByInstrumentId<Transaction>(instrument.Id);
-            int count = 0;
 
-            foreach (Transaction trans in list)
-            {
-                if (trans is BuyTransaction)
-                {
-                    count += trans.Quantity;
-                }
-                else if (trans is SellTransaction)
-                {
-                    count -= trans.Quantity;
-                }
-            }
-
-            value.Value = count*CurrentPrice.Value;
-            return value;
+            return instrument.CurrentMarketValue(list);
         }
 
         public Price CurrentMarketValueOther()
