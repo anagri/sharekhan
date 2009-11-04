@@ -172,6 +172,20 @@ namespace Sharekhan.domain
             Assert.AreEqual(0, price.Value);
 
         }
+        [Test, Ignore]
+        public void ShouldCreateStackOfBuyAndSellTransactionsGivenAListOfTransactions()
+        {
+            Instrument share = new Stock(new Symbol("REL"), new Price(10.00), "Reliance Power");
+            Transaction buyTransaction1 = new BuyTransaction(new DateTime(2008, 06, 01), share, 10, new Price(10.00), 5.00, 3.00);
+            Transaction sellTransaction1 = new SellTransaction(new DateTime(2008, 12, 01), share, 2, new Price(20.00), 5.00, 3.00);
+            Transaction buyTransaction2 = new BuyTransaction(new DateTime(2009, 06, 01), share, 12, new Price(50.00), 5.00, 3.00);
+            Transaction sellTransaction2 = new SellTransaction(new DateTime(2009, 12, 01), share, 20, new Price(100.00), 5.00, 3.00);
+
+            List<Transaction> listTransaction = new List<Transaction> { buyTransaction1, sellTransaction1, buyTransaction2, sellTransaction2 };
+
+
+            
+        }
         
     }
 }
