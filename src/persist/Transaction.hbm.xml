@@ -22,6 +22,10 @@
       <property name="Tax" type="Double"/>
       <property name="Brokerage" type="Double"/>
     </subclass>
+    <subclass name="Sharekhan.domain.CashDividendTransaction"  discriminator-value="CASHDIV" dynamic-update="true" dynamic-insert="true">
+    </subclass>
+    <subclass name="Sharekhan.domain.UnitDividendTransaction"  discriminator-value="UNITDIV" dynamic-update="true" dynamic-insert="true">
+    </subclass>
     
     
   </class> 

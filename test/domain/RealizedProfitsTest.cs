@@ -167,11 +167,45 @@ namespace Sharekhan.test.domain
             Portfolio d = new Portfolio();
             TransactionCollection ts = new TransactionCollection();
             Stock relianceShare = new Stock(new Symbol("RIL"), new Price(10.00), "Reliance Industries");
-            ts.Add(new BuyTransaction(new DateTime(1999, 3, 20), relianceShare, 10, new Price(1200), 1000, 0));
-            ts.Add(new SellTransaction(new DateTime(1999, 5, 20), relianceShare, 5, new Price(1300), 0, 1000));
-            ts.Add(new CashDividendTransaction(relianceShare,new Price(50),new DateTime(1999, 5, 20)));
-            Assert.AreEqual(-1450, d.CalculateRealizedProfits(ts));
+            int buyUnitPrice = 1200;
+            int buyBrokerage = 100;
+            int sellBrokerage = 100;
+            int buyQuantity = 10;
+            int sellQuantity = 5;
+            int sellUnitPrice = 1300;
+
+
+            ts.Add(new BuyTransaction(new DateTime(1999, 3, 20), relianceShare, buyQuantity, new Price(buyUnitPrice), buyBrokerage, 0));
+            ts.Add(new SellTransaction(new DateTime(1999, 5, 20), relianceShare, sellQuantity, new Price(sellUnitPrice), 0, sellBrokerage));
+            int dividend = 50;
+            ts.Add(new CashDividendTransaction(relianceShare,new Price(dividend),new DateTime(1999, 5, 20)));
+
+            Assert.AreEqual((sellUnitPrice-buyUnitPrice) * sellQuantity - sellBrokerage -buyBrokerage + dividend, d.CalculateRealizedProfits(ts));
         }
+
+        [Test]
+        public void ShouldIncludeUnitDividendSoldInRealizedProfit()
+        {
+            Portfolio d = new Portfolio();
+            TransactionCollection ts = new TransactionCollection();
+
+            var selectedMutualFund = new MutualFund(null, null, null, "SUNMF", "SUN Magma", "Growth");
+            int buyUnitPrice = 1200;
+            int buyBrokerage = 100;
+            int sellBrokerage = 100;
+            int buyQuantity = 10;
+            int sellQuantity = 10;
+
+            ts.Add(new BuyTransaction(new DateTime(1999, 3, 20), selectedMutualFund, buyQuantity, new Price(buyUnitPrice), buyBrokerage, 0));
+            int  sellUnitPrice = 1300;
+            ts.Add(new SellTransaction(new DateTime(1999, 5, 20), selectedMutualFund, 5, new Price(sellUnitPrice), 0, sellBrokerage));
+            int unitReceived = 2;
+            ts.Add(new UnitDividendTransaction(selectedMutualFund, unitReceived, new DateTime(1999, 5, 20)));
+            ts.Add(new SellTransaction(new DateTime(1999, 5, 20), selectedMutualFund, 7, new Price(sellUnitPrice), 0, sellBrokerage));
+
+            Assert.AreEqual((sellUnitPrice - buyUnitPrice) * sellQuantity - buyBrokerage - sellBrokerage + sellUnitPrice * unitReceived - sellBrokerage, d.CalculateRealizedProfits(ts));
+        }
+
 
         [Test,Ignore]
         public void ShouldCalculateRealizedProfitsComplexCaseWithDateMismatch()

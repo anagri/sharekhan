@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using ShareKhan.persist;
 
 namespace Sharekhan.domain
@@ -42,8 +43,8 @@ namespace Sharekhan.domain
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != typeof (Instrument)) return false;
-            return Equals((Instrument) obj);
+            if (obj.GetType() != typeof(Instrument)) return false;
+            return Equals((Instrument)obj);
         }
 
         public override int GetHashCode()
@@ -64,6 +65,14 @@ namespace Sharekhan.domain
         public override string ToString()
         {
             return string.Format("Id: {0}", Id);
+        }
+
+
+        public virtual Price CalculateShortTermTax(BuyTransaction buyTransaction, SellTransaction sellTransaction)
+        {
+
+            return sellTransaction.CalculateShortTermTax(buyTransaction);
+           
         }
     }
 }
