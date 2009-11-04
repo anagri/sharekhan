@@ -69,12 +69,6 @@ namespace Sharekhan.domain
             }
         }
 
-        // TODO: Move this method to the superclass
-        public override Price GetEffectiveValue(DateTime referenceDate, double rate)
-        {
-            var duration = ((double)(referenceDate - Date).Days) /365.0;
-            return EffectiveTransactionAmount().GetEffectiveValue(duration, rate);
-        }
     }
 }
 //some other comment

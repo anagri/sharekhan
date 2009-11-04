@@ -47,6 +47,10 @@ namespace Sharekhan.domain
 
         public abstract void UpdateBoughtQuantities(IDictionary<Instrument, int> dictionary);
 
-        public abstract Price GetEffectiveValue(DateTime time, double rate);
+        public virtual Price GetEffectiveValue(DateTime referenceDate, double rate)
+        {
+            var duration = ((double)(referenceDate - Date).Days) / 365.0;
+            return EffectiveTransactionAmount().GetEffectiveValue(duration, rate);
+        }
     }
 }
