@@ -31,16 +31,12 @@ namespace Sharekhan.domain
         }
 
 
-        public abstract Price TransactionAmount();
+        public abstract Price Amount();
 
         public virtual bool IsLongTerm(FinYear year)
         {
             return (this.Date < year.GetTaxationPeriod().Value.StartDate);
         }
-
-        
-
-
 
         public abstract Price EffectiveTransactionAmount();
 
