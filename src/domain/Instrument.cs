@@ -76,7 +76,7 @@ namespace Sharekhan.domain
 
             foreach (Transaction trans in transactions)
             {
-                if (trans is BuyTransaction)
+                if (trans is BuyTransaction || trans is UnitDividendTransaction)
                 {
                     count += trans.Quantity;
                 }
