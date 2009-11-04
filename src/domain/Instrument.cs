@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using ShareKhan.persist;
 
@@ -67,12 +68,14 @@ namespace Sharekhan.domain
             return string.Format("Id: {0}", Id);
         }
 
-
-        public virtual Price CalculateShortTermTax(BuyTransaction buyTransaction, SellTransaction sellTransaction)
+        public virtual Price CalculateShortTermTax(List<Transaction> transactions)
         {
-
-            return sellTransaction.CalculateShortTermTax(buyTransaction);
-           
+            return (new ShortTermTaxCalculator(transactions).CalculateShortTermTax());
         }
+
+
+        
+
+        
     }
 }

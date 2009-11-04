@@ -1,3 +1,6 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using NUnit.Framework;
 
 namespace Sharekhan.domain
@@ -15,6 +18,7 @@ namespace Sharekhan.domain
             Assert.AreEqual(four, instrument.CurrentPrice);
         }
 
+        
 
 
     }
