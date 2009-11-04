@@ -61,10 +61,10 @@ namespace Sharekhan.domain
         {
             Portfolio d = new Portfolio();
             TransactionCollection ts = new TransactionCollection();
-            Stock relianceShare = new Stock(new Symbol("RIL"), new Price(10.00), "Reliance Industries");
-            ts.Add(new BuyTransaction(new DateTime(1999, 3, 20), relianceShare, 10, new Price(1200), 1000, 0));
-            ts.Add(new SellTransaction(new DateTime(1999, 5, 20), relianceShare, 5, new Price(1300), 0, 1000));
-            ts.Add(new UnitDividendTransaction(relianceShare, 2, new DateTime(1999, 5, 20)));
+            var selectedMutualFund = new MutualFund(null, null, null, "SUNMF", "SUN Magma", "Growth");
+            ts.Add(new BuyTransaction(new DateTime(1999, 3, 20), selectedMutualFund, 10, new Price(1200), 1000, 0));
+            ts.Add(new SellTransaction(new DateTime(1999, 5, 20), selectedMutualFund, 5, new Price(1300), 0, 1000));
+            ts.Add(new UnitDividendTransaction(selectedMutualFund, 2, new DateTime(1999, 5, 20)));
 
             int actualQty = 0;
 
