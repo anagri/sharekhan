@@ -62,5 +62,10 @@ namespace Sharekhan.domain
         {
             
         }
+
+        public override Price GetEffectiveValue(DateTime time, double rate)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

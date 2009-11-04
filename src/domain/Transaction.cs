@@ -46,6 +46,7 @@ namespace Sharekhan.domain
         public abstract void UpdateBoughtAmounts(IDictionary<Instrument, Price> dictionary, int quantity);
 
         public abstract void UpdateBoughtQuantities(IDictionary<Instrument, int> dictionary);
-        
+
+        public abstract Price GetEffectiveValue(DateTime time, double rate);
     }
 }
