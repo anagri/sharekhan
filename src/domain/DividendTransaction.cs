@@ -5,14 +5,19 @@ namespace Sharekhan.domain
 {
     public class DividendTransaction : Transaction
     {
-        public override Price TransactionAmount()
+        public override Price Amount()
         {
-            throw new NotImplementedException();
+            return Price.Null;
         }
 
         public override Price EffectiveTransactionAmount()
         {
-            return Price.Null;
+            return Amount();
+        }
+
+        public override int EffectiveTransactionQuantity()
+        {
+            return 0;
         }
 
         public override void UpdateSoldAmounts(IDictionary<Instrument, Price> realizedProfitsDictionary)

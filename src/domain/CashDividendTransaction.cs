@@ -46,10 +46,10 @@ namespace Sharekhan.domain
             {
                 realizedProfitsDictionary[Instrument] = Price.Null;
             }
-            realizedProfitsDictionary[Instrument] += EffectiveTransactionAmount();
+            realizedProfitsDictionary[Instrument] += Amount();
         }
     
-        public override Price EffectiveTransactionAmount()
+        public override Price Amount()
         {
             return new Price((UnitPrice.Value));
         }

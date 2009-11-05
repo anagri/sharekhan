@@ -124,26 +124,69 @@ namespace Sharekhan.domain
 
             IList<Transaction> list = mock.Object.ListTransactionsByInstrumentId<Transaction>(share.Id);
 
-
             Assert.AreEqual(4, list.Count);
         }
 
-        [Test, Ignore]
+        [Test]
         public void ShouldReturnEffectiveValueGivenTheDateAndRateOfReturn()
         {
-            // TODO: Assign Expected Value
-            double expectedValue = 0.0;
             DateTime transactionDate = new DateTime(2008, 3, 10);
             DateTime effectiveDate = new DateTime(2009, 11, 3);
             double effectiveRate = 0.3;
 
-            var tx = new BuyTransaction(transactionDate, 
-                new Stock(new Symbol("STOCK1"), new Price(100.0), "Stock 1" ),
+            var symbol = new Symbol("STOCK1");
+            double delta = 0.005;
+
+            double test1expected = -15441.744;
+            var buy1 = new BuyTransaction(transactionDate, 
+                new Stock(symbol, new Price(100.0), "Stock 1" ),
                 100,
                 new Price(100.0), 
                 10,
                 0.5);
-            Assert.AreEqual(expectedValue, tx.GetEffectiveValue(effectiveDate, effectiveRate).Value, 0.005*expectedValue);
+            Assert.AreEqual(test1expected, buy1.GetEffectiveValue(effectiveDate, effectiveRate).Value, delta*-test1expected);
+
+            double test2expected = 571.284;
+            var sold1 = new SellTransaction(new DateTime(2008, 5, 21),
+                                          new Stock(symbol, new Price(100), "Sold some the shares"),
+                                           20,
+                                           new Price(20),
+                                           5,
+                                           5);
+
+            Assert.AreEqual(test2expected, sold1.GetEffectiveValue(effectiveDate, 0.3).Value, delta*test2expected);
+
+            double test3expected = 148.068;
+            DateTime effectiveDatePast = new DateTime(2007, 1, 1);
+            var cashDividend = new CashDividendTransaction(
+                                          new Stock(symbol, new Price(100), "Sold some the shares"),
+                                           new Price(200),
+                                           new DateTime(2008, 8, 25));
+
+            Assert.AreEqual(test3expected, cashDividend.GetEffectiveValue(effectiveDatePast, 0.2).Value, delta * test3expected);
+
+//            double test3expected = 0;
+        }
+
+        [Test]
+        public void AmountShouldAccountForTaxAndBrokerage()
+        {
+            var symbol = new Symbol("STOCK1");
+            var stock = new Stock(symbol, new Price(100.0), "My Stock 1");
+            double delta = 0.005;
+
+            Transaction transaction = new BuyTransaction(DateTime.Now, stock, 100, new Price(120.0), 0.0, 0.0);
+            double expected = 12000.0;
+            Assert.AreEqual(expected, transaction.Amount().Value, delta*expected);
+
+            transaction = new BuyTransaction(DateTime.Now, stock, 10, new Price(120.0), 10.0, 15.0);
+            expected = 1225.0;
+            Assert.AreEqual(expected, transaction.Amount().Value, delta * expected);
+
+            transaction = new SellTransaction(DateTime.Now, stock, 100, new Price(150.0), 50.0, 15.0);
+            expected = 14935.0;
+            Assert.AreEqual(expected, transaction.Amount().Value, delta * expected);
+       
         }
 
         

@@ -19,6 +19,7 @@ namespace Sharekhan.domain
             Description = description;
         }
 
+
         public virtual int Id { get; set; }
         public virtual Symbol Symbol { get; set; }
         public virtual String Description { get; set; }
@@ -72,10 +73,27 @@ namespace Sharekhan.domain
         {
             return (new ShortTermTaxCalculator(transactions).CalculateShortTermTax());
         }
+   
+        public virtual Price CurrentMarketValue(IList<Transaction> transactions)
+        {
+            Price CurrentPrice = this.CurrentPrice;
+            Price value = new Price(0.0);
+            int count = 0;
 
+            foreach (Transaction trans in transactions)
+            {
+                count += trans.EffectiveTransactionQuantity();
+            }
+
+            value.Value = count*CurrentPrice.Value;
+            return value;
+        }
+
+   
 
         
 
         
     }
+
 }

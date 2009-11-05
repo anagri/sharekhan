@@ -14,6 +14,10 @@ namespace Sharekhan.src.domain
         {
             
         }
+        public override Price CurrentMarketValue(System.Collections.Generic.IList<Transaction> transactions)
+        {
+            return new Price(100);
+        }
 
         public SinglePayOut(Term term, Price investedAmount,
                             Symbol symbol, string description,

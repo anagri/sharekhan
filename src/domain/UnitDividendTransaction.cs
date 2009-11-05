@@ -14,6 +14,11 @@ namespace Sharekhan.domain
         {
         }
 
+        public override int EffectiveTransactionQuantity()
+        {
+            return Quantity;
+        }
+
         public virtual bool Equals(UnitDividendTransaction other)
         {
             return base.Equals(other);

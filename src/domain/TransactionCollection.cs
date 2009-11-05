@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using ShareKhan.persist;
 
 namespace Sharekhan.domain
@@ -46,6 +47,11 @@ namespace Sharekhan.domain
                 transaction.UpdateBoughtAmounts(realizedProfitsDictionary, instrumentQuantities[transaction.Instrument]);
                 transaction.UpdateBoughtQuantities(instrumentQuantities);
             }
+        }
+
+        public Price GetEffectiveValue(DateTime effectiveDate, double rate)
+        {
+            return new Price(_transactionList.Sum(s => s.GetEffectiveValue(effectiveDate, rate).Value));
         }
     }
 }

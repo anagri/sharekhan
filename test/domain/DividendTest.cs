@@ -70,14 +70,7 @@ namespace Sharekhan.domain
 
             foreach (Transaction transaction in ts.TransactionList)
             {
-                if ((transaction is BuyTransaction) || (transaction is UnitDividendTransaction))
-                {
-                    actualQty += transaction.Quantity;
-                }
-                else
-                {
-                    actualQty -= transaction.Quantity;
-                }
+                actualQty += transaction.EffectiveTransactionQuantity();
             }
 
             Assert.AreEqual(7, actualQty);

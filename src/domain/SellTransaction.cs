@@ -25,14 +25,19 @@ namespace Sharekhan.domain
         }
 
 
-        public override Price TransactionAmount()
+        public override Price Amount()
         {
-            throw new NotImplementedException();
+            return new Price((UnitPrice.Value*Quantity) - Tax - Brokerage);
         }
 
         public override Price EffectiveTransactionAmount()
         {
-            return new Price((UnitPrice.Value*Quantity) - Tax - Brokerage);
+            return Amount();
+        }
+
+        public override int EffectiveTransactionQuantity()
+        {
+            return -Quantity;
         }
 
         public override void UpdateSoldAmounts(IDictionary<Instrument, Price> realizedProfitsDictionary)
@@ -41,7 +46,7 @@ namespace Sharekhan.domain
             {
                 realizedProfitsDictionary[Instrument] = Price.Null;
             }
-            realizedProfitsDictionary[Instrument] += EffectiveTransactionAmount();
+            realizedProfitsDictionary[Instrument] += Amount();
         }
 
         public override void UpdateSoldQuantities(IDictionary<Instrument, int> instrumentQuantities)
