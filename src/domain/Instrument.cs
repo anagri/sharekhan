@@ -89,6 +89,23 @@ namespace Sharekhan.domain
             return sellTransaction.CalculateShortTermTax(buyTransaction);
            
         }
+
+        public virtual double CalculateRealizedProfits(ITransactionCollection listOfTransactions)
+        {
+            Dictionary<Instrument, Price> realizedProfitsTbl = new Dictionary<Instrument, Price>();
+            Dictionary<Instrument, int> qty = new Dictionary<Instrument, int>();
+            Price realizedProfits = Price.Null;
+
+            listOfTransactions.BuildDictionariesWithSellingAmounts(realizedProfitsTbl, qty);
+            listOfTransactions.UpdateRealizedProfits(realizedProfitsTbl, qty);
+
+            foreach (Price price in realizedProfitsTbl.Values)
+            {
+                realizedProfits += price;
+            }
+
+            return realizedProfits.Value;
+        }
     }
 
 }

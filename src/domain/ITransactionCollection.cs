@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Iesi.Collections.Generic;
 
 namespace Sharekhan.domain
 {
@@ -12,5 +13,7 @@ namespace Sharekhan.domain
                                                  IDictionary<Instrument, int> instrumentQuantities);
         void UpdateRealizedProfits(IDictionary<Instrument, Price> realizedProfitsDictionary,
                                                   IDictionary<Instrument, int> instrumentQuantities);
+
+        ISet<Instrument> GetAllUniqueInstruments();
     }
 }

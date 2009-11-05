@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Iesi.Collections.Generic;
 using ShareKhan.persist;
 
 namespace Sharekhan.domain
@@ -46,6 +47,16 @@ namespace Sharekhan.domain
                 transaction.UpdateBoughtAmounts(realizedProfitsDictionary, instrumentQuantities[transaction.Instrument]);
                 transaction.UpdateBoughtQuantities(instrumentQuantities);
             }
+        }
+
+        public ISet<Instrument> GetAllUniqueInstruments()
+        {
+            ISet<Instrument> instruments = new HashedSet<Instrument>();
+            foreach (Transaction transaction in _transactionList)
+            {
+                instruments.Add(transaction.Instrument);
+            }
+            return instruments;
         }
     }
 }

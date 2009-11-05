@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Iesi.Collections.Generic;
 using Sharekhan.domain;
 using ShareKhan.persist;
 
@@ -61,22 +62,18 @@ namespace ShareKhan.domain
 
         public double CalculateRealizedProfits(ITransactionCollection listOfTransactions)
         {
-            Dictionary<Instrument, Price> realizedProfitsTbl = new Dictionary<Instrument, Price>();
-            Dictionary<Instrument, int> qty = new Dictionary<Instrument, int>();
-            Price realizedProfits = Price.Null;
-
-            listOfTransactions.BuildDictionariesWithSellingAmounts(realizedProfitsTbl, qty);
-            listOfTransactions.UpdateRealizedProfits(realizedProfitsTbl, qty);
-
-            foreach (Price price in realizedProfitsTbl.Values)
+            ISet<Instrument> instruments = listOfTransactions.GetAllUniqueInstruments();
+            double realizedProfits = 0;
+            foreach (Instrument instrument in instruments)
             {
-                realizedProfits += price;
+                realizedProfits += CalculateRealizedProfits(listOfTransactions, instrument);
             }
-            return realizedProfits.Value;
+            
+            return realizedProfits;
         }
 
 
-        public object CalculateRealizedProfits(ITransactionCollection statement, Instrument instrument)
+        public double CalculateRealizedProfits(ITransactionCollection statement, Instrument instrument)
         {
             ITransactionCollection instrumentSpecificTransaction = new TransactionCollection();
             foreach (Transaction transaction in statement.TransactionList)
@@ -86,7 +83,7 @@ namespace ShareKhan.domain
                     instrumentSpecificTransaction.Add(transaction);
                 }
             }
-            return CalculateRealizedProfits(instrumentSpecificTransaction);
+            return instrument.CalculateRealizedProfits(instrumentSpecificTransaction);
         }
         
         public double GetEffectiveRateOfReturn()
