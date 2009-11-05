@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -12,5 +13,7 @@ namespace Sharekhan.domain
                                                  IDictionary<Instrument, int> instrumentQuantities);
         void UpdateRealizedProfits(IDictionary<Instrument, Price> realizedProfitsDictionary,
                                                   IDictionary<Instrument, int> instrumentQuantities);
+
+        Price GetEffectiveValue(DateTime effectiveDate, double rate);
     }
 }
