@@ -147,7 +147,7 @@ namespace Sharekhan.test.domain
         [Test]
         public void ShouldBeAbleToCalculateTaxGivenABuyStackAndSellStackWithMultipleValues()
         {
-            Instrument share = new Stock(new Symbol("REL"), new Price(10.00), "Reliance Power");
+            Instrument share = new Stock(new Symbol("REL"), new Price(10.00), "Rel*iance Power");
             Transaction buyTransaction1 = new BuyTransaction(new DateTime(2008, 06, 01), share, 20, new Price(10.00), 5.00, 3.00);
             Transaction sellTransaction1 = new SellTransaction(new DateTime(2009, 01, 01), share, 10, new Price(20.00), 5.00, 3.00);
             Transaction buyTransaction2 = new BuyTransaction(new DateTime(2008, 12, 01), share, 10, new Price(10.00), 5.00, 3.00);
@@ -173,6 +173,9 @@ namespace Sharekhan.test.domain
             Assert.AreEqual(20, Tax.Value);
             
         }
+
+//        [Test]
+//        public void 
 
 
 

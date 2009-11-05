@@ -43,7 +43,8 @@ namespace Sharekhan.test.domain
                                                          new Price(800.0), new DateTime(2009, 5, 5)));
 
 
-            const double expectedValue1 = -16201.73;            Assert.AreEqual(expectedValue1, transactionCollection.GetEffectiveValue(new DateTime(2009, 11, 4), 0.3).Value, 0.005*-expectedValue1);
+            const double expectedValue1 = -16201.73;
+            Assert.AreEqual(expectedValue1, transactionCollection.GetEffectiveValue(new DateTime(2009, 11, 4), 0.3).Value, 0.005*-expectedValue1);
             const double expectedValue2 = -7226.7;
             Assert.AreEqual(expectedValue2, transactionCollection.GetEffectiveValue(new DateTime(2007, 1, 1), 0.25).Value, 0.005 *-expectedValue2);
             const double expectedValue3 = -5590.62;
