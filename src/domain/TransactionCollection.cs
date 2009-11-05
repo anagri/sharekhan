@@ -59,9 +59,9 @@ namespace Sharekhan.domain
             return instruments;
         }
 
-        public Price GetEffectiveValue(DateTime effectiveDate, double rate)
+        public Price GetEffectiveReturn(DateTime effectiveDate, double rate)
         {
-            return new Price(_transactionList.Sum(s => s.GetEffectiveValue(effectiveDate, rate).Value));
+            return new Price(_transactionList.Sum(s => s.GetEffectiveReturn(effectiveDate, rate).Value));
 
         }
     }

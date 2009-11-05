@@ -23,7 +23,7 @@ namespace Sharekhan.test.domain
 
         }
 
-        [Test, Ignore]
+        [Test]
         public void ShouldReturnTheNetValueGivenTheDateAndRateOfReturn()
         {
             var transactionCollection = new TransactionCollection();
@@ -42,20 +42,26 @@ namespace Sharekhan.test.domain
             transactionCollection.Add(new CashDividendTransaction(stock,
                                                          new Price(800.0), new DateTime(2009, 5, 5)));
 
+            var finalDate = new DateTime(2009, 11, 4);
+            transactionCollection.Add(new SellTransaction(finalDate,
+                                                          stock, 80, new Price(100), 0, 0));
 
-            const double expectedValue1 = -16201.73;            Assert.AreEqual(expectedValue1, transactionCollection.GetEffectiveValue(new DateTime(2009, 11, 4), 0.3).Value, 0.005*-expectedValue1);
-            const double expectedValue2 = -7226.7;
-            Assert.AreEqual(expectedValue2, transactionCollection.GetEffectiveValue(new DateTime(2007, 1, 1), 0.25).Value, 0.005 *-expectedValue2);
-            const double expectedValue3 = -5590.62;
-            Assert.AreEqual(expectedValue3, transactionCollection.GetEffectiveValue(new DateTime(2006, 1, 1), 0.2).Value, 0.005 *-expectedValue3);
+            const double delta = 0.001;
+            double expectedReturns;
 
-            transactionCollection.Add(new SellTransaction(new DateTime(2009, 11, 4),
-                                                         stock,
-                                                         80, new Price(100.0), 0, 0));
-            const double expectedValue4 = 0.0;
-            Assert.AreEqual(expectedValue4, transactionCollection.GetEffectiveValue(new DateTime(2007, 1, 1), 0.3).Value, 0.005 * -expectedValue4);
+            const double guessRate = 0.11;
+            expectedReturns = -10784.37 + -10979.45 + 13406.76 + 842.97 + 8000;
+            Assert.AreEqual(expectedReturns, transactionCollection.GetEffectiveReturn(finalDate, 0.11).Value,
+                            delta);
+
+            const double correctRate = 0.122557646;
+            expectedReturns = -11134.96 + -11283.75 + 13570.97 + 847.74 + 8000;
+            Assert.AreEqual(expectedReturns, transactionCollection.GetEffectiveReturn(finalDate, correctRate).Value,
+                            delta);
 
         }
+
+        
 
     }
 }

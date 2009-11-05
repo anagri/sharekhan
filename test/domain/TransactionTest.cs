@@ -128,14 +128,14 @@ namespace Sharekhan.domain
         }
 
         [Test]
-        public void ShouldReturnEffectiveValueGivenTheDateAndRateOfReturn()
+        public void ShouldCalculateEffectiveReturnGivenTheDateAndRateOfReturn()
         {
             DateTime transactionDate = new DateTime(2008, 3, 10);
             DateTime effectiveDate = new DateTime(2009, 11, 3);
             double effectiveRate = 0.3;
 
             var symbol = new Symbol("STOCK1");
-            double delta = 0.005;
+            var delta = 0.005;
 
             double test1expected = -15441.744;
             var buy1 = new BuyTransaction(transactionDate, 
@@ -144,7 +144,7 @@ namespace Sharekhan.domain
                 new Price(100.0), 
                 10,
                 0.5);
-            Assert.AreEqual(test1expected, buy1.GetEffectiveValue(effectiveDate, effectiveRate).Value, delta*-test1expected);
+            Assert.AreEqual(test1expected, buy1.GetEffectiveReturn(effectiveDate, effectiveRate).Value, delta * -test1expected);
 
             double test2expected = 571.284;
             var sold1 = new SellTransaction(new DateTime(2008, 5, 21),
@@ -154,7 +154,7 @@ namespace Sharekhan.domain
                                            5,
                                            5);
 
-            Assert.AreEqual(test2expected, sold1.GetEffectiveValue(effectiveDate, 0.3).Value, delta*test2expected);
+            Assert.AreEqual(test2expected, sold1.GetEffectiveReturn(effectiveDate, 0.3).Value, delta * test2expected);
 
             double test3expected = 148.068;
             DateTime effectiveDatePast = new DateTime(2007, 1, 1);
@@ -163,9 +163,16 @@ namespace Sharekhan.domain
                                            new Price(200),
                                            new DateTime(2008, 8, 25));
 
-            Assert.AreEqual(test3expected, cashDividend.GetEffectiveValue(effectiveDatePast, 0.2).Value, delta * test3expected);
+            Assert.AreEqual(test3expected, cashDividend.GetEffectiveReturn(effectiveDatePast, 0.2).Value, delta * test3expected);
 
-//            double test3expected = 0;
+            var buyTransaction = new BuyTransaction(new DateTime(2007, 1, 1),
+                                                    new Stock(symbol, new Price(100), "Sell from larger test example"),
+                                                    100, 
+                                                    new Price(80.0),
+                                                    10,
+                                                    5);
+            const double test4expected = -11970.65;
+            Assert.AreEqual(test4expected, buyTransaction.GetEffectiveReturn(new DateTime(2010, 11, 4), .11).Value, delta );
         }
 
         [Test]
