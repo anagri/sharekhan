@@ -5,7 +5,7 @@ namespace Sharekhan.domain
 {
     public class TermDepositTransaction : Transaction
     {
-        public TermDepositTransaction(DateTime dateTime, SinglePayOut instrument, Price price)
+        public TermDepositTransaction(DateTime dateTime, TermDeposit instrument, Price price)
             : base(dateTime, instrument, 0, price)
         {
             instrument.DepositDate = new DepositDate(dateTime);

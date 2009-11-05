@@ -6,7 +6,7 @@ namespace Sharekhan.domain
 {
     class TermDepositWithdrawalTransaction : Transaction
     {
-        public TermDepositWithdrawalTransaction(DateTime dateTime, SinglePayOut instrument, Price price)
+        public TermDepositWithdrawalTransaction(DateTime dateTime, TermDeposit instrument, Price price)
             : base(dateTime, instrument, 0, price)
         {
             
