@@ -1,8 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using Iesi.Collections.Generic;
-using ShareKhan.persist;
+using System.Linq;
 
 namespace Sharekhan.domain
 {
@@ -49,6 +48,7 @@ namespace Sharekhan.domain
             }
         }
 
+
         public ISet<Instrument> GetAllUniqueInstruments()
         {
             ISet<Instrument> instruments = new HashedSet<Instrument>();
@@ -57,6 +57,12 @@ namespace Sharekhan.domain
                 instruments.Add(transaction.Instrument);
             }
             return instruments;
+        }
+
+        public Price GetEffectiveValue(DateTime effectiveDate, double rate)
+        {
+            return new Price(_transactionList.Sum(s => s.GetEffectiveValue(effectiveDate, rate).Value));
+
         }
     }
 }

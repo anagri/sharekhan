@@ -114,6 +114,8 @@
     <Compile Include="test\domain\PortfolioTest.cs" />
     <Compile Include="test\domain\PriceTest.cs" />
     <Compile Include="test\domain\RealizedProfitsTest.cs" />
+    <Compile Include="src\domain\ShortTermTaxCalculator.cs" />
+    <Compile Include="test\domain\ShortTermTaxCalculatorTest.cs" />
     <Compile Include="test\domain\SinglePayOutTest.cs" />
     <Compile Include="test\domain\StockTest.cs" />
     <Compile Include="test\domain\SymbolTest.cs" />

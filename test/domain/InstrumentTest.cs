@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Moq;
 using NUnit.Framework;
@@ -20,6 +21,7 @@ namespace Sharekhan.domain
             Assert.AreEqual(four, instrument.CurrentPrice);
         }
 
+        
         [Test]
         public void ShouldIncludeUnitDividendWhileGettingCurrentMarketValueOfInstrument()
         {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using ShareKhan.persist;
 
@@ -68,6 +69,11 @@ namespace Sharekhan.domain
             return string.Format("Id: {0}", Id);
         }
 
+        public virtual Price CalculateShortTermTax(List<Transaction> transactions)
+        {
+            return (new ShortTermTaxCalculator(transactions).CalculateShortTermTax());
+        }
+
         public virtual Price CurrentMarketValue(IList<Transaction> transactions)
         {
             Price CurrentPrice = this.CurrentPrice;
@@ -79,15 +85,8 @@ namespace Sharekhan.domain
                 count += trans.EffectiveTransactionQuantity();
             }
 
-            value.Value = count*CurrentPrice.Value;
+            value.Value = count * CurrentPrice.Value;
             return value;
-        }
-
-        public virtual Price CalculateShortTermTax(BuyTransaction buyTransaction, SellTransaction sellTransaction)
-        {
-
-            return sellTransaction.CalculateShortTermTax(buyTransaction);
-           
         }
 
         public virtual double CalculateRealizedProfits(ITransactionCollection listOfTransactions)
@@ -107,5 +106,4 @@ namespace Sharekhan.domain
             return realizedProfits.Value;
         }
     }
-
 }
