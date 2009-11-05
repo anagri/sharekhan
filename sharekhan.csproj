@@ -100,6 +100,8 @@
     <Compile Include="src\domain\Statement.cs" />
     <Compile Include="src\domain\Stock.cs" />
     <Compile Include="src\domain\Symbol.cs" />
+    <Compile Include="src\domain\TermDepositTransaction.cs" />
+    <Compile Include="src\domain\TermDepositWithdrawalTransaction.cs" />
     <Compile Include="src\domain\Transaction.cs" />
     <Compile Include="src\domain\TransactionCollection.cs" />
     <Compile Include="src\domain\UnitDividendTransaction.cs" />
