@@ -6,7 +6,6 @@ using NUnit.Framework;
 using Sharekhan.domain;
 using ShareKhan.domain;
 using Moq;
-using Sharekhan.src.domain;
 
 
 namespace Sharekhan.test.domain
@@ -226,7 +225,7 @@ namespace Sharekhan.test.domain
         {
             Portfolio portfolio = new Portfolio();
             TransactionCollection tc = new TransactionCollection();
-            Instrument singliePayout = new SinglePayOut(new Term(2),new Price(10000),new Symbol("CITI"),"Two year deposit at CITI",new InterestRate(10),new DepositDate(new DateTime(2009,11,01)));
+            Instrument singliePayout = new SinglePayOut(new Term(2),new Price(10000),new Symbol("CITI"),"Two year deposit at CITI",new InterestRate(10));
             tc.Add(new BuyTransaction(new DateTime(2009, 11, 01), singliePayout, 1, new Price(10000), 0, 0));
             Assert.AreEqual(0,portfolio.CalculateRealizedProfits(tc));
         }
