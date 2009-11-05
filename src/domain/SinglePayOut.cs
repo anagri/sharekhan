@@ -1,45 +1,54 @@
 ﻿using System;
-using Sharekhan.domain;
+using System.Collections.Generic;
 
-namespace Sharekhan.src.domain
+namespace Sharekhan.domain
 {
-    class SinglePayOut : Instrument
+    public class SinglePayOut : Instrument
     {
         public Term Term { get; set; }
         public InterestRate InterestRate { get; set; }
         public DepositDate DepositDate { get; set; }
         public Price InvestedAmount { get; set; }
 
-        private SinglePayOut()
+        public override Price CurrentMarketValue(IList<Transaction> transactions)
         {
-            
-        }
-        public override Price CurrentMarketValue(System.Collections.Generic.IList<Transaction> transactions)
-        {
-            return new Price(100);
+            int noOfYears = DateTime.Now.Subtract(DepositDate.DateOfDeposit).Days/365;
+
+            return new Price(Math.Round((InvestedAmount.GetEffectiveValue(noOfYears,InterestRate.RateOfInterest/100)).Value,2));
+
         }
 
         public SinglePayOut(Term term, Price investedAmount,
                             Symbol symbol, string description,
-                            InterestRate interestRate, DepositDate depositDate) : base(symbol, investedAmount, description)
+                            InterestRate interestRate) : base(symbol, investedAmount, description)
         {
             Term = term;
             InterestRate = interestRate;
-            DepositDate = depositDate;
             InvestedAmount = investedAmount;
             Validate();
         }
 
+        public double CalculateRealizedProfits(ITransactionCollection listOfTransactions)
+        {
+            Price realizedProfit = new Price(0);
+            foreach (Transaction transaction in listOfTransactions.TransactionList)
+            {
+                realizedProfit += transaction.EffectiveTransactionAmount();
+            }
+
+            return realizedProfit.Value;
+        }
+
         private void Validate()
         {
-            if(!Term.IsValid() || !InterestRate.IsValid() || InvestedAmount.Value <= 0 || !DepositDate.IsValid())
+            if(!Term.IsValid() || !InterestRate.IsValid() || InvestedAmount.Value <= 0 )
             {
                 throw new InvalidTermDepositException();
             }
         }
     }
 
-    class DepositDate
+    public class DepositDate
     {
         public DateTime DateOfDeposit { get; set; }
 
@@ -56,7 +65,7 @@ namespace Sharekhan.src.domain
         }
     }
 
-    class InterestRate
+    public class InterestRate
     {
         public float RateOfInterest { get; private set; }
 
@@ -71,7 +80,7 @@ namespace Sharekhan.src.domain
         }
     }
 
-    class Term
+    public class Term
     {
         public int DepositTerm { get; private set; }
 
