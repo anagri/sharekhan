@@ -29,13 +29,17 @@ namespace Sharekhan.test.domain
         [Test]
         public void ShouldBeAbleToGiveTotalAmountForTermDepositForATimePeriod()
         {
-            SinglePayOut termDeposit = new SinglePayOut(new Term(2), new Price(10000), new Symbol("CITI"), "Term Deposit", new InterestRate(10));
-            Transaction termDepositTransaction = new TermDepositTransaction(new DateTime(2008, 11, 5), termDeposit, new Price(10000.00));
+            Price deposit = new Price(10000);
+            SinglePayOut termDeposit = new SinglePayOut(new Term(2), deposit, new Symbol("CITI"), "Term Deposit", new InterestRate(10));
+            Transaction termDepositTransaction = new TermDepositTransaction(new DateTime(2007, 11, 5), termDeposit, new Price(10000.00));
 
             IList<Transaction> transactionCollection = new List<Transaction>() { termDepositTransaction };
 
-            // TODO: calculate dynamically the expected value.
-            Assert.AreEqual(11000, termDeposit.CurrentMarketValue(transactionCollection).Value);
+            int noOfYears = DateTime.Now.Subtract(new DateTime(2007, 11, 5)).Days / 365;
+
+            double expectedAmount = Math.Round((deposit.GetEffectiveValue(noOfYears, 0.1).Value),2);
+
+            Assert.AreEqual(expectedAmount, termDeposit.CurrentMarketValue(transactionCollection).Value);
 
         }
 
