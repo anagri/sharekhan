@@ -40,13 +40,9 @@ namespace Sharekhan.domain
             return !Equals(left, right);
         }
 
-        public override void UpdateSoldAmounts(IDictionary<Instrument, Price> realizedProfitsDictionary)
+        public override void UpdateSoldAmounts(RealizedProfit realizedProfit)
         {
-            if (!realizedProfitsDictionary.ContainsKey(Instrument))
-            {
-                realizedProfitsDictionary[Instrument] = Price.Null;
-            }
-            realizedProfitsDictionary[Instrument] += Amount();
+            realizedProfit.For(Instrument).Profit += Amount();
         }
     
         public override Price Amount()

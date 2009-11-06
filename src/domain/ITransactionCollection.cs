@@ -10,11 +10,7 @@ namespace Sharekhan.domain
         bool Add(Transaction transaction);
         IEnumerable<Transaction> TransactionList { get; }
 
-        void BuildDictionariesWithSellingAmounts(IDictionary<Instrument, Price> realizedProfitsDictionary,
-                                                 IDictionary<Instrument, int> instrumentQuantities);
-        void UpdateRealizedProfits(IDictionary<Instrument, Price> realizedProfitsDictionary,
-                                                  IDictionary<Instrument, int> instrumentQuantities);
-
+        RealizedProfit RealizedProfit();
 
         ISet<Instrument> GetAllUniqueInstruments();
         Price GetEffectiveValue(DateTime effectiveDate, double rate);

@@ -46,16 +46,9 @@ namespace Sharekhan.domain
             return !Equals(left, right);
         }
 
-        public override void UpdateBoughtQuantities(IDictionary<Instrument, int> instrumentQuantities)
+        public override void UpdateBoughtQuantities(RealizedProfit realizedProfit)
         {
-            if (instrumentQuantities[Instrument] < Quantity)
-            {
-                instrumentQuantities[Instrument] = 0;
-            }
-            else
-            {
-                instrumentQuantities[Instrument] -= Quantity;
-            }
+            realizedProfit.For(Instrument).Quantity -= Quantity;
         }
     }
 }
