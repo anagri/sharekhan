@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Iesi.Collections.Generic;
 using System.Linq;
@@ -7,9 +8,9 @@ namespace Sharekhan.domain
 {
     public class TransactionCollection : ITransactionCollection
     {
-        private readonly IList<Transaction> _transactionList = new List<Transaction>();
+        private readonly List<Transaction> _transactionList = new List<Transaction>();
 
-        public IEnumerable<Transaction> TransactionList
+        public List<Transaction> TransactionList
         {
             get { return _transactionList; }
         }
@@ -24,30 +25,24 @@ namespace Sharekhan.domain
             return false;
         }
 
-        public void BuildDictionariesWithSellingAmounts(IDictionary<Instrument, Price> realizedProfitsDictionary,
-                                                        IDictionary<Instrument, int> instrumentQuantities)
+        public RealizedProfit RealizedProfit()
         {
-            foreach (var transaction in TransactionList)
+            RealizedProfit realizedProfit = new RealizedProfit();
+            List<Transaction> sellTransactions = TransactionList.FindAll(transaction => !(transaction is BuyTransaction));
+            foreach (var transaction in sellTransactions)
             {
-                transaction.UpdateSoldAmounts(realizedProfitsDictionary);
-                transaction.UpdateSoldQuantities(instrumentQuantities);
+                transaction.ComputeCapitalRealization(realizedProfit);
             }
-        }
-
-        public void UpdateRealizedProfits(IDictionary<Instrument, Price> realizedProfitsDictionary,
-                                          IDictionary<Instrument, int> instrumentQuantities)
-        {
-            foreach (var transaction in TransactionList)
+            List<Transaction> buyTransactions = TransactionList.FindAll(transaction => transaction is BuyTransaction);
+            foreach (var transaction in buyTransactions)
             {
-                if (!instrumentQuantities.ContainsKey(transaction.Instrument) ||
-                    instrumentQuantities[transaction.Instrument] == 0)
+                if (realizedProfit.For(transaction.Instrument).Quantity ==0 )
                     continue;
 
-                transaction.UpdateBoughtAmounts(realizedProfitsDictionary, instrumentQuantities[transaction.Instrument]);
-                transaction.UpdateBoughtQuantities(instrumentQuantities);
+                transaction.ComputeCapitalRealization(realizedProfit);
             }
+            return realizedProfit;
         }
-
 
         public ISet<Instrument> GetAllUniqueInstruments()
         {
@@ -59,10 +54,44 @@ namespace Sharekhan.domain
             return instruments;
         }
 
-        public Price GetEffectiveValue(DateTime effectiveDate, double rate)
+        public Price GetEffectiveReturn(DateTime effectiveDate, double rate)
         {
-            return new Price(_transactionList.Sum(s => s.GetEffectiveValue(effectiveDate, rate).Value));
+            return new Price(_transactionList.Sum(s => s.GetEffectiveReturn(effectiveDate, rate).Value));
 
+        }
+        public Rate GetXIRR(double lb, double ub)
+        {
+            const double tolerance = 1e-6;
+            const int maxIterations = 100;
+
+            if (_transactionList.Count == 0) return new Rate(0.0);
+            DateTime effectiveDate = _transactionList[_transactionList.Count - 1].Date;
+
+            double lbVal = GetEffectiveReturn(effectiveDate, lb).Value;
+            double ubVal = GetEffectiveReturn(effectiveDate, ub).Value;
+
+            bool returnIsAscending = (lbVal < 0);
+
+            for( int i = 0; i < maxIterations; i++ )
+            {
+                double mid = (lb + ub)/2;
+
+                double midVal = GetEffectiveReturn(effectiveDate, mid).Value;
+                if (Math.Abs(midVal) < tolerance) return new Rate( mid );
+
+                bool lbAndMidValsHaveSameSign = (lbVal > 0 && midVal > 0 || lbVal < 0 && midVal < 0);
+
+                if (lbAndMidValsHaveSameSign)
+                {
+                    lb = mid;
+                }
+                else // ubAndMidValsHaveSameSign
+                {
+                    ub = mid;
+                }
+            }
+
+            return new Rate(double.NaN);
         }
     }
 }

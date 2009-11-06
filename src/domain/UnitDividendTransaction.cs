@@ -19,6 +19,11 @@ namespace Sharekhan.domain
             return Quantity;
         }
 
+        public override void ComputeCapitalRealization(RealizedProfit realizedProfit)
+        {
+            realizedProfit.For(Instrument).Quantity -= Quantity;
+        }
+
         public virtual bool Equals(UnitDividendTransaction other)
         {
             return base.Equals(other);
@@ -44,18 +49,6 @@ namespace Sharekhan.domain
         public static bool operator !=(UnitDividendTransaction left, UnitDividendTransaction right)
         {
             return !Equals(left, right);
-        }
-
-        public override void UpdateBoughtQuantities(IDictionary<Instrument, int> instrumentQuantities)
-        {
-            if (instrumentQuantities[Instrument] < Quantity)
-            {
-                instrumentQuantities[Instrument] = 0;
-            }
-            else
-            {
-                instrumentQuantities[Instrument] -= Quantity;
-            }
         }
     }
 }

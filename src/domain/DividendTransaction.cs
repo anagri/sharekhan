@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Sharekhan.domain
 {
-    public class DividendTransaction : Transaction
+    public abstract class DividendTransaction : Transaction
     {
         public override Price Amount()
         {
@@ -20,21 +20,7 @@ namespace Sharekhan.domain
             return 0;
         }
 
-        public override void UpdateSoldAmounts(IDictionary<Instrument, Price> realizedProfitsDictionary)
-        {
-        }
-
-        public override void UpdateSoldQuantities(IDictionary<Instrument, int> instrumentQuantities)
-        {
-        }
-
-        public override void UpdateBoughtAmounts(IDictionary<Instrument, Price> dictionary, int quantity)
-        {
-        }
-
-        public override void UpdateBoughtQuantities(IDictionary<Instrument, int> dictionary)
-        {
-        }
+        public abstract override void ComputeCapitalRealization(RealizedProfit realizedProfit);
 
         protected DividendTransaction()
         {

@@ -8,30 +8,8 @@ namespace Sharekhan.domain
         public SinglePayOut(Term term, Price investedAmount,
                             Symbol symbol, string description,
                             InterestRate interestRate)
-            : base(term, investedAmount, symbol, description, interestRate)
+            : base(term, investedAmount, symbol, description, interestRate, 0)
         {
         }
-
-        public override Price CurrentMarketValue(IList<Transaction> transactions)
-        {
-            int noOfYears = DateTime.Now.Subtract(DepositDate.DateOfDeposit).Days / 365;
-
-            return new Price(Math.Round((InvestedAmount.GetEffectiveValue(noOfYears, InterestRate.RateOfInterest / 100)).Value, 2));
-
-        }
-
-        public double CalculateRealizedProfits(ITransactionCollection listOfTransactions)
-        {
-            Price realizedProfit = new Price(0);
-            foreach (Transaction transaction in listOfTransactions.TransactionList)
-            {
-                realizedProfit += transaction.EffectiveTransactionAmount();
-            }
-
-            return realizedProfit.Value;
-        }
-        
-    }
-
-    
+    }    
 }

@@ -83,7 +83,7 @@ namespace ShareKhan.domain
                     instrumentSpecificTransaction.Add(transaction);
                 }
             }
-            return instrument.CalculateRealizedProfits(instrumentSpecificTransaction);
+            return instrumentSpecificTransaction.RealizedProfit().Profit.Value;
         }
         
         public double GetEffectiveRateOfReturn()
