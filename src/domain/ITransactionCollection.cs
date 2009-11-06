@@ -13,7 +13,7 @@ namespace Sharekhan.domain
         RealizedProfit RealizedProfit();
 
         ISet<Instrument> GetAllUniqueInstruments();
-        Price GetEffectiveValue(DateTime effectiveDate, double rate);
+        Price GetEffectiveReturn(DateTime effectiveDate, double rate);
 
     }
 }

@@ -65,7 +65,7 @@ namespace Sharekhan.domain
             return new Price(left.Value - right.Value);
         }
         
-        public Price GetEffectiveValue(double duration, double rate)
+        public Price GetEffectiveReturn(double duration, double rate)
         {
             return new Price(Value * Math.Pow(1.0+rate, duration));
         }

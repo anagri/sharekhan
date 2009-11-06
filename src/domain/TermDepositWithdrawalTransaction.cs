@@ -17,7 +17,7 @@ namespace Sharekhan.domain
             int noOfYears = DateTime.Now.Subtract(Date).Days / 365;
             return
                 new Price(Math.Round(
-                    -UnitPrice.GetEffectiveValue(noOfYears, ((TermDeposit) Instrument).InterestRate.RateOfInterest/100).
+                    -UnitPrice.GetEffectiveReturn(noOfYears, ((TermDeposit) Instrument).InterestRate.RateOfInterest/100).
                          Value));
           
         }
