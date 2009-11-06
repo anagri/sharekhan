@@ -20,7 +20,7 @@ namespace Sharekhan.domain
             return 0;
         }
 
-        public abstract override void Update(RealizedProfit realizedProfit);
+        public abstract override void ComputeCapitalRealization(RealizedProfit realizedProfit);
 
         protected DividendTransaction()
         {

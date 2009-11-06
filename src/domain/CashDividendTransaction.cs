@@ -40,7 +40,7 @@ namespace Sharekhan.domain
             return !Equals(left, right);
         }
 
-        public override void Update(RealizedProfit realizedProfit)
+        public override void ComputeCapitalRealization(RealizedProfit realizedProfit)
         {
             realizedProfit.For(Instrument).Profit += Amount();
         }

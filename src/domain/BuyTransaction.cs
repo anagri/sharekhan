@@ -40,7 +40,7 @@ namespace Sharekhan.domain
             return Quantity;
         }
 
-        public override void Update(RealizedProfit realizedProfit)
+        public override void ComputeCapitalRealization(RealizedProfit realizedProfit)
         {
             Net net = realizedProfit.For(Instrument);
             if (net.Quantity < Quantity)

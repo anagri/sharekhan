@@ -31,7 +31,7 @@ namespace Sharekhan.domain
             List<Transaction> sellTransactions = TransactionList.FindAll(transaction => !(transaction is BuyTransaction));
             foreach (var transaction in sellTransactions)
             {
-                transaction.Update(realizedProfit);
+                transaction.ComputeCapitalRealization(realizedProfit);
             }
             List<Transaction> buyTransactions = TransactionList.FindAll(transaction => transaction is BuyTransaction);
             foreach (var transaction in buyTransactions)
@@ -39,7 +39,7 @@ namespace Sharekhan.domain
                 if (realizedProfit.For(transaction.Instrument).Quantity ==0 )
                     continue;
 
-                transaction.Update(realizedProfit);
+                transaction.ComputeCapitalRealization(realizedProfit);
             }
             return realizedProfit;
         }
