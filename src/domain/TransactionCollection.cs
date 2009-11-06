@@ -77,7 +77,6 @@ namespace Sharekhan.domain
                 double mid = (lb + ub)/2;
 
                 double midVal = GetEffectiveReturn(effectiveDate, mid).Value;
-                Console.WriteLine	("Iter {0}- {1} - {2}" , i,mid,midVal);
                 if (Math.Abs(midVal) < tolerance) return new Rate( mid );
 
                 bool lbAndMidValsHaveSameSign = (lbVal > 0 && midVal > 0 || lbVal < 0 && midVal < 0);
