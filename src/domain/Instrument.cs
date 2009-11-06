@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using ShareKhan.domain;
 using ShareKhan.persist;
 
 namespace Sharekhan.domain
@@ -71,7 +72,7 @@ namespace Sharekhan.domain
 
         public virtual Price CalculateShortTermTax(List<Transaction> transactions)
         {
-            return (new ShortTermTaxCalculator(transactions).CalculateShortTermTax());
+            return (new ShortTermTaxCalculator(transactions, new FinYear(2009)).CalculateShortTermTax());
         }
 
         public virtual Price CurrentMarketValue(IList<Transaction> transactions)

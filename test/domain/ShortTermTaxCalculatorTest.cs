@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using NUnit.Framework;
 using Sharekhan.domain;
+using ShareKhan.domain;
 
 namespace Sharekhan.test.domain
 {
@@ -18,7 +19,7 @@ namespace Sharekhan.test.domain
             SellTransaction sellTransaction = new SellTransaction(new DateTime(2008, 12, 01), share, 10, new Price(20.00), 5.00, 3.00);
 
 
-            Price price = new ShortTermTaxCalculator(null).CalculateShortTermTaxForAPairOfTransactions(buyTransaction, sellTransaction);
+            Price price = new ShortTermTaxCalculator(null, new FinYear(2009)).CalculateShortTermTaxForAPairOfTransactions(buyTransaction, sellTransaction);
             Assert.AreEqual(20, price.Value);
 
         }
@@ -32,7 +33,7 @@ namespace Sharekhan.test.domain
             SellTransaction sellTransaction = new SellTransaction(new DateTime(2009, 12, 01), share, 10, new Price(20.00), 5.00, 3.00);
 
 
-            Price price = new ShortTermTaxCalculator(null).CalculateShortTermTaxForAPairOfTransactions(buyTransaction, sellTransaction);
+            Price price = new ShortTermTaxCalculator(null, new FinYear(2009)).CalculateShortTermTaxForAPairOfTransactions(buyTransaction, sellTransaction);
             Assert.AreEqual(0, price.Value);
 
         }
@@ -47,7 +48,7 @@ namespace Sharekhan.test.domain
 
             List<Transaction> listTransaction = new List<Transaction> { buyTransaction1, sellTransaction1, buyTransaction2, sellTransaction2 };
 
-            Stack buyStack = new ShortTermTaxCalculator(listTransaction).CreateBuyTransactionStack();
+            Stack buyStack = new ShortTermTaxCalculator(listTransaction, new FinYear(2009)).CreateBuyTransactionStack();
             Assert.AreEqual(2, buyStack.Count);
             Assert.AreEqual(buyTransaction1, buyStack.Pop());
             Assert.AreEqual(buyTransaction2, buyStack.Pop());
@@ -65,7 +66,7 @@ namespace Sharekhan.test.domain
 
             List<Transaction> listTransaction = new List<Transaction> { buyTransaction1, sellTransaction1, buyTransaction2, sellTransaction2 };
 
-            Stack sellStack = new ShortTermTaxCalculator(listTransaction).CreateSellTransactionStack();
+            Stack sellStack = new ShortTermTaxCalculator(listTransaction, new FinYear(2009)).CreateSellTransactionStack();
             Assert.AreEqual(2, sellStack.Count);
             Assert.AreEqual(sellTransaction1, sellStack.Pop());
             Assert.AreEqual(sellTransaction2, sellStack.Pop());
@@ -80,7 +81,7 @@ namespace Sharekhan.test.domain
             
             List<Transaction> listTransaction = new List<Transaction> { buyTransaction1, sellTransaction1};
 
-            ShortTermTaxCalculator TaxCalculator = new ShortTermTaxCalculator(listTransaction);
+            ShortTermTaxCalculator TaxCalculator = new ShortTermTaxCalculator(listTransaction, new FinYear(2009));
 
             Stack buyStack = TaxCalculator.CreateBuyTransactionStack();
             Stack sellStack = TaxCalculator.CreateSellTransactionStack();
@@ -103,7 +104,7 @@ namespace Sharekhan.test.domain
 
             List<Transaction> listTransaction = new List<Transaction> { buyTransaction1, sellTransaction1 };
 
-            ShortTermTaxCalculator TaxCalculator = new ShortTermTaxCalculator(listTransaction);
+            ShortTermTaxCalculator TaxCalculator = new ShortTermTaxCalculator(listTransaction, new FinYear(2009));
 
             Stack buyStack = TaxCalculator.CreateBuyTransactionStack();
             Stack sellStack = TaxCalculator.CreateSellTransactionStack();
@@ -128,7 +129,7 @@ namespace Sharekhan.test.domain
 
             List<Transaction> listTransaction = new List<Transaction> { buyTransaction1, sellTransaction1 };
 
-            ShortTermTaxCalculator TaxCalculator = new ShortTermTaxCalculator(listTransaction);
+            ShortTermTaxCalculator TaxCalculator = new ShortTermTaxCalculator(listTransaction, new FinYear(2009));
 
             Stack buyStack = TaxCalculator.CreateBuyTransactionStack();
             Stack sellStack = TaxCalculator.CreateSellTransactionStack();
@@ -156,7 +157,7 @@ namespace Sharekhan.test.domain
 
             List<Transaction> listTransaction = new List<Transaction> { buyTransaction1, sellTransaction1, buyTransaction2, sellTransaction2 };
 
-            ShortTermTaxCalculator TaxCalculator = new ShortTermTaxCalculator(listTransaction);
+            ShortTermTaxCalculator TaxCalculator = new ShortTermTaxCalculator(listTransaction, new FinYear(2009));
 
             Stack buyStack = TaxCalculator.CreateBuyTransactionStack();
             Stack sellStack = TaxCalculator.CreateSellTransactionStack();
@@ -174,11 +175,99 @@ namespace Sharekhan.test.domain
             
         }
 
-//        [Test]
-//        public void 
+        [Test,Ignore]
+        public void ShouldBeAbleToCreateATransactionShowingRemainingQuantityOfInstrumentForAllBuyAndSellBeforeOneYearPriorToTaxCalculationYear()
+        {
+            Instrument share = new Stock(new Symbol("REL"), new Price(10.00), "Rel*iance Power");
+
+            Transaction buyTransaction1 = new BuyTransaction(new DateTime(2005, 06, 01), share, 20, new Price(10.00), 5.00, 3.00);
+            Transaction sellTransaction1 = new SellTransaction(new DateTime(2006, 01, 01), share, 10, new Price(20.00), 5.00, 3.00);
+            Transaction buyTransaction2 = new BuyTransaction(new DateTime(2006, 12, 01), share, 10, new Price(30.00), 5.00, 3.00);
+            Transaction sellTransaction2 = new SellTransaction(new DateTime(2007, 08, 01), share, 10, new Price(50.00), 5.00, 3.00);
+    
+            // The balance at end of this should be a Buy with 10 shares left. 
+            // These transactions below will not be considered.
+            
+            Transaction buyTransaction3 = new BuyTransaction(new DateTime(2008, 06, 01), share, 20, new Price(10.00), 5.00, 3.00);
+            Transaction sellTransaction3 = new SellTransaction(new DateTime(2009, 01, 01), share, 10, new Price(20.00), 5.00, 3.00);
+            Transaction buyTransaction4 = new BuyTransaction(new DateTime(2008, 12, 01), share, 10, new Price(10.00), 5.00, 3.00);
+            Transaction sellTransaction4 = new SellTransaction(new DateTime(2009, 08, 01), share, 10, new Price(20.00), 5.00, 3.00);
+
+
+            List<Transaction> listTransaction = new List<Transaction> { buyTransaction1, sellTransaction1, buyTransaction2, sellTransaction2, buyTransaction3, sellTransaction3, buyTransaction4, sellTransaction4 };
+
+            ShortTermTaxCalculator TaxCalculator = new ShortTermTaxCalculator(listTransaction, new FinYear(2009));
+
+            List<Transaction> listOfValidTransactionsForSTCG = TaxCalculator.GetTransactionBalance();
+
+            Assert.AreEqual(10,listOfValidTransactionsForSTCG[0].Quantity);
+
+
+            
+            
+        }
+
+        [Test,Ignore]
+        public void ShouldBeAbleToCreateATransactionShowingNoRemainingQuantityOfInstrumentIfBuyAndSellCancelOut()
+        {
+            Instrument share = new Stock(new Symbol("REL"), new Price(10.00), "Rel*iance Power");
+
+            Transaction buyTransaction1 = new BuyTransaction(new DateTime(2005, 06, 01), share, 20, new Price(10.00), 5.00, 3.00);
+            Transaction sellTransaction1 = new SellTransaction(new DateTime(2006, 01, 01), share, 10, new Price(20.00), 5.00, 3.00);
+            Transaction buyTransaction2 = new BuyTransaction(new DateTime(2006, 12, 01), share, 10, new Price(30.00), 5.00, 3.00);
+            Transaction sellTransaction2 = new SellTransaction(new DateTime(2007, 08, 01), share, 20, new Price(50.00), 5.00, 3.00);
+
+            // The balance at end of this should be a Buy with 10 shares left. 
+            // These transactions below will not be considered.
+
+            Transaction buyTransaction3 = new BuyTransaction(new DateTime(2008, 06, 01), share, 20, new Price(10.00), 5.00, 3.00);
+            Transaction sellTransaction3 = new SellTransaction(new DateTime(2009, 01, 01), share, 10, new Price(20.00), 5.00, 3.00);
+            Transaction buyTransaction4 = new BuyTransaction(new DateTime(2008, 12, 01), share, 10, new Price(10.00), 5.00, 3.00);
+            Transaction sellTransaction4 = new SellTransaction(new DateTime(2009, 08, 01), share, 10, new Price(20.00), 5.00, 3.00);
+
+
+            List<Transaction> listTransaction = new List<Transaction> { buyTransaction1, sellTransaction1, buyTransaction2, sellTransaction2, buyTransaction3, sellTransaction3, buyTransaction4, sellTransaction4 };
+
+            ShortTermTaxCalculator TaxCalculator = new ShortTermTaxCalculator(listTransaction, new FinYear(2009));
+
+            List<Transaction> listOfValidTransactionsForSTCG = TaxCalculator.GetTransactionBalance();
+
+            Assert.AreEqual(4, listOfValidTransactionsForSTCG.Count);
 
 
 
+
+        }
+
+        [Test]
+        public void ShouldGetSTCGForTheListOfValidTransactions()
+        {
+            Instrument share = new Stock(new Symbol("REL"), new Price(10.00), "Rel*iance Power");
+
+            Transaction buyTransaction1 = new BuyTransaction(new DateTime(2005, 06, 01), share, 20, new Price(10.00), 5.00, 3.00);
+            Transaction sellTransaction1 = new SellTransaction(new DateTime(2006, 01, 01), share, 10, new Price(20.00), 5.00, 3.00);
+            Transaction buyTransaction2 = new BuyTransaction(new DateTime(2006, 12, 01), share, 10, new Price(30.00), 5.00, 3.00);
+            Transaction sellTransaction2 = new SellTransaction(new DateTime(2007, 08, 01), share, 10, new Price(50.00), 5.00, 3.00);
+
+            // The balance at end of this should be a Buy with 10 shares left. 
+            // These transactions below will not be considered.
+//            Transaction buyTransaction8 = new BuyTransaction(new DateTime(2008, 06, 01), share, 10, new Price(10.00), 5.00, 3.00);
+            Transaction buyTransaction3 = new BuyTransaction(new DateTime(2008, 06, 01), share, 20, new Price(10.00), 5.00, 3.00);
+            Transaction sellTransaction3 = new SellTransaction(new DateTime(2009, 01, 01), share, 10, new Price(20.00), 5.00, 3.00);
+            Transaction buyTransaction4 = new BuyTransaction(new DateTime(2008, 12, 01), share, 10, new Price(10.00), 5.00, 3.00);
+            Transaction sellTransaction4 = new SellTransaction(new DateTime(2009, 08, 01), share, 10, new Price(20.00), 5.00, 3.00);
+
+
+            List<Transaction> listTransaction = new List<Transaction> { buyTransaction1, sellTransaction1, buyTransaction2, sellTransaction2,buyTransaction3, sellTransaction3, buyTransaction4, sellTransaction4 };
+
+            ShortTermTaxCalculator TaxCalculator = new ShortTermTaxCalculator(listTransaction, new FinYear(2009));
+
+            Price Tax = TaxCalculator.CalculateShortTermTax();
+
+            Assert.AreEqual(20, Tax.Value);
+
+            
+        }
         
 
     }
