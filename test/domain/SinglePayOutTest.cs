@@ -21,8 +21,8 @@ namespace Sharekhan.test.domain
             // Invalid Price
             new SinglePayOut(new Term(10), new Price(0), new Symbol("CITI"), "Term Deposit", new InterestRate(10));
             
-            // Date not specified
-            new SinglePayOut(new Term(10), new Price(1000), new Symbol("CITI"), "Term Deposit", new InterestRate(10));
+            //// Date not specified
+            //new SinglePayOut(new Term(10), new Price(1000), new Symbol("CITI"), "Term Deposit", new InterestRate(10));
 
         }
 

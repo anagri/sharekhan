@@ -63,6 +63,41 @@ namespace Sharekhan.domain
         {
             return new Price(_transactionList.Sum(s => s.GetEffectiveReturn(effectiveDate, rate).Value));
 
+        }
+        public Rate GetXIRR(double lb, double ub)
+        {
+            const double tolerance = 1e-6;
+            const int maxIterations = 100;
+
+            if (_transactionList.Count == 0) return new Rate(0.0);
+            DateTime effectiveDate = _transactionList[_transactionList.Count - 1].Date;
+
+            double lbVal = GetEffectiveReturn(effectiveDate, lb).Value;
+            double ubVal = GetEffectiveReturn(effectiveDate, ub).Value;
+
+            bool returnIsAscending = (lbVal < 0);
+
+            for( int i = 0; i < maxIterations; i++ )
+            {
+                double mid = (lb + ub)/2;
+
+                double midVal = GetEffectiveReturn(effectiveDate, mid).Value;
+                Console.WriteLine	("Iter {0}- {1} - {2}" , i,mid,midVal);
+                if (Math.Abs(midVal) < tolerance) return new Rate( mid );
+
+                bool lbAndMidValsHaveSameSign = (lbVal > 0 && midVal > 0 || lbVal < 0 && midVal < 0);
+
+                if (lbAndMidValsHaveSameSign)
+                {
+                    lb = mid;
+                }
+                else // ubAndMidValsHaveSameSign
+                {
+                    ub = mid;
+                }
+            }
+
+            return new Rate(double.NaN);
         }
     }
 }

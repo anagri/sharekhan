@@ -51,7 +51,7 @@ namespace Sharekhan.test.domain
 
             const double guessRate = 0.11;
             expectedReturns = -10784.37 + -10979.45 + 13406.76 + 842.97 + 8000;
-            Assert.AreEqual(expectedReturns, transactionCollection.GetEffectiveReturn(finalDate, 0.11).Value,
+            Assert.AreEqual(expectedReturns, transactionCollection.GetEffectiveReturn(finalDate, guessRate).Value,
                             delta);
 
             const double correctRate = 0.122557646;
@@ -61,6 +61,49 @@ namespace Sharekhan.test.domain
 
         }
 
+
+        [Test]
+        public void ShouldBeAbleToIterativelyCalculateIRRWithInitialGuess()
+        {
+            var transactionCollection = new TransactionCollection();
+            var delta = 1e-6;
+
+            Assert.AreEqual(0, transactionCollection.GetXIRR(.1, .2).Value, delta);
+
+
+            var symbol = new Symbol("STOCK1");
+            var stock = new Stock(symbol, new Price(100.0), "My Stock 1");
+
+            transactionCollection.Add(new BuyTransaction(new DateTime(2007, 1, 1),
+                                                         stock,
+                                                         100, new Price(80.0), 10, 5));
+            transactionCollection.Add(new BuyTransaction(new DateTime(2007, 6, 1),
+                                                         stock,
+                                                         100, new Price(85.0), 15, 5));
+            transactionCollection.Add(new SellTransaction(new DateTime(2008, 10, 5),
+                                                         stock,
+                                                         120, new Price(100.0), 15, 10));
+            transactionCollection.Add(new CashDividendTransaction(stock,
+                                                         new Price(800.0), new DateTime(2009, 5, 5)));
+
+            var finalDate = new DateTime(2009, 11, 4);
+            transactionCollection.Add(new SellTransaction(finalDate,
+                                                          stock, 80, new Price(100), 0, 0));
+
+            var goodLowerBoundGuess = 0.11;
+            var goodUpperBoundGuess = 0.13;
+            var correctRate = new Rate(0.122557646);
+            Assert.AreEqual(correctRate.Value, transactionCollection.GetXIRR(goodLowerBoundGuess, goodUpperBoundGuess).Value, delta);
+
+            var decentLowerBoundGuess = -.99;
+            var decentUpperBoundGuess = 0.99;
+            Assert.AreEqual(correctRate.Value, transactionCollection.GetXIRR(decentLowerBoundGuess, decentUpperBoundGuess).Value, delta);
+
+            var badLowerBoundGuess = -.99;
+            var badUpperBoundGuess = 100000;
+            Assert.AreEqual(correctRate.Value, transactionCollection.GetXIRR(badLowerBoundGuess, badUpperBoundGuess).Value, delta);
+
+        }
         
 
     }

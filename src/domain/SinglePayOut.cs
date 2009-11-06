@@ -14,7 +14,7 @@ namespace Sharekhan.domain
         {
             int noOfYears = DateTime.Now.Subtract(DepositDate.DateOfDeposit).Days/365;
 
-            return new Price(Math.Round((InvestedAmount.GetEffectiveValue(noOfYears,InterestRate.RateOfInterest/100)).Value,2));
+            return new Price(Math.Round((InvestedAmount.GetEffectiveReturn(noOfYears,InterestRate.RateOfInterest/100)).Value,2));
 
         }
 
@@ -28,7 +28,7 @@ namespace Sharekhan.domain
             Validate();
         }
 
-        public double CalculateRealizedProfits(ITransactionCollection listOfTransactions)
+        public override double CalculateRealizedProfits(ITransactionCollection listOfTransactions)
         {
             Price realizedProfit = new Price(0);
             foreach (Transaction transaction in listOfTransactions.TransactionList)
