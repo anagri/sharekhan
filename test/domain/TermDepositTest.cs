@@ -13,7 +13,7 @@ namespace Sharekhan.test.domain
         public void ShouldBeAbleToGiveCompoundInterestForDepositTransaction()
         {
             Price deposit = new Price(10000);
-            PeriodicPayout termDeposit = new PeriodicPayout(new Term(4), deposit, new Symbol("CITI"), "Term Deposit", new InterestRate(10), 24);
+            TermDeposit termDeposit = new TermDeposit(new Term(4), deposit, new Symbol("CITI"), "Term Deposit", new InterestRate(10), 24);
             Transaction termDepositTransaction = new TermDepositTransaction(new DateTime(2006, 11, 6), termDeposit, new Price(10000.00));
 
             int noOfYears = DateTime.Now.Subtract(new DateTime(2006, 11, 6)).Days / 365;
@@ -26,7 +26,7 @@ namespace Sharekhan.test.domain
         public void ShouldBeAbleToGiveCompoundInterestForWithdrawalTransaction()
         {
             Price deposit = new Price(2100);
-            PeriodicPayout termDeposit = new PeriodicPayout(new Term(4), deposit, new Symbol("CITI"), "Term Deposit", new InterestRate(10), 24);
+            TermDeposit termDeposit = new TermDeposit(new Term(4), deposit, new Symbol("CITI"), "Term Deposit", new InterestRate(10), 24);
             Transaction termDepositWithdrawalTransaction = new TermDepositWithdrawalTransaction(new DateTime(2008, 11, 6), termDeposit, new Price(2100.0));
 
             int noOfYears = DateTime.Now.Subtract(new DateTime(2008, 11, 6)).Days / 365;

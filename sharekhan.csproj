@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -91,7 +91,6 @@
     <Compile Include="src\domain\IPortfolio.cs" />
     <Compile Include="src\domain\IPortfolioBalance.cs" />
     <Compile Include="src\domain\ITransactionCollection.cs" />
-    <Compile Include="src\domain\PeriodicPayout.cs" />
     <Compile Include="src\domain\Portfolio.cs" />
     <Compile Include="src\domain\PortfolioBalance.cs" />
     <Compile Include="src\domain\PortfolioStatement.cs" />
@@ -99,7 +98,6 @@
     <Compile Include="src\domain\Rate.cs" />
     <Compile Include="src\domain\RealizedProfit.cs" />
     <Compile Include="src\domain\SellTransaction.cs" />
-    <Compile Include="src\domain\SinglePayOut.cs" />
     <Compile Include="src\domain\Statement.cs" />
     <Compile Include="src\domain\Stock.cs" />
     <Compile Include="src\domain\Symbol.cs" />
@@ -117,13 +115,11 @@
     <Compile Include="src\domain\MutualFund.cs" />
     <Compile Include="test\domain\LibraryTest.cs" />
     <Compile Include="test\domain\MutualFundTest.cs" />
-    <Compile Include="test\domain\PeriodicPayoutTermDepositTest.cs" />
     <Compile Include="test\domain\PortfolioTest.cs" />
     <Compile Include="test\domain\PriceTest.cs" />
     <Compile Include="test\domain\RealizedProfitsTest.cs" />
     <Compile Include="src\domain\ShortTermTaxCalculator.cs" />
     <Compile Include="test\domain\ShortTermTaxCalculatorTest.cs" />
-    <Compile Include="test\domain\SinglePayOutTest.cs" />
     <Compile Include="test\domain\StockTest.cs" />
     <Compile Include="test\domain\SymbolTest.cs" />
     <Compile Include="test\domain\TermDepositTest.cs" />
