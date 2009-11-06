@@ -20,19 +20,19 @@ namespace Sharekhan.domain
             return 0;
         }
 
-        public override void UpdateSoldAmounts(IDictionary<Instrument, Price> realizedProfitsDictionary)
+        public override void UpdateSoldAmounts(RealizedProfit realizedProfit)
         {
         }
 
-        public override void UpdateSoldQuantities(IDictionary<Instrument, int> instrumentQuantities)
+        public override void UpdateSoldQuantities(RealizedProfit realizedProfit)
         {
         }
 
-        public override void UpdateBoughtAmounts(IDictionary<Instrument, Price> dictionary, int quantity)
+        public override void UpdateBoughtAmounts(RealizedProfit realizedProfit)
         {
         }
 
-        public override void UpdateBoughtQuantities(IDictionary<Instrument, int> dictionary)
+        public override void UpdateBoughtQuantities(RealizedProfit realizedProfit)
         {
         }
 

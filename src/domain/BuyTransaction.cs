@@ -40,38 +40,41 @@ namespace Sharekhan.domain
             return Quantity;
         }
 
-        public override void UpdateSoldAmounts(IDictionary<Instrument, Price> realizedProfitsDictionary)
+        public override void UpdateSoldAmounts(RealizedProfit realizedProfit)
         {
         }
 
-        public override void UpdateSoldQuantities(IDictionary<Instrument, int> instrumentQuantities)
+        public override void UpdateSoldQuantities(RealizedProfit realizedProfit)
         {
         }
 
-        public override void UpdateBoughtAmounts(IDictionary<Instrument, Price> realizedProfitsDictionary, int quantity)
+        public override void UpdateBoughtAmounts(RealizedProfit realizedProfit)
         {
-            if (quantity < Quantity)
+            Net net = realizedProfit.For(Instrument);
+            if (net.Quantity < Quantity)
             {
-                realizedProfitsDictionary[Instrument] -=
-                    new Price(quantity * UnitPrice.Value +
+                net.Profit -=
+                    new Price(net.Quantity* UnitPrice.Value +
                               Tax + Brokerage);
             }
             else
             {
                 // TODO: We probably want EffectiveTransactionAmount here
-                realizedProfitsDictionary[Instrument] -= Amount();
+                net.Profit -= Amount();
             }
         }
 
-        public override void UpdateBoughtQuantities(IDictionary<Instrument, int> instrumentQuantities)
+        public override void UpdateBoughtQuantities(RealizedProfit realizedProfit)
         {
-            if (instrumentQuantities[Instrument] < Quantity)
+            Net net = realizedProfit.For(Instrument);
+
+            if (net.Quantity < Quantity)
             {
-                instrumentQuantities[Instrument] = 0;
+                net.Quantity = 0;
             }
             else
             {
-                instrumentQuantities[Instrument] -= Quantity;
+                net.Quantity -= Quantity;
             }
         }
 

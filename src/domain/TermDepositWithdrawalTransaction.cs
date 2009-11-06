@@ -6,7 +6,7 @@ namespace Sharekhan.domain
 {
     class TermDepositWithdrawalTransaction : Transaction
     {
-        public TermDepositWithdrawalTransaction(DateTime dateTime, SinglePayOut instrument, Price price)
+        public TermDepositWithdrawalTransaction(DateTime dateTime, TermDeposit instrument, Price price)
             : base(dateTime, instrument, 0, price)
         {
             
@@ -27,22 +27,22 @@ namespace Sharekhan.domain
             throw new NotImplementedException();
         }
 
-        public override void UpdateSoldAmounts(IDictionary<Instrument, Price> realizedProfitsDictionary)
+        public override void UpdateSoldAmounts(RealizedProfit realizedProfit)
         {
             throw new NotImplementedException();
         }
 
-        public override void UpdateSoldQuantities(IDictionary<Instrument, int> instrumentQuantities)
+        public override void UpdateSoldQuantities(RealizedProfit realizedProfit)
         {
             throw new NotImplementedException();
         }
 
-        public override void UpdateBoughtAmounts(IDictionary<Instrument, Price> dictionary, int quantity)
+        public override void UpdateBoughtAmounts(RealizedProfit realizedProfit)
         {
             throw new NotImplementedException();
         }
 
-        public override void UpdateBoughtQuantities(IDictionary<Instrument, int> dictionary)
+        public override void UpdateBoughtQuantities(RealizedProfit realizedProfit)
         {
             throw new NotImplementedException();
         }

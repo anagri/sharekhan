@@ -102,7 +102,6 @@ namespace Sharekhan.test.domain
             var badLowerBoundGuess = -.99;
             var badUpperBoundGuess = 100000;
             Assert.AreEqual(correctRate.Value, transactionCollection.GetXIRR(badLowerBoundGuess, badUpperBoundGuess).Value, delta);
-
         }
         
 

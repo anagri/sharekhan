@@ -91,16 +91,19 @@
     <Compile Include="src\domain\IPortfolio.cs" />
     <Compile Include="src\domain\IPortfolioBalance.cs" />
     <Compile Include="src\domain\ITransactionCollection.cs" />
+    <Compile Include="src\domain\PeriodicPayout.cs" />
     <Compile Include="src\domain\Portfolio.cs" />
     <Compile Include="src\domain\PortfolioBalance.cs" />
     <Compile Include="src\domain\PortfolioStatement.cs" />
     <Compile Include="src\domain\Price.cs" />
     <Compile Include="src\domain\Rate.cs" />
+    <Compile Include="src\domain\RealizedProfit.cs" />
     <Compile Include="src\domain\SellTransaction.cs" />
     <Compile Include="src\domain\SinglePayOut.cs" />
     <Compile Include="src\domain\Statement.cs" />
     <Compile Include="src\domain\Stock.cs" />
     <Compile Include="src\domain\Symbol.cs" />
+    <Compile Include="src\domain\TermDeposit.cs" />
     <Compile Include="src\domain\TermDepositTransaction.cs" />
     <Compile Include="src\domain\TermDepositWithdrawalTransaction.cs" />
     <Compile Include="src\domain\Transaction.cs" />
@@ -114,6 +117,7 @@
     <Compile Include="src\domain\MutualFund.cs" />
     <Compile Include="test\domain\LibraryTest.cs" />
     <Compile Include="test\domain\MutualFundTest.cs" />
+    <Compile Include="test\domain\PeriodicPayoutTermDepositTest.cs" />
     <Compile Include="test\domain\PortfolioTest.cs" />
     <Compile Include="test\domain\PriceTest.cs" />
     <Compile Include="test\domain\RealizedProfitsTest.cs" />

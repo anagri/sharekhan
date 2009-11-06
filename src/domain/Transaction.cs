@@ -41,13 +41,13 @@ namespace Sharekhan.domain
         public abstract Price EffectiveTransactionAmount();
         public abstract int EffectiveTransactionQuantity();
 
-        public abstract void UpdateSoldAmounts(IDictionary<Instrument, Price> realizedProfitsDictionary);
+        public abstract void UpdateSoldAmounts(RealizedProfit realizedProfit);
 
-        public abstract void UpdateSoldQuantities(IDictionary<Instrument, int> instrumentQuantities);
+        public abstract void UpdateSoldQuantities(RealizedProfit realizedProfit);
 
-        public abstract void UpdateBoughtAmounts(IDictionary<Instrument, Price> dictionary, int quantity);
+        public abstract void UpdateBoughtAmounts(RealizedProfit realizedProfit);
 
-        public abstract void UpdateBoughtQuantities(IDictionary<Instrument, int> dictionary);
+        public abstract void UpdateBoughtQuantities(RealizedProfit realizedProfit);
 
         public virtual Price GetEffectiveReturn(DateTime referenceDate, double rate)
         {
