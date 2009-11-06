@@ -45,7 +45,7 @@ namespace Sharekhan.domain
             return price;
         }
 
-        public double CalculateRealizedProfits(ITransactionCollection listOfTransactions)
+        public override double CalculateRealizedProfits(ITransactionCollection listOfTransactions)
         {
             Price realizedProfit = new Price(0);
             foreach (Transaction transaction in listOfTransactions.TransactionList)
