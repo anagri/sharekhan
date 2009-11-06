@@ -41,13 +41,7 @@ namespace Sharekhan.domain
         public abstract Price EffectiveTransactionAmount();
         public abstract int EffectiveTransactionQuantity();
 
-        public abstract void UpdateSoldAmounts(RealizedProfit realizedProfit);
-
-        public abstract void UpdateSoldQuantities(RealizedProfit realizedProfit);
-
-        public abstract void UpdateBoughtAmounts(RealizedProfit realizedProfit);
-
-        public abstract void UpdateBoughtQuantities(RealizedProfit realizedProfit);
+        public abstract void ComputeCapitalRealization(RealizedProfit realizedProfit);
 
         public virtual Price GetEffectiveReturn(DateTime referenceDate, double rate)
         {

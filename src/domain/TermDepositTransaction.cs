@@ -38,22 +38,7 @@ namespace Sharekhan.domain
             throw new NotImplementedException();
         }
 
-        public override void UpdateSoldAmounts(RealizedProfit realizedProfit)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void UpdateSoldQuantities(RealizedProfit realizedProfit)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void UpdateBoughtAmounts(RealizedProfit realizedProfit)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void UpdateBoughtQuantities(RealizedProfit realizedProfit)
+        public override void ComputeCapitalRealization(RealizedProfit realizedProfit)
         {
             throw new NotImplementedException();
         }
