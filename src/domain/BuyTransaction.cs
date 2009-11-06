@@ -40,40 +40,18 @@ namespace Sharekhan.domain
             return Quantity;
         }
 
-        public override void UpdateSoldAmounts(RealizedProfit realizedProfit)
-        {
-        }
-
-        public override void UpdateSoldQuantities(RealizedProfit realizedProfit)
-        {
-        }
-
-        public override void UpdateBoughtAmounts(RealizedProfit realizedProfit)
+        public override void Update(RealizedProfit realizedProfit)
         {
             Net net = realizedProfit.For(Instrument);
             if (net.Quantity < Quantity)
             {
-                net.Profit -=
-                    new Price(net.Quantity* UnitPrice.Value +
-                              Tax + Brokerage);
+                net.Profit -= new Price(net.Quantity * UnitPrice.Value + Tax + Brokerage);
+                net.Quantity = 0;
             }
             else
             {
                 // TODO: We probably want EffectiveTransactionAmount here
                 net.Profit -= Amount();
-            }
-        }
-
-        public override void UpdateBoughtQuantities(RealizedProfit realizedProfit)
-        {
-            Net net = realizedProfit.For(Instrument);
-
-            if (net.Quantity < Quantity)
-            {
-                net.Quantity = 0;
-            }
-            else
-            {
                 net.Quantity -= Quantity;
             }
         }
