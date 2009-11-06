@@ -14,7 +14,14 @@ namespace Sharekhan.domain
         
         public override Price Amount()
         {
-            int noOfYears = DateTime.Now.Subtract(Date).Days / 365;
+            TermDeposit termDeposit = (TermDeposit)Instrument;
+            int noOfYears = 0;
+
+            if (termDeposit.IsMatured())
+                return new Price(-EffectiveTransactionAmount().Value);
+            else
+                noOfYears = DateTime.Now.Subtract(Date).Days / 365;
+            
             return
                 new Price(Math.Round(
                     -UnitPrice.GetEffectiveReturn(noOfYears, ((TermDeposit) Instrument).InterestRate.RateOfInterest/100).

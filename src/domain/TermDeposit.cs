@@ -55,6 +55,13 @@ namespace Sharekhan.domain
 
             return realizedProfit.Value;
         }
+
+        public bool IsMatured()
+        {
+            if(DateTime.Now.Subtract(DepositDate.DateOfDeposit).Days >  (Term.DepositTerm * 365))
+                return true;
+            return false;
+        }
     }
     
     public class DepositDate

@@ -20,6 +20,7 @@ namespace Sharekhan.test.domain
             double expectedAmount = Math.Round((deposit.GetEffectiveReturn(noOfYears, 0.1).Value), 2);
 
             Assert.AreEqual(expectedAmount, termDepositTransaction.Amount().Value);
+            
         }
 
         [Test]
@@ -27,6 +28,7 @@ namespace Sharekhan.test.domain
         {
             Price deposit = new Price(2100);
             TermDeposit termDeposit = new TermDeposit(new Term(4), deposit, new Symbol("CITI"), "Term Deposit", new InterestRate(10), 24);
+            Transaction termDepositTransaction = new TermDepositTransaction(new DateTime(2006, 11, 6), termDeposit, new Price(10000.00));
             Transaction termDepositWithdrawalTransaction = new TermDepositWithdrawalTransaction(new DateTime(2008, 11, 6), termDeposit, new Price(2100.0));
 
             int noOfYears = DateTime.Now.Subtract(new DateTime(2008, 11, 6)).Days / 365;
@@ -114,25 +116,37 @@ namespace Sharekhan.test.domain
 
         }
 
-        [Test, Ignore]
+        [Test]
         public void ShouldBeAbleToGiveCurrentMarketValueForMaturedSinglePayoutTermDeposit()
         {
             Price depositPrice = new Price(10000);
-            Price withdrawalPrice = new Price(2100);
             TermDeposit termDeposit = new TermDeposit(new Term(2), new Price(10000), new Symbol("CITI"),
                                                          "Term Deposit", new InterestRate(10), -1);
             Transaction termDepositTransaction = new TermDepositTransaction(new DateTime(2006, 11, 6), termDeposit,
                                                                            new Price(10000));
             Transaction termDepositWithdrawalTransaction =
-                new TermDepositWithdrawalTransaction(new DateTime(2008, 11, 6), termDeposit, new Price(12310));
-
+                new TermDepositWithdrawalTransaction(new DateTime(2008, 11, 6), termDeposit, new Price(12100));
+            
             IList<Transaction> transactionCollection = new List<Transaction>() { termDepositTransaction, termDepositWithdrawalTransaction };
             transactionCollection.Add(termDepositTransaction);
             transactionCollection.Add(termDepositWithdrawalTransaction);
 
-            Assert.AreEqual(12310, termDeposit.CurrentMarketValue(transactionCollection).Value);
+            Console.WriteLine(termDepositTransaction.Amount().Value);
+            Console.WriteLine(termDepositWithdrawalTransaction.EffectiveTransactionAmount().Value);
+
+            Assert.AreEqual(0, termDeposit.CurrentMarketValue(transactionCollection).Value);
 
         }
+        [Test]
+        public void ShouldBeMaturedSinglePayoutTermDeposit()
+        {
+            Price depositPrice = new Price(10000);
+            TermDeposit termDeposit = new TermDeposit(new Term(1), new Price(10000), new Symbol("CITI"),
+                                                         "Term Deposit", new InterestRate(10), -1);
+            Transaction termDepositTransaction = new TermDepositTransaction(new DateTime(2007, 11, 6), termDeposit,
+                                                                           new Price(10000));
+            Assert.AreEqual(true, termDeposit.IsMatured());
 
+        }
     }
 }
