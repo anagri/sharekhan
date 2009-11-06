@@ -14,7 +14,11 @@ namespace Sharekhan.domain
 
         public override Price Amount()
         {
-            throw new NotImplementedException();
+            int noOfYears = DateTime.Now.Subtract(Date).Days / 365;
+            return
+                new Price(Math.Round(
+                    UnitPrice.GetEffectiveValue(noOfYears, ((TermDeposit)Instrument).InterestRate.RateOfInterest/100).
+                         Value));
         }
 
         public override Price EffectiveTransactionAmount()
