@@ -15,12 +15,12 @@ namespace Sharekhan.domain
         public override Price Amount()
         {
             TermDeposit termDeposit = (TermDeposit)Instrument;
-            int noOfYears = 0;
+            double noOfYears = 0;
 
             if (termDeposit.IsMatured())
                 return new Price(-EffectiveTransactionAmount().Value);
             else
-                noOfYears = DateTime.Now.Subtract(Date).Days / 365;
+                noOfYears = ((double)DateTime.Now.Subtract(Date).Days) / 365;
             
             return
                 new Price(Math.Round(

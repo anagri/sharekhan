@@ -16,10 +16,10 @@ namespace Sharekhan.test.domain
             TermDeposit termDeposit = new TermDeposit(new Term(4), deposit, new Symbol("CITI"), "Term Deposit", new InterestRate(10), 24);
             Transaction termDepositTransaction = new TermDepositTransaction(new DateTime(2006, 11, 6), termDeposit, new Price(10000.00));
 
-            int noOfYears = DateTime.Now.Subtract(new DateTime(2006, 11, 6)).Days / 365;
+            double noOfYears = ((double)DateTime.Now.Subtract(new DateTime(2006, 11, 6)).Days) / 365;
             double expectedAmount = Math.Round((deposit.GetEffectiveReturn(noOfYears, 0.1).Value), 2);
 
-            Assert.AreEqual(expectedAmount, termDepositTransaction.Amount().Value);
+            Assert.AreEqual(Math.Round(expectedAmount), termDepositTransaction.Amount().Value);
             
         }
 
@@ -49,13 +49,13 @@ namespace Sharekhan.test.domain
 
             IList<Transaction> transactionCollection = new List<Transaction>() { termDepositTransaction, termDepositWithdrawalTransaction };
 
-            int noOfYears = DateTime.Now.Subtract(new DateTime(2006, 11, 6)).Days / 365;
+            double noOfYears = ((double)DateTime.Now.Subtract(new DateTime(2006, 11, 6)).Days) / 365;
             double depositAmountWithInterest = Math.Round((depositPrice.GetEffectiveReturn(noOfYears, 0.1).Value), 2);
 
-            noOfYears = DateTime.Now.Subtract(new DateTime(2008, 11, 6)).Days / 365;
+            noOfYears = ((double)DateTime.Now.Subtract(new DateTime(2008, 11, 6)).Days) / 365;
             double withDrawAmountWithInterest = Math.Round((withdrawalPrice.GetEffectiveReturn(noOfYears, 0.1).Value), 2);
 
-            Assert.AreEqual(depositAmountWithInterest - withDrawAmountWithInterest, termDeposit.CurrentMarketValue(transactionCollection).Value);
+            Assert.AreEqual(Math.Round(depositAmountWithInterest - withDrawAmountWithInterest), termDeposit.CurrentMarketValue(transactionCollection).Value);
 
         }
 
@@ -108,11 +108,11 @@ namespace Sharekhan.test.domain
 
             IList<Transaction> transactionCollection = new List<Transaction>() { termDepositTransaction};
 
-            int noOfYears = DateTime.Now.Subtract(new DateTime(2007, 11, 6)).Days / 365;
+            double noOfYears = ((double)DateTime.Now.Subtract(new DateTime(2007, 11, 6)).Days) / 365;
             double depositAmountWithInterest = Math.Round((depositPrice.GetEffectiveReturn(noOfYears, 0.1).Value), 2);
 
 
-            Assert.AreEqual(depositAmountWithInterest, termDeposit.CurrentMarketValue(transactionCollection).Value);
+            Assert.AreEqual(Math.Round(depositAmountWithInterest), termDeposit.CurrentMarketValue(transactionCollection).Value);
 
         }
 
@@ -146,6 +146,32 @@ namespace Sharekhan.test.domain
             Transaction termDepositTransaction = new TermDepositTransaction(new DateTime(2007, 11, 6), termDeposit,
                                                                            new Price(10000));
             Assert.AreEqual(true, termDeposit.IsMatured());
+
+        }
+
+        [Test]
+        public void ShouldBeAbleToGiveCurrentMarketValueForPeriodicPayoutTermDepositForMultipleWithdrawalTransaction()
+        {
+            Price depositPrice = new Price(10000);
+            Price withdrawalPrice = new Price(1000);
+
+            TermDeposit termDeposit = new TermDeposit(new Term(3), new Price(10000), new Symbol("CITI"), "Term Deposit", new InterestRate(10), 12);
+            Transaction termDepositTransaction = new TermDepositTransaction(new DateTime(2006, 11, 7), termDeposit, new Price(10000.00));
+            Transaction termDepositWithdrawalTransaction = new TermDepositWithdrawalTransaction(new DateTime(2007, 11, 7), termDeposit, new Price(1000.0));
+            Transaction termDepositWithdrawalTransaction1 = new TermDepositWithdrawalTransaction(new DateTime(2008, 11, 7), termDeposit, new Price(1000.0));
+
+            IList<Transaction> transactionCollection = new List<Transaction>() { termDepositTransaction, termDepositWithdrawalTransaction, termDepositWithdrawalTransaction1 };
+
+            double noOfYears = ((double)DateTime.Now.Subtract(new DateTime(2006, 11, 7)).Days) / 365;
+            double depositAmountWithInterest = Math.Round((depositPrice.GetEffectiveReturn(noOfYears, 0.1).Value), 2);
+
+            noOfYears = ((double)DateTime.Now.Subtract(new DateTime(2007, 11, 7)).Days) / 365;
+            double withDrawAmountWithInterest1 = Math.Round((withdrawalPrice.GetEffectiveReturn(noOfYears, 0.1).Value), 2);
+
+            noOfYears = ((double)DateTime.Now.Subtract(new DateTime(2008, 11, 7)).Days) / 365;
+            double withDrawAmountWithInterest = Math.Round((withdrawalPrice.GetEffectiveReturn(noOfYears, 0.1).Value), 2);
+
+            Assert.AreEqual(Math.Round(depositAmountWithInterest - (withDrawAmountWithInterest + withDrawAmountWithInterest1)), termDeposit.CurrentMarketValue(transactionCollection).Value);
 
         }
     }

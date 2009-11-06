@@ -58,9 +58,7 @@ namespace Sharekhan.domain
 
         public bool IsMatured()
         {
-            if(DateTime.Now.Subtract(DepositDate.DateOfDeposit).Days >  (Term.DepositTerm * 365))
-                return true;
-            return false;
+            return DateTime.Now.Subtract(DepositDate.DateOfDeposit).Days >  (Term.DepositTerm * 365);
         }
     }
     
