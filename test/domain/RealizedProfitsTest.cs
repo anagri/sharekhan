@@ -155,14 +155,5 @@ namespace Sharekhan.test.domain
             Assert.AreEqual(18, d.CalculateRealizedProfits(ts));
         }
 
-        [Test,Ignore]
-        public void ShouldCalculateARealisedProfitForTermDeposit()
-        {
-            Portfolio portfolio = new Portfolio();
-            TransactionCollection tc = new TransactionCollection();
-            Instrument singliePayout = new SinglePayOut(new Term(2),new Price(10000),new Symbol("CITI"),"Two year deposit at CITI",new InterestRate(10));
-            tc.Add(new BuyTransaction(new DateTime(2009, 11, 01), singliePayout, 1, new Price(10000), 0, 0));
-            Assert.AreEqual(0,portfolio.CalculateRealizedProfits(tc));
-        }
     }
 }
