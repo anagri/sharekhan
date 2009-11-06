@@ -8,9 +8,9 @@ namespace Sharekhan.domain
 {
     public class TransactionCollection : ITransactionCollection
     {
-        private readonly IList<Transaction> _transactionList = new List<Transaction>();
+        private readonly List<Transaction> _transactionList = new List<Transaction>();
 
-        public IEnumerable<Transaction> TransactionList
+        public List<Transaction> TransactionList
         {
             get { return _transactionList; }
         }
@@ -28,18 +28,18 @@ namespace Sharekhan.domain
         public RealizedProfit RealizedProfit()
         {
             RealizedProfit realizedProfit = new RealizedProfit();
-            foreach (var transaction in TransactionList)
+            List<Transaction> sellTransactions = TransactionList.FindAll(transaction => !(transaction is BuyTransaction));
+            foreach (var transaction in sellTransactions)
             {
-                transaction.UpdateSoldAmounts(realizedProfit);
-                transaction.UpdateSoldQuantities(realizedProfit);
+                transaction.Update(realizedProfit);
             }
-            foreach (var transaction in TransactionList)
+            List<Transaction> buyTransactions = TransactionList.FindAll(transaction => transaction is BuyTransaction);
+            foreach (var transaction in buyTransactions)
             {
                 if (realizedProfit.For(transaction.Instrument).Quantity ==0 )
                     continue;
 
-                transaction.UpdateBoughtAmounts(realizedProfit);
-                transaction.UpdateBoughtQuantities(realizedProfit);
+                transaction.Update(realizedProfit);
             }
             return realizedProfit;
         }

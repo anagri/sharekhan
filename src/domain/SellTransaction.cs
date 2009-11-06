@@ -40,26 +40,11 @@ namespace Sharekhan.domain
             return -Quantity;
         }
 
-        public override void UpdateSoldAmounts(RealizedProfit realizedProfit)
+        public override void Update(RealizedProfit realizedProfit)
         {
             Net net = realizedProfit.For(Instrument);
             net.Profit += Amount();
-        }
-
-        public override void UpdateSoldQuantities(RealizedProfit realizedProfit)
-        {
-            Net net = realizedProfit.For(Instrument);
             net.Quantity += Quantity;
-        }
-
-        public override void UpdateBoughtAmounts(RealizedProfit realizedProfit)
-        {
-            
-        }
-
-        public override void UpdateBoughtQuantities(RealizedProfit realizedProfit)
-        {
-            
         }
 
         public virtual Price CalculateShortTermTax(BuyTransaction buyTransaction)

@@ -8,7 +8,7 @@ namespace Sharekhan.domain
     public interface ITransactionCollection
     {
         bool Add(Transaction transaction);
-        IEnumerable<Transaction> TransactionList { get; }
+        List<Transaction> TransactionList { get; }
 
         RealizedProfit RealizedProfit();
 
