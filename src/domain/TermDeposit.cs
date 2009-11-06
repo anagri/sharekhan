@@ -5,20 +5,23 @@ using System.Text;
 
 namespace Sharekhan.domain
 {
-    public abstract class TermDeposit : Instrument
+    public class TermDeposit : Instrument
     {
         public Term Term { get; set; }
         public InterestRate InterestRate { get; set; }
         public DepositDate DepositDate { get; set; }
         public Price InvestedAmount { get; set; }
+        public int InterestPayoutFrequency { get; set; }
 
         public TermDeposit(Term term, Price investedAmount,
                             Symbol symbol, string description,
-                            InterestRate interestRate) : base(symbol, investedAmount, description)
+                            InterestRate interestRate, int interestPayoutFrequency)
+            : base(symbol, investedAmount, description)
         {
             Term = term;
             InterestRate = interestRate;
             InvestedAmount = investedAmount;
+            InterestPayoutFrequency = interestPayoutFrequency;
             Validate();
         }
 
@@ -28,6 +31,29 @@ namespace Sharekhan.domain
             {
                 throw new InvalidTermDepositException();
             }
+        }
+
+        public override Price CurrentMarketValue(IList<Transaction> transactions)
+        {
+            Price price = new Price(0);
+
+            foreach (Transaction transaction in transactions)
+            {
+                price += transaction.Amount();
+            }
+
+            return price;
+        }
+
+        public double CalculateRealizedProfits(ITransactionCollection listOfTransactions)
+        {
+            Price realizedProfit = new Price(0);
+            foreach (Transaction transaction in listOfTransactions.TransactionList)
+            {
+                realizedProfit += transaction.EffectiveTransactionAmount();
+            }
+
+            return realizedProfit.Value;
         }
     }
     

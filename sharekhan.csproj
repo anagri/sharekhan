@@ -125,6 +125,7 @@
     <Compile Include="test\domain\SinglePayOutTest.cs" />
     <Compile Include="test\domain\StockTest.cs" />
     <Compile Include="test\domain\SymbolTest.cs" />
+    <Compile Include="test\domain\TermDepositTest.cs" />
     <Compile Include="test\domain\TransactionCollectionTest.cs" />
     <Compile Include="test\domain\TransactionTest.cs" />
     <Compile Include="test\persist\NHibernateInMemoryTestFixtureBase.cs" />
