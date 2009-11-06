@@ -45,21 +45,13 @@ namespace Sharekhan.domain
             Net net = realizedProfit.For(Instrument);
             if (net.Quantity < Quantity)
             {
-                net.Profit -=
-                    new Price(net.Quantity * UnitPrice.Value +
-                              Tax + Brokerage);
+                net.Profit -= new Price(net.Quantity * UnitPrice.Value + Tax + Brokerage);
+                net.Quantity = 0;
             }
             else
             {
                 // TODO: We probably want EffectiveTransactionAmount here
                 net.Profit -= Amount();
-            }
-            if (net.Quantity < Quantity)
-            {
-                net.Quantity = 0;
-            }
-            else
-            {
                 net.Quantity -= Quantity;
             }
         }
