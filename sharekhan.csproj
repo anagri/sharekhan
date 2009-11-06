@@ -96,6 +96,7 @@
     <Compile Include="src\domain\PortfolioBalance.cs" />
     <Compile Include="src\domain\PortfolioStatement.cs" />
     <Compile Include="src\domain\Price.cs" />
+    <Compile Include="src\domain\RealizedProfit.cs" />
     <Compile Include="src\domain\SellTransaction.cs" />
     <Compile Include="src\domain\SinglePayOut.cs" />
     <Compile Include="src\domain\Statement.cs" />

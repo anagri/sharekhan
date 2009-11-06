@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Iesi.Collections.Generic;
 using System.Linq;
@@ -24,30 +25,24 @@ namespace Sharekhan.domain
             return false;
         }
 
-        public void BuildDictionariesWithSellingAmounts(IDictionary<Instrument, Price> realizedProfitsDictionary,
-                                                        IDictionary<Instrument, int> instrumentQuantities)
+        public RealizedProfit RealizedProfit()
         {
+            RealizedProfit realizedProfit = new RealizedProfit();
             foreach (var transaction in TransactionList)
             {
-                transaction.UpdateSoldAmounts(realizedProfitsDictionary);
-                transaction.UpdateSoldQuantities(instrumentQuantities);
+                transaction.UpdateSoldAmounts(realizedProfit);
+                transaction.UpdateSoldQuantities(realizedProfit);
             }
-        }
-
-        public void UpdateRealizedProfits(IDictionary<Instrument, Price> realizedProfitsDictionary,
-                                          IDictionary<Instrument, int> instrumentQuantities)
-        {
             foreach (var transaction in TransactionList)
             {
-                if (!instrumentQuantities.ContainsKey(transaction.Instrument) ||
-                    instrumentQuantities[transaction.Instrument] == 0)
+                if (realizedProfit.For(transaction.Instrument).Quantity ==0 )
                     continue;
 
-                transaction.UpdateBoughtAmounts(realizedProfitsDictionary, instrumentQuantities[transaction.Instrument]);
-                transaction.UpdateBoughtQuantities(instrumentQuantities);
+                transaction.UpdateBoughtAmounts(realizedProfit);
+                transaction.UpdateBoughtQuantities(realizedProfit);
             }
+            return realizedProfit;
         }
-
 
         public ISet<Instrument> GetAllUniqueInstruments()
         {
