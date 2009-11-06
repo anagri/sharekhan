@@ -3,16 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using ShareKhan.domain;
 
 namespace Sharekhan.domain
 {
     class ShortTermTaxCalculator
     {
         public List<Transaction> Transactions { get; set; }
+        public FinYear YearForStcg { get; set; }
 
-        public ShortTermTaxCalculator(List<Transaction> transactions)
+        public ShortTermTaxCalculator(List<Transaction> transactions, FinYear yearForStcg)
         {
             Transactions = transactions;
+            YearForStcg = yearForStcg;
 
         }
 
@@ -107,10 +110,71 @@ namespace Sharekhan.domain
 
         public Price CalculateShortTermTax()
         {
-            throw new NotImplementedException();
+            Transactions = GetTransactionBalance();
+
+            Stack buyStack = CreateBuyTransactionStack();
+            Stack sellStack = CreateSellTransactionStack();
+
+            return CalculateTaxOverTheBuyAndSellStacks(buyStack, sellStack);
+
         }
 
-        
+
+        public List<Transaction> GetTransactionBalance()
+        {
+
+            
+            int leftOverBuys = 0;
+            FinYear theYearBefore = new FinYear(YearForStcg.StartYear-1);
+            Instrument theBuyInstrument = Transactions[0].Instrument;
+
+            for (int i = 0; i < Transactions.Count;)
+            {
+                if (Transactions[i].Date.CompareTo(theYearBefore.GetTaxationPeriod().Value.StartDate) > 0)
+                {
+                    break;
+                }
+                if (Transactions[i].GetType() == typeof(BuyTransaction))
+                 {
+                     leftOverBuys += Transactions[i].Quantity;
+                     Transactions.Remove(Transactions[i]);
+                   
+                 }
+                else if (Transactions[i].GetType() == typeof(SellTransaction))
+                {
+                    leftOverBuys -= Transactions[i].Quantity;
+                    Transactions.Remove(Transactions[i]);
+                
+                }
+                
+            }
+            BuyTransaction theBuyToAppendToList = new BuyTransaction(new DateTime(2008, 06, 01), theBuyInstrument, leftOverBuys, new Price(0),0, 0);
+
+            if (theBuyToAppendToList.Quantity > 0)
+            {
+                //             Transactions.Insert(0, theBuyToAppendToList);
+
+                for (int i = 0; i < Transactions.Count;i++)
+                {
+                    if (Transactions[i].GetType() == typeof (SellTransaction))
+                    {
+                       leftOverBuys -= Transactions[i].Quantity;
+                       if(leftOverBuys<0)
+                       {
+                           Transactions[i].Quantity = -leftOverBuys;
+                           break;
+                       }
+                       else if(leftOverBuys>0)
+                       {
+                           Transactions.Remove(Transactions[i]);
+                           i--;
+                       }
+                    }
+                }
+            }
+            return Transactions;
+           
+        }
     }
 
 }

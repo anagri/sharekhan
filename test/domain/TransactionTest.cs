@@ -162,7 +162,7 @@ namespace Sharekhan.domain
             List<Transaction> listTransaction = new List<Transaction> { buyTransaction1, sellTransaction1, buyTransaction2, sellTransaction2
             ,buyTransaction3,buyTransaction4,sellTransaction3};
 
-            ShortTermTaxCalculator TaxCalculator = new ShortTermTaxCalculator(listTransaction);
+            ShortTermTaxCalculator TaxCalculator = new ShortTermTaxCalculator(listTransaction, new FinYear(2009));
 
             List<Transaction> filteredList = TaxCalculator.filterListOfTransactionsOnYear();
 
